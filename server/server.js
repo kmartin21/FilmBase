@@ -6,7 +6,6 @@ const morgan = require('morgan')
 const jwt = require('express-jwt')
 const jwksRsa = require('jwks-rsa')
 
-
 const app = express()
 
 const questions = []
@@ -52,7 +51,7 @@ const checkJwt = jwt({
 
 })
 
-  // insert a new question
+// insert a new question
 app.post('/', checkJwt, (req, res) => {
   const {title, description} = req.body;
   const newQuestion = {
@@ -82,10 +81,10 @@ app.post('/answer/:id', checkJwt, (req, res) => {
   res.status(200).send();
 });
   
-  // start the server
-  app.listen(7001, () => {
-    console.log('listening on port 7001');
-  });
+// start the server
+app.listen(7001, () => {
+  console.log('listening on port 7001');
+});
 
 
 
