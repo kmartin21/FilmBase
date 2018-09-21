@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const ObjectId = require('mongoose').ObjectId
 const Schema = mongoose.schema
 
 const MovieSchema = new Schema({
@@ -15,7 +16,7 @@ const MovieSchema = new Schema({
         required: true
     },
     favorited_by: {
-        type: [ObjectId],
+        type: [Schema.Types.ObjectId],
         ref: 'User',
         required: false
     }

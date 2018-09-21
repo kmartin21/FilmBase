@@ -4,10 +4,14 @@ const Schema = mongoose.Schema
 const UserSchema = new Schema({
     name: {
         type: String, 
-        required: false
+        required: true
+    },
+    username: {
+        type: String,
+        required: true
     },
     favoriteMovies: {
-        type: [ObjectId],
+        type: [Schema.Types.ObjectId],
         ref: 'Movie'
     }
 })

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Route} from 'react-router-dom'
 import NavBar from './containers/NavBar'
-import Callback from './Callback'
+import Callback from './oauth/Callback'
 import HomePage from './components/HomePage'
 
 class App extends Component {
