@@ -11,11 +11,16 @@ class Callback extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({name: `${auth0Client.getProfile().name}`, username: `${auth0Client.getProfile().nickname}`})
-    }).then(res => {
-      console.log("RESPONSE: ", res)
+    })
+    .then(res => res.json())
+    .then(json => {
+      console.log("LOGIN RESPONSE: ", json)
       this.props.history.replace('/')
     })
-    .catch(error => console.log("ERROR: ", error))
+    .catch(error => {
+      console.log("ERROR: ", error)
+      this.props.history.replace('/')
+    })
   }
 
   render() {

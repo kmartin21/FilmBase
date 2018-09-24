@@ -3,34 +3,27 @@ const User = require('../models/user.model')
 exports.userCreate = (req, res) => {
     const user = new User({
         name: req.body.name,
-        username: req.body.nickname
+        username: req.body.username
     })
-
-    user.save((err) => {
-        if (err) {
-            console.log("ERROR SAVING USER: ", err)
+    
+    User.findOne({username: `${user.username}`}, function(err, result) {
+        if (err) { 
+            res.status(415).json({ error: `${err.message}` })
         }
-        console.log('USER CREATED')
-        res.send('User created successfully')
+
+        if (!result) {
+            user.save((err) => {
+                if (err) {
+                    res.status(415).json({ error: `${err.message}` })
+                }
+                res.status(201).send()
+            })
+        } else {
+            res.json({ msg: 'User already exists' })
+        }
     })
+}
 
-    // User.findOne({username: `${req.body.nickname}`}, function(err, result, next) {
-    //     if (err) { 
-    //         console.log("ERROR: ", err) 
-    //         next(err)
-    //     }
-
-    //     if (result) {
-            
-    //     } else {
-    //         console.log("NO RESULT")
-    //         user.save((err) => {
-    //             if (err) {
-    //                 console.log("ERROR SAVING USER: ", err)
-    //             }
-    //             console.log('USER CREATED')
-    //             res.send('User created successfully')
-    //         })
-    //     }
-    // })
+exports.favoriteMovie = (req, res) => {
+    
 }

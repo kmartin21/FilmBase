@@ -36,8 +36,8 @@ app.use(helmet())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(cors())
-app.use(morgan('combined'))
-app.use('/login', user)
+app.use(morgan('dev'))
+app.use('/', user)
   
 app.listen(7001, () => {
   console.log('listening on port 7001');

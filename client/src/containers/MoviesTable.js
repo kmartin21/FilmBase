@@ -11,7 +11,7 @@ class MoviesTable extends Component {
         const {moviesData} = this.props
         const movieItems = moviesData.map((movie) => 
             <li key={movie.id.toString()}>
-                <Movie title={movie.title} description={movie.overview} imageUrl={movie.poster_path} />
+                <Movie id={movie.id} title={movie.title} description={movie.overview} imageUrl={movie.poster_path} />
             </li>
         )
 
