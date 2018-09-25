@@ -38,11 +38,17 @@ app.use(bodyParser.json())
 app.use(cors())
 app.use(morgan('dev'))
 app.use('/', user)
-  
+
+
 app.listen(7001, () => {
   console.log('listening on port 7001');
 });
 
-
+process.on('SIGINT', () => {
+  mongoose.connection.close(function () {
+    console.log('Mongoose disconnected on app termination');
+    process.exit(0);
+  });
+});
 
 

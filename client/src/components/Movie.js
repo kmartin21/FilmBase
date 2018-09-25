@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import fetch from 'cross-fetch'
-import auth0Client from './Auth';
+import auth0Client from '../oauth/Auth';
 
 class Movie extends Component {
     constructor(props) {
@@ -10,7 +10,8 @@ class Movie extends Component {
     }
 
     favoriteMovie(id) {
-        fetch(`http://localhost:7001/movie/${id}`, {
+        const userId = localStorage.getItem('userId')
+        fetch(`http://localhost:7001/user/${userId}/fav-movie/${id}`, {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'

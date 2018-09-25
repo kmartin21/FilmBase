@@ -1,8 +1,11 @@
 const mongoose = require('mongoose')
-const ObjectId = require('mongoose').ObjectId
-const Schema = mongoose.schema
+const Schema = mongoose.Schema
 
 const MovieSchema = new Schema({
+    movieId: {
+        type: String,
+        required: true
+    },
     title: {
         type: String,
         required: true

@@ -14,11 +14,11 @@ class Callback extends Component {
     })
     .then(res => res.json())
     .then(json => {
-      console.log("LOGIN RESPONSE: ", json)
+      localStorage.setItem('userId', json.userId)
       this.props.history.replace('/')
     })
     .catch(error => {
-      console.log("ERROR: ", error)
+      alert(`ERROR: ${error}`)
       this.props.history.replace('/')
     })
   }
