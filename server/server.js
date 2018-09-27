@@ -9,7 +9,7 @@ const user = require('./routes/user.route')
 const app = express()
 const mongoose = require('mongoose')
 
-const dbUrl = ''
+const dbUrl = 'mongodb://kmartin:f1lmbas3!@ds263832.mlab.com:63832/filmbase'
 const mongoDB = process.env.MONGODB_URI || dbUrl
 mongoose.connect(mongoDB)
 mongoose.Promise = global.Promise
@@ -18,6 +18,9 @@ connection.on('open', () => {
   console.log("Successfully connected to db")
 })
 connection.on('error', console.error.bind(console, 'MongoDB connection error:'))
+connection.on('disconnected', () => {
+  console.log("DB connection closed")
+})
 
 const checkJwt = jwt({
   secret: jwksRsa.expressJwtSecret({

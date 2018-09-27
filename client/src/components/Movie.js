@@ -9,14 +9,18 @@ class Movie extends Component {
         this.favoriteMovie = this.favoriteMovie.bind(this)
     }
 
-    favoriteMovie(id) {
+    favoriteMovie(id, title, description, imageUrl) {
         const userId = localStorage.getItem('userId')
         fetch(`http://localhost:7001/user/${userId}/fav-movie/${id}`, {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({username: `${auth0Client.getProfile().nickname}`})
+            body: JSON.stringify({
+                title: title,
+                description: description,
+                imageUrl: imageUrl
+            })
         })
     }
 
@@ -29,7 +33,7 @@ class Movie extends Component {
                 <h5>{title}</h5>
                 <p>{description}</p>
                 <p>Favorited by <a href="">kmartin5</a></p>
-                <button onClick={this.favoriteMovie.bind(this, id)}>Favorite</button>
+                <button onClick={this.favoriteMovie.bind(this, id, title, description, imageUrl)}>Favorite</button>
             </div>
         )
     }

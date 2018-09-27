@@ -1,6 +1,7 @@
 const User = require('../models/user.model')
 const movieController = require('./movie.controller')
-const Movie = require('../models/movie.model')
+const mongoose = require('mongoose')
+
 
 exports.userCreate = (req, res) => {
     const user = new User({
@@ -27,26 +28,19 @@ exports.userCreate = (req, res) => {
 }
 
 exports.favoriteMovie = (req, res) => {
-    // console.log("ID: ", req.params.id)
-    // console.log("ID: ", req.params.id.toString())
-    // const p = movieController.findMovie(req.params.id)
-    // console.log("P: ", p)
-    // p.then(result => console.log("RESULT: ", result))
-    // .catch(error => console.log("MOVIE CONTROLLER ERR: ", error))
-    console.log("FAV MOVIE")
-    Movie.findOne({movieId: `${req.params.id}`, function(err, result) {
-        console.log("INSIDE FAV MOVIE")
-        if(err) {
-            console.log("ERRasd: ", err)
-            reject(err)
-        }
-        if(result) {
-            console.log("RESULT: ", result)
-            resolve(result)
-        } else {
-            console.log("NO RESULT: ", result)
-        }
-    }})
+    const saveMoviePromise = movieController.saveMovieIfDoesNotExist(req.params.id, req.body)
+    saveMoviePromise.then(result => {
+        console.log("RESULT: ", result)
+        User.findByIdAndUpdate(req.params.userId,
+            { "$push": { "favoriteMovies": req.params.id } },
+            {"new": true, upsert: true },
+            function (err, user) {
+                if (err) console.log("ERR IN FIND BY ID AND UPDATE:", err)
+                else console.log("USER:", user)
+            }
+        )
+    })
+    .catch(error => console.log("SAVE MOVIE ERR: ", error))
 }
 
 

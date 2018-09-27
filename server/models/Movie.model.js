@@ -17,11 +17,6 @@ const MovieSchema = new Schema({
     image_url: {
         type: String,
         required: true
-    },
-    favorited_by: {
-        type: [Schema.Types.ObjectId],
-        ref: 'User',
-        required: false
     }
 })
 
