@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const favoriteMovieSchema = new Schema({name: 'FavoriteMovie'})
 
 const UserSchema = new Schema({
     name: {
@@ -11,8 +12,7 @@ const UserSchema = new Schema({
         required: true
     },
     favoriteMovies: {
-        type: [Number],
-        ref: 'Movie'
+        type: [favoriteMovieSchema]
     }
 })
 
