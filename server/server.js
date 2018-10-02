@@ -6,10 +6,11 @@ const morgan = require('morgan')
 const jwt = require('express-jwt')
 const jwksRsa = require('jwks-rsa')
 const user = require('./routes/user.route')
+const recentFavorites = require('./routes/recentFavorite.route')
 const app = express()
 const mongoose = require('mongoose')
 
-const dbUrl = 'mongodb://kmartin:f1lmbas3!@ds263832.mlab.com:63832/filmbase'
+const dbUrl = ''
 const mongoDB = process.env.MONGODB_URI || dbUrl
 mongoose.connect(mongoDB)
 mongoose.Promise = global.Promise
@@ -41,7 +42,7 @@ app.use(bodyParser.json())
 app.use(cors())
 app.use(morgan('dev'))
 app.use('/', user)
-
+app.use('/recent-favorites', recentFavorites)
 
 app.listen(7001, () => {
   console.log('listening on port 7001');

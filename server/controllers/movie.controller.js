@@ -17,13 +17,14 @@ exports.saveMovieIfDoesNotExist = (id, body) => {
                     if (err) {
                         reject(err)
                     }
+                    console.log("MOVIE ID: ", movie._id)
+                    resolve(movie._id)
                 })
             }
-            resolve()
+            resolve(result._id)
         })    
     })
 }
-
 
 
 

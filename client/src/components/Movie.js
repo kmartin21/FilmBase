@@ -9,6 +9,8 @@ class Movie extends Component {
             favorited: localStorage.getItem("favoriteMovies").includes(parseInt(props.id)) 
         }
         this.favoriteMovie = this.favoriteMovie.bind(this)
+        this.unfavoriteMovie = this.unfavoriteMovie.bind(this)
+        this.createOpinion = this.createOpinion.bind(this)
     }
 
     favoriteMovie(id, title, description, imageUrl) {
@@ -30,14 +32,12 @@ class Movie extends Component {
             localStorage.setItem("favoriteMovies", json.favoriteMovies)
             this.setState({favorited: localStorage.getItem("favoriteMovies").includes(parseInt(this.props.id))})
         })
-        .catch(error => {
-            alert(`ERROR: ${error}`)
-        })
+        .catch(error => alert(`ERROR: ${error}`))
     }
 
     unfavoriteMovie(id) {
         const userId = localStorage.getItem('userId')
-
+        console.log("UNFAV MOVIE")
         fetch(`http://localhost:7001/user/${userId}/fav-movie/${id}`, {
             method: 'delete',
             headers: {
@@ -54,6 +54,23 @@ class Movie extends Component {
         })
     }
 
+    createOpinion(id, opinion) {
+        const userId = localStorage.getItem('userId')
+
+        fetch(`http://localhost:7001/user/${userId}/fav-movie/${id}/opinion`, {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                opinion: opinion
+            })
+        })
+        .catch(error => {
+            alert(`ERROR: ${error}`)
+        })
+    } 
+
     render() {
         const {id, title, description, imageUrl} = this.props
         
@@ -64,6 +81,9 @@ class Movie extends Component {
                 <p>{description}</p>
                 <p>Favorited by <a href="">kmartin5</a></p>
                 <button onClick={this.state.favorited ? this.unfavoriteMovie.bind(this, id) : this.favoriteMovie.bind(this, id, title, description, imageUrl)}>{this.state.favorited ? 'Unfavorite' : 'Favorite'}</button>
+                {this.state.favorited &&
+                    <button onClick={this.createOpinion.bind(this, id, "Awesome movie!!")}>Write opinion</button>
+                }
             </div>
         )
     }
