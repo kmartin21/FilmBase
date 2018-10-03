@@ -72,7 +72,7 @@ class Movie extends Component {
     } 
 
     render() {
-        const {id, title, description, imageUrl} = this.props
+        const {isRecents, id, title, description, imageUrl} = this.props
         
         return (
             <div>
@@ -80,9 +80,12 @@ class Movie extends Component {
                 <h5>{title}</h5>
                 <p>{description}</p>
                 <p>Favorited by <a href="">kmartin5</a></p>
-                <button onClick={this.state.favorited ? this.unfavoriteMovie.bind(this, id) : this.favoriteMovie.bind(this, id, title, description, imageUrl)}>{this.state.favorited ? 'Unfavorite' : 'Favorite'}</button>
-                {this.state.favorited &&
+                {isRecents ?
+                    <button onClick={this.state.favorited ? this.unfavoriteMovie.bind(this, id) : this.favoriteMovie.bind(this, id, title, description, imageUrl)}>{this.state.favorited ? 'Unfavorite' : 'Favorite'}</button>
+                    {this.state.favorited ?
                     <button onClick={this.createOpinion.bind(this, id, "Awesome movie!!")}>Write opinion</button>
+                    : null}
+                    : null
                 }
             </div>
         )

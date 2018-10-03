@@ -1,27 +1,28 @@
 const Movie = require('../models/movie.model')
 
-exports.saveMovieIfDoesNotExist = (id, body) => {
+exports.saveMovieIfDoesNotExist = (movieId, body) => {
     return new Promise((resolve, reject) => {
-        Movie.findOne({movieId: id}, function(err, result) {
+        Movie.findOne({movieId: movieId}, function(err, result) {
             if (err) {
                 reject(err)
             }
             if (!result) {
                 const movie = new Movie({
-                    movieId: id,
+                    movieId: movieId,
                     title: body.title,
                     description: body.description,
                     image_url: body.imageUrl
                 })
-                movie.save((err) => {
+                
+                movie.save((err, movie) => {
                     if (err) {
                         reject(err)
                     }
-                    console.log("MOVIE ID: ", movie._id)
                     resolve(movie._id)
                 })
+            } else {
+                resolve(result._id)
             }
-            resolve(result._id)
         })    
     })
 }

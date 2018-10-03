@@ -12,7 +12,7 @@ const UserSchema = new Schema({
     },
     favoriteMovies: {
         type: [{
-            movieId: {
+            movie: {
                 type: Schema.Types.ObjectId, 
                 ref: 'Movie',
                 required: true

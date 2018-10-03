@@ -8,12 +8,15 @@ class MoviesTable extends Component {
     }
 
     render() {
-        const {moviesData} = this.props
-        const movieItems = moviesData.map((movie) => 
-            <li key={movie.id.toString()}>
-                <Movie id={movie.id} title={movie.title} description={movie.overview} imageUrl={movie.poster_path} />
+        const {isRecents, moviesData} = this.props
+        debugger;
+        const movieItems = moviesData.map((movie) => {
+            const imageUrl = movie.poster_path ? movie.poster_path : movie.image_url
+            const id = movie.id ? movie.id.toString() : movie._id
+            return <li key={id}>
+                <Movie isRecent={isRecents} id={id} title={movie.title} description={movie.overview} imageUrl={imageUrl} />
             </li>
-        )
+        })
 
         return (
             <div>
