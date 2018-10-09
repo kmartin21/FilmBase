@@ -19,10 +19,10 @@ exports.userCreate = (req, res) => {
                 if (err) {
                     res.status(415).json({ error: `${err.message}` })
                 }
-                res.status(201).json({ userId: `${user._id}`, favoriteMovies: `${user.favoriteMovies}` })
+                res.status(201).json({ userId: user._id, favoriteMovies: user.favoriteMovies })
             })
         } else {
-            res.json({ userId: `${result._id}`, favoriteMovies: `${result.favoriteMovies}` })
+            res.json({ userId: result._id, favoriteMovies: result.favoriteMovies })
         }
     })
 }
@@ -38,24 +38,21 @@ exports.favoriteMovie = (req, res) => {
                 const favMovie = {
                     movie: mongoose.Types.ObjectId(movieObjectId)
                 }
-                User.findOneAndUpdate(req.params.userId,
-                    {"$push": { "favoriteMovies": favMovie }},
-                    {"new": true, upsert: true },
-                    function (err, user) {
-                        if (err) res.status(415).json({ error: `${err.message}` })
-                        else {
-                            recentFavoriteController.add(req.params.userId, movieObjectId)
+                user.favoriteMovies.push(favMovie)
+                user.save((err, user) => {
+                    if (err) res.status(415).json({ error: `${err.message}` })
+                    else {
+                        recentFavoriteController.add(req.params.userId, movieObjectId)
 
-                            User.find({_id: user._id})
-                            .populate('favoriteMovies.movie')
-                            .exec(function(err, result) {
-                                if (err) res.status(415).json({ error: `${err.message}` })
-                                const favoriteMoviesIds = result[0].favoriteMovies.map(favoriteMovie => favoriteMovie.movie.movieId)
-                                res.json({ msg: "Favorited movie successfully", favoriteMovies: favoriteMoviesIds})
-                            }) 
-                        }
+                        User.find({_id: user._id})
+                        .populate('favoriteMovies.movie')
+                        .exec(function(err, result) {
+                            if (err) res.status(415).json({ error: `${err.message}` })
+                            const favoriteMoviesIds = result[0].favoriteMovies.map(favoriteMovie => favoriteMovie.movie.movieId)
+                            res.json({ msg: "Favorited movie successfully", favoriteMovies: favoriteMoviesIds})
+                        }) 
                     }
-                )
+                })
             }
         })
     })
@@ -110,7 +107,7 @@ exports.writeOpinion = (req, res) => {
         .exec((err, result) => {
             const favoriteMovies = result[0].favoriteMovies
             if (err) res.status(415).json({ error: `${err.message}` })
-
+            console.log("WRITE OPINION:", favoriteMovies)
             const movieToDelete = favoriteMovies.find(favoriteMovie => favoriteMovie.movie.movieId === movieId).movie._id
             const movieForOpinion = user.favoriteMovies.find(favoriteMovie => favoriteMovie.movie.equals(movieToDelete))
             movieForOpinion.opinion = req.body.opinion

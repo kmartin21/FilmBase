@@ -9,10 +9,10 @@ class MoviesTable extends Component {
 
     render() {
         const {isRecents, moviesData} = this.props
-        debugger;
-        const movieItems = moviesData.map((movie) => {
-            const imageUrl = movie.poster_path ? movie.poster_path : movie.image_url
-            const id = movie.id ? movie.id.toString() : movie._id
+        const movieItems = moviesData.map((movieData) => {
+            const movie = movieData.movie ? movieData.movie : movieData
+            const imageUrl = isRecents ? movie.image_url : movie.poster_path
+            const id = isRecents ? movie._id : movie.id.toString()
             return <li key={id}>
                 <Movie isRecent={isRecents} id={id} title={movie.title} description={movie.overview} imageUrl={imageUrl} />
             </li>
