@@ -14,11 +14,11 @@ exports.saveMovieIfDoesNotExist = (movieId, body) => {
                     image_url: body.imageUrl
                 })
                 
-                movie.save((err, movie) => {
+                movie.save((err, mov) => {
                     if (err) {
                         reject(err)
                     }
-                    resolve(movie._id)
+                    resolve(mov._id)
                 })
             } else {
                 resolve(result._id)

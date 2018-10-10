@@ -16,7 +16,7 @@ class Callback extends Component {
     .then(json => {
       localStorage.setItem('userId', json.userId)
       localStorage.setItem('favoriteMovies', JSON.stringify(json.favoriteMovies))
-     
+      
       this.props.history.replace('/')
     })
     .catch(error => {

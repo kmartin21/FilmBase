@@ -16,9 +16,9 @@ class Movie extends Component {
     }
 
     componentWillMount() {
-        const favoriteMovies = JSON.parse(localStorage.getItem("favoriteMovies"))
+        const storedFavMovies = localStorage.getItem("favoriteMovies")
+        const favoriteMovies = JSON.parse(storedFavMovies)
         const id = this.props.id
-        debugger
         if (favoriteMovies && id) this.setState({favorited: favoriteMovies.includes(parseInt(id))})
     }
 
@@ -38,7 +38,8 @@ class Movie extends Component {
         })
         .then(response => response.json())
         .then(json => {
-            localStorage.setItem("favoriteMovies", json.favoriteMovies)
+            debugger
+            localStorage.setItem("favoriteMovies", JSON.stringify(json.favoriteMovies))
             this.setState({favorited: localStorage.getItem("favoriteMovies").includes(parseInt(this.props.id))})
         })
         .catch(error => alert(`ERROR: ${error}`))
@@ -54,7 +55,8 @@ class Movie extends Component {
         })
         .then(response => response.json())
         .then(json => {
-            localStorage.setItem("favoriteMovies", json.favoriteMovies)
+            debugger
+            localStorage.setItem("favoriteMovies", JSON.stringify(json.favoriteMovies))
             this.setState({favorited: localStorage.getItem("favoriteMovies").includes(parseInt(this.props.id))})
         })
         .catch(error => {
@@ -80,16 +82,15 @@ class Movie extends Component {
     } 
 
     render() {
-        const {isRecent, id, title, description, imageUrl} = this.props
-        debugger
+        const {isRecent, id, user, title, description, imageUrl} = this.props
+        
         return (
             <div>
                 <img src={`https://image.tmdb.org/t/p/w45/${imageUrl}`} alt='Movie image' />
                 <h5>{title}</h5>
                 <p>{description}</p>
-                <p>Favorited by <Link to={`/user/${localStorage.getItem('userId')}`}>{auth0Client.getProfile() ? auth0Client.getProfile().name : 'kmartin5'}</Link></p>
                 {isRecent 
-                    ? null
+                    ? <p>Favorited by <Link to={`/user/${user._id}`}>{user.name}</Link></p>
                     : <div>
                         <button onClick={this.state.favorited ? this.unfavoriteMovie.bind(this, id) : this.favoriteMovie.bind(this, id, title, description, imageUrl)}>{this.state.favorited ? 'Unfavorite' : 'Favorite'}</button>
                         {this.state.favorited &&

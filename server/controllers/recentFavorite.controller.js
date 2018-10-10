@@ -28,7 +28,7 @@ exports.getRecents = (req, res) => {
         .populate('movie')
         .exec(function(err, results) {
             if (err) res.status(415).json({ error: `${err.message}` })
-            console.log("RECENTS RESULT: ", results)
+            
             const recentFavorites = results.map(result => {
                 return {
                     user: result.user,
