@@ -16,9 +16,10 @@ class Movie extends Component {
     }
 
     componentWillMount() {
-        const a = JSON.parse(localStorage.getItem("favoriteMovies"))
+        const favoriteMovies = JSON.parse(localStorage.getItem("favoriteMovies"))
+        const id = this.props.id
         debugger
-        this.setState({favorited: JSON.parse(localStorage.getItem("favoriteMovies")).find(movie => parseInt(movie.movie) === parseInt(this.props.id)) !== null})
+        if (favoriteMovies && id) this.setState({favorited: favoriteMovies.includes(parseInt(id))})
     }
 
     favoriteMovie(id, title, description, imageUrl) {
@@ -80,7 +81,7 @@ class Movie extends Component {
 
     render() {
         const {isRecent, id, title, description, imageUrl} = this.props
-        
+        debugger
         return (
             <div>
                 <img src={`https://image.tmdb.org/t/p/w45/${imageUrl}`} alt='Movie image' />

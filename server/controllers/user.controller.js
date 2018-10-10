@@ -13,16 +13,29 @@ exports.userCreate = (req, res) => {
         if (err) { 
             res.status(415).json({ error: `${err.message}` })
         }
-
+        
         if (!result) {
             user.save((err, user) => {
                 if (err) {
                     res.status(415).json({ error: `${err.message}` })
                 }
-                res.status(201).json({ userId: user._id, favoriteMovies: user.favoriteMovies })
+                User.find({_id: user._id})
+                    .populate('favoriteMovies.movie')
+                    .exec(function(err, result) {
+                        if (err) res.status(415).json({ error: `${err.message}` })
+                        const favoriteMoviesIds = result[0].favoriteMovies.map(favoriteMovie => favoriteMovie.movie.movieId)
+                        res.status(201).json({ userId: user._id, favoriteMovies: favoriteMoviesIds })
+                    }) 
+                
             })
         } else {
-            res.json({ userId: result._id, favoriteMovies: result.favoriteMovies })
+            User.find({_id: result._id})
+                .populate('favoriteMovies.movie')
+                .exec(function(err, result) {
+                    if (err) res.status(415).json({ error: `${err.message}` })
+                    const favoriteMoviesIds = result[0].favoriteMovies.map(favoriteMovie => favoriteMovie.movie.movieId)
+                    res.json({ userId: result._id, favoriteMovies: favoriteMoviesIds })
+                }) 
         }
     })
 }
