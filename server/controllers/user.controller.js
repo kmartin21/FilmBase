@@ -75,8 +75,6 @@ exports.favoriteMovie = (req, res) => {
 
 exports.unfavoriteMovie = (req, res) => {
     const movieId = parseInt(req.params.id)
-    console.log("HEX:", req.params.userId)
-    console.log("OBJECTID:", mongoose.Types.ObjectId(req.params.userId))
     User.findOne({_id: mongoose.Types.ObjectId(req.params.userId)}, function(err, user) {
 
         if (err) res.status(415).json({ error: `${err.message}` })
@@ -134,6 +132,19 @@ exports.writeOpinion = (req, res) => {
             })
         })
     })
+}
+
+exports.getUserProfile = (req, res) => {
+    User.find({_id: mongoose.Types.ObjectId(req.params.id)})
+        .populate('favoriteMovies.movie')
+        .exec((err, result) => {
+            const resultObject = result[0]
+            const favoriteMovies = resultObject.favoriteMovies
+        
+            if (err) res.status(415).json({ error: `${err.message}` })
+            
+            res.json({ msg: 'Successfully retrieved user profile', name: resultObject.name, favoriteMovies: favoriteMovies })
+        })
 }
 
 

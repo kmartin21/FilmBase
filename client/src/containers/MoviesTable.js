@@ -8,27 +8,26 @@ class MoviesTable extends Component {
     }
 
     createMovieItems() {
-        const {isRecents, moviesData} = this.props
-        var finalMoviesData = isRecents ? moviesData.slice(0).reverse() : moviesData
+        const {fromSearch, moviesData} = this.props
+        var finalMoviesData = fromSearch ? moviesData : moviesData.slice(0).reverse()
         return finalMoviesData.map((movieData) => {
             const movie = movieData.movie ? movieData.movie : movieData
             const title = movie.title
-            const description = movie.overview
-            const imageUrl = isRecents ? movie.image_url : movie.poster_path
-            const id = isRecents ? movie._id : movie.id.toString()
-            const user = isRecents ? {
+            const description = movie.overview ? movie.overview : movie.description
+            const imageUrl = movie.image_url ? movie.image_url : movie.poster_path
+            const id = movie.movieId ? movie.movieId : movie.id.toString()
+            const user = !fromSearch && movieData.user ? {
                 _id: movieData.user._id,
                 name: movieData.user.name
             } : null
 
-            return <li key={id}>
-                <Movie isRecent={isRecents} id={id} user={user} title={title} description={description} imageUrl={imageUrl} />
+            return <li>
+                <Movie id={id} user={user} title={title} description={description} imageUrl={imageUrl} />
             </li>
         })
     }
 
     render() {
-        
         const movieItems = this.createMovieItems()
 
         return (

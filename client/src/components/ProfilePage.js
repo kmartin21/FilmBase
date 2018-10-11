@@ -1,27 +1,35 @@
 import React, { Component } from 'react'
 import fetch from 'cross-fetch'
+import MoviesTable from '../containers/MoviesTable' 
 
 class ProfilePage extends Component {
 
-    constructor() {
+    constructor(props) {
+        super(props)
         this.state = {
+            name: '',
             favoriteMovies: []
         }
     }
 
     componentDidMount() {
         const {params} = this.props.match
+        
         fetch(`http://localhost:7001/user/${params.id}/profile`)
         .then(response => response.json())
         .then(json => {
-            this.setState({ favoriteMovies: json.favoriteMovies })
+            this.setState({ name: json.name, favoriteMovies: json.favoriteMovies })
         })
     }
 
     render() {
-
+        return (
+            <div>
+                <h3>{this.state.name}</h3>
+                <MoviesTable fromSearch={false} moviesData={this.state.favoriteMovies}/>
+            </div>
+        )    
     }
-
 }
 
 export default ProfilePage

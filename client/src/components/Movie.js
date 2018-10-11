@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import fetch from 'cross-fetch'
-import {Link, withRouter} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import auth0Client from '../oauth/Auth';
 
 class Movie extends Component {
@@ -17,14 +17,20 @@ class Movie extends Component {
 
     componentWillMount() {
         const storedFavMovies = localStorage.getItem("favoriteMovies")
-        if (storedFavMovies === null) {
+        if (storedFavMovies !== null) {
             const favoriteMovies = JSON.parse(storedFavMovies)
             const id = this.props.id
+            const title = this.props.title
+            debugger
             if (favoriteMovies && id) this.setState({favorited: favoriteMovies.includes(parseInt(id))})
         }
     }
 
     favoriteMovie(id, title, description, imageUrl) {
+        if (!auth0Client.isAuthenticated()) {
+            alert("Sign in to add movies to your favorites")
+            return
+        }
         const userId = localStorage.getItem('userId')
 
         fetch(`http://localhost:7001/user/${userId}/fav-movie/${id}`, {
@@ -40,7 +46,6 @@ class Movie extends Component {
         })
         .then(response => response.json())
         .then(json => {
-            debugger
             localStorage.setItem("favoriteMovies", JSON.stringify(json.favoriteMovies))
             this.setState({favorited: localStorage.getItem("favoriteMovies").includes(parseInt(this.props.id))})
         })
@@ -57,7 +62,6 @@ class Movie extends Component {
         })
         .then(response => response.json())
         .then(json => {
-            debugger
             localStorage.setItem("favoriteMovies", JSON.stringify(json.favoriteMovies))
             this.setState({favorited: localStorage.getItem("favoriteMovies").includes(parseInt(this.props.id))})
         })
@@ -84,22 +88,22 @@ class Movie extends Component {
     } 
 
     render() {
-        const {isRecent, id, user, title, description, imageUrl} = this.props
+        const {id, user, title, description, imageUrl} = this.props
         
         return (
             <div>
                 <img src={`https://image.tmdb.org/t/p/w45/${imageUrl}`} alt='Movie image' />
                 <h5>{title}</h5>
                 <p>{description}</p>
-                {isRecent 
-                    ? <p>Favorited by <Link to={`/user/${user._id}`}>{user.name}</Link></p>
-                    : <div>
-                        <button onClick={this.state.favorited ? this.unfavoriteMovie.bind(this, id) : this.favoriteMovie.bind(this, id, title, description, imageUrl)}>{this.state.favorited ? 'Unfavorite' : 'Favorite'}</button>
-                        {this.state.favorited &&
-                            <button onClick={this.createOpinion.bind(this, id, "Awesome movie!!")}>Write opinion</button>
-                        }
-                    </div> 
-                }
+                <div>
+                    {user &&
+                        <p>Favorited by <Link to={`/user/${user._id}/profile`}>{user.name}</Link></p>
+                    }
+                    <button onClick={this.state.favorited && auth0Client.isAuthenticated() ? this.unfavoriteMovie.bind(this, id) : this.favoriteMovie.bind(this, id, title, description, imageUrl)}>{this.state.favorited && auth0Client.isAuthenticated() ? 'Unfavorite' : 'Favorite'}</button>
+                    {this.state.favorited && auth0Client.isAuthenticated() &&
+                        <button onClick={this.createOpinion.bind(this, id, "Awesome movie!!")}>Write opinion</button>
+                    }
+                </div> 
             </div>
         )
     }

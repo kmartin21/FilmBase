@@ -29,13 +29,15 @@ class Auth {
   handleAuthentication() {
     return new Promise((resolve, reject) => {
       this.auth0.parseHash((err, authResult) => {
-        if (err) return reject(err);
+        if (err) {
+          return reject(err);
+        }
         if (!authResult || !authResult.idToken) {
           return reject(err);
         }
         this.idToken = authResult.idToken;
         this.profile = authResult.idTokenPayload;
-        
+        debugger
         this.expiresAt = authResult.expiresIn * 1000 + new Date().getTime();
         resolve();
       });
