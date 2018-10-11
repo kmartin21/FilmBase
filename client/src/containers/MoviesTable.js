@@ -7,32 +7,29 @@ class MoviesTable extends Component {
         super(props)
     }
 
-    componentDidMount() {
-        
-    }
-
-    testingIt() {
-        
-    }
-
-    render() {
+    createMovieItems() {
         const {isRecents, moviesData} = this.props
-        
-        const movieItems = moviesData.map((movieData, index) => {
+        var finalMoviesData = isRecents ? moviesData.slice(0).reverse() : moviesData
+        return finalMoviesData.map((movieData) => {
             const movie = movieData.movie ? movieData.movie : movieData
             const title = movie.title
-            const description = movie.description
+            const description = movie.overview
             const imageUrl = isRecents ? movie.image_url : movie.poster_path
             const id = isRecents ? movie._id : movie.id.toString()
             const user = isRecents ? {
-                _id: movie.user._id,
-                name: movie.user.name
+                _id: movieData.user._id,
+                name: movieData.user.name
             } : null
 
             return <li key={id}>
                 <Movie isRecent={isRecents} id={id} user={user} title={title} description={description} imageUrl={imageUrl} />
             </li>
         })
+    }
+
+    render() {
+        
+        const movieItems = this.createMovieItems()
 
         return (
             <div>

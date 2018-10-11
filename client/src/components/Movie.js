@@ -17,9 +17,11 @@ class Movie extends Component {
 
     componentWillMount() {
         const storedFavMovies = localStorage.getItem("favoriteMovies")
-        const favoriteMovies = JSON.parse(storedFavMovies)
-        const id = this.props.id
-        if (favoriteMovies && id) this.setState({favorited: favoriteMovies.includes(parseInt(id))})
+        if (storedFavMovies === null) {
+            const favoriteMovies = JSON.parse(storedFavMovies)
+            const id = this.props.id
+            if (favoriteMovies && id) this.setState({favorited: favoriteMovies.includes(parseInt(id))})
+        }
     }
 
     favoriteMovie(id, title, description, imageUrl) {

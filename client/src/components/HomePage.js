@@ -35,7 +35,6 @@ class HomePage extends Component {
         
         if (this.state.isRecents && auth0Client.isAuthenticated()) {
             moviesData = this.state.moviesData.filter(movie => movie.user._id !== localStorage.getItem('userId'))
-            debugger
         }
         return (
             <div>

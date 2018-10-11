@@ -10,7 +10,7 @@ const recentFavorites = require('./routes/recentFavorite.route')
 const app = express()
 const mongoose = require('mongoose')
 
-const dbUrl = 'mongodb://kmartin:f1lmbas3!@ds263832.mlab.com:63832/filmbase'
+const dbUrl = ''
 const mongoDB = process.env.MONGODB_URI || dbUrl
 mongoose.connect(mongoDB)
 mongoose.Promise = global.Promise
