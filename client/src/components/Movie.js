@@ -8,7 +8,7 @@ class Movie extends Component {
         super(props)
 
         this.state = {
-            favorited: false
+            favorited: null
         }
         this.favoriteMovie = this.favoriteMovie.bind(this)
         this.unfavoriteMovie = this.unfavoriteMovie.bind(this)
@@ -36,7 +36,7 @@ class Movie extends Component {
         .then(response => response.json())
         .then(json => {
             localStorage.setItem("favoriteMovies", JSON.stringify(json.favoriteMovies))
-            this.setState({favorited: localStorage.getItem("favoriteMovies").includes(parseInt(this.props.id))})
+            this.setState({favorited: true})
         })
         .catch(error => alert(`ERROR: ${error}`))
     }
@@ -52,7 +52,7 @@ class Movie extends Component {
         .then(response => response.json())
         .then(json => {
             localStorage.setItem("favoriteMovies", JSON.stringify(json.favoriteMovies))
-            this.setState({favorited: localStorage.getItem("favoriteMovies").includes(parseInt(this.props.id))})
+            this.setState({favorited: false})
         })
         .catch(error => {
             alert(`ERROR: ${error}`)
@@ -77,8 +77,9 @@ class Movie extends Component {
     } 
 
     render() {
-        const {id, user, title, description, imageUrl, favorited} = this.props
-        
+        const {id, user, title, description, imageUrl} = this.props
+        var {favorited} = this.props
+        favorited = this.state.favorited ? this.state.favorited : favorited
         return (
             <div>
                 <img src={`https://image.tmdb.org/t/p/w45/${imageUrl}`} alt='Movie image' />
@@ -88,7 +89,7 @@ class Movie extends Component {
                     {user &&
                         <p>Favorited by <Link to={`/user/${user._id}/profile`}>{user.name}</Link></p>
                     }
-                    <button onClick={favorited && auth0Client.isAuthenticated() ? this.unfavoriteMovie.bind(this, id) : this.favoriteMovie.bind(this, id, title, description, imageUrl)}>{favorited && auth0Client.isAuthenticated() ? 'Unfavorite' : 'Favorite'}</button>
+                    <button onClick={favorited && auth0Client.isAuthenticated() ? this.unfavoriteMovie.bind(this, id) : this.favoriteMovie.bind(this, id, title, description, imageUrl)}>{favorited || this.state.favorited && auth0Client.isAuthenticated() ? 'Unfavorite' : 'Favorite'}</button>
                     {favorited && auth0Client.isAuthenticated() &&
                         <button onClick={this.createOpinion.bind(this, id, "Awesome movie!!")}>Write opinion</button>
                     }

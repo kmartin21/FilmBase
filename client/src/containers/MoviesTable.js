@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import Movie from '.././components/Movie'
+import auth0Client from '../oauth/Auth'
 
 class MoviesTable extends Component {
 
@@ -8,6 +9,7 @@ class MoviesTable extends Component {
     }
 
     createMovieItems() {
+        if (!auth0Client.isAuthenticated()) localStorage.clear()
         const {fromSearch, moviesData} = this.props
         var finalMoviesData = fromSearch ? moviesData : moviesData.slice(0).reverse()
         const storedFavMovies = localStorage.getItem("favoriteMovies")

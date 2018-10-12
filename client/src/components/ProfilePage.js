@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import fetch from 'cross-fetch'
 import MoviesTable from '../containers/MoviesTable' 
+import {withRouter} from 'react-router-dom';
+import auth0Client from '../oauth/Auth'
 
 class ProfilePage extends Component {
 
@@ -32,4 +34,4 @@ class ProfilePage extends Component {
     }
 }
 
-export default ProfilePage
+export default withRouter(ProfilePage)
