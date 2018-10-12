@@ -10,6 +10,13 @@ class MoviesTable extends Component {
     createMovieItems() {
         const {fromSearch, moviesData} = this.props
         var finalMoviesData = fromSearch ? moviesData : moviesData.slice(0).reverse()
+        const storedFavMovies = localStorage.getItem("favoriteMovies")
+        var favorited = false
+        var favoriteMovies = []
+        if (storedFavMovies !== null) {
+            favoriteMovies = JSON.parse(storedFavMovies)
+        }
+
         return finalMoviesData.map((movieData) => {
             const movie = movieData.movie ? movieData.movie : movieData
             const title = movie.title
@@ -20,9 +27,12 @@ class MoviesTable extends Component {
                 _id: movieData.user._id,
                 name: movieData.user.name
             } : null
-
+            if (favoriteMovies && id) {
+                favorited = favoriteMovies.includes(parseInt(id))
+            }
+            
             return <li>
-                <Movie id={id} user={user} title={title} description={description} imageUrl={imageUrl} />
+                <Movie id={id} user={user} title={title} description={description} imageUrl={imageUrl} favorited={favorited}/>
             </li>
         })
     }

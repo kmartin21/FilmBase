@@ -15,17 +15,6 @@ class Movie extends Component {
         this.createOpinion = this.createOpinion.bind(this)
     }
 
-    componentWillMount() {
-        const storedFavMovies = localStorage.getItem("favoriteMovies")
-        if (storedFavMovies !== null) {
-            const favoriteMovies = JSON.parse(storedFavMovies)
-            const id = this.props.id
-            const title = this.props.title
-            debugger
-            if (favoriteMovies && id) this.setState({favorited: favoriteMovies.includes(parseInt(id))})
-        }
-    }
-
     favoriteMovie(id, title, description, imageUrl) {
         if (!auth0Client.isAuthenticated()) {
             alert("Sign in to add movies to your favorites")
@@ -88,7 +77,7 @@ class Movie extends Component {
     } 
 
     render() {
-        const {id, user, title, description, imageUrl} = this.props
+        const {id, user, title, description, imageUrl, favorited} = this.props
         
         return (
             <div>
@@ -99,8 +88,8 @@ class Movie extends Component {
                     {user &&
                         <p>Favorited by <Link to={`/user/${user._id}/profile`}>{user.name}</Link></p>
                     }
-                    <button onClick={this.state.favorited && auth0Client.isAuthenticated() ? this.unfavoriteMovie.bind(this, id) : this.favoriteMovie.bind(this, id, title, description, imageUrl)}>{this.state.favorited && auth0Client.isAuthenticated() ? 'Unfavorite' : 'Favorite'}</button>
-                    {this.state.favorited && auth0Client.isAuthenticated() &&
+                    <button onClick={favorited && auth0Client.isAuthenticated() ? this.unfavoriteMovie.bind(this, id) : this.favoriteMovie.bind(this, id, title, description, imageUrl)}>{favorited && auth0Client.isAuthenticated() ? 'Unfavorite' : 'Favorite'}</button>
+                    {favorited && auth0Client.isAuthenticated() &&
                         <button onClick={this.createOpinion.bind(this, id, "Awesome movie!!")}>Write opinion</button>
                     }
                 </div> 
