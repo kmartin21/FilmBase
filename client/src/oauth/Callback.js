@@ -4,7 +4,14 @@ import auth0Client from './Auth';
 
 class Callback extends Component {
   async componentDidMount() {
-    await auth0Client.handleAuthentication();
+    try {
+      await auth0Client.handleAuthentication()
+    } catch(error) {
+      alert(`Could not login: ${error.error}`)
+      this.props.history.replace('/')
+      return
+    }
+
     fetch('http://localhost:7001/login', {
       method: 'post',
       headers: {
@@ -20,7 +27,7 @@ class Callback extends Component {
       this.props.history.replace('/')
     })
     .catch(error => {
-      alert(`ERROR: ${error}`)
+      alert(`ERROR: ${error.message}`)
       this.props.history.replace('/')
     })
   }
