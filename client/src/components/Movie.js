@@ -79,7 +79,7 @@ class Movie extends Component {
     render() {
         const {id, user, title, description, imageUrl} = this.props
         var {favorited} = this.props
-        favorited = this.state.favorited ? this.state.favorited : favorited
+        favorited = this.state.favorited !== null ? this.state.favorited : favorited
         return (
             <div>
                 <img src={`https://image.tmdb.org/t/p/w45/${imageUrl}`} alt='Movie image' />
