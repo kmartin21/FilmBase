@@ -1,11 +1,26 @@
 import React, {Component} from 'react'
 import Movie from '.././components/Movie'
 import auth0Client from '../oauth/Auth'
+import Modal from '../components/Modal'
+import MovieDetailsModal from '../containers/MovieDetailsModal'
+import '../styles/main.css'
 
 class MoviesTable extends Component {
 
     constructor(props) {
         super(props)
+        this.state = {
+            show: false
+        }
+    }
+
+    showModal = () => {
+        this.setState({ show: true })
+    }
+
+    hideModal = (e) => {
+        e.preventDefault()
+        this.setState({ show: false })
     }
 
     createMovieItems() {
@@ -34,7 +49,7 @@ class MoviesTable extends Component {
             }
             
             return <li>
-                <Movie id={id} user={user} title={title} description={description} imageUrl={imageUrl} favorited={favorited}/>
+                <Movie id={id} user={user} title={title} description={description} imageUrl={imageUrl} favorited={favorited} onClick={() => this.showModal()} />
             </li>
         })
     }
@@ -42,11 +57,25 @@ class MoviesTable extends Component {
     render() {
         const movieItems = this.createMovieItems()
 
+        const modal = this.state.show ? (
+            <Modal>
+                <div className="modal">
+                    <MovieDetailsModal onClose={(e) => this.hideModal(e)} />
+                </div>
+            </Modal>
+        ) : null
+
         return (
             <div>
-                <ul>
-                    {movieItems}
-                </ul>
+                {/* <div> */}
+                    {/* <ul> */}
+                        <div className="modal">
+                    {/* <MovieDetailsModal onClose={(e) => this.hideModal(e)} /> */}
+                    <p>alksdjf;lakjs</p>
+                </div>
+                    {/* </ul> */}
+                {/* </div> */}
+                {modal}
             </div>
         )
     }
