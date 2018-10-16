@@ -47,6 +47,7 @@ class MoviesTable extends Component {
             const movie = movieData.movie ? movieData.movie : movieData
             const title = movie.title
             const description = movie.overview ? movie.overview : movie.description
+            const opinion = movie.opinion ? movie.opinion : null
             const imageUrl = movie.image_url ? movie.image_url : movie.poster_path
             const id = movie.movieId ? movie.movieId : movie.id.toString()
             const user = !fromSearch && movieData.user ? {
@@ -63,7 +64,8 @@ class MoviesTable extends Component {
                 title: title,
                 description: description,
                 imageUrl: imageUrl,
-                favorited: favorited
+                favorited: favorited,
+                opinion: opinion
             }
             return <li>
                 <Movie id={id} user={user} title={title} description={description} imageUrl={imageUrl} favorited={favorited} onClick={() => this.showModal(movieObject)} />

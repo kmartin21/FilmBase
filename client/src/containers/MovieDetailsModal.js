@@ -14,6 +14,7 @@ class MovieDetailsModal extends Component {
                     <img src={`https://image.tmdb.org/t/p/w45/${movie.imageUrl}`} alt='Movie image'/>
                     <h5>{movie.title}</h5>
                     <p>{movie.description}</p>
+                    <p>opinion: {movie.opinion}</p>
                 </div>
             </div>
         )
