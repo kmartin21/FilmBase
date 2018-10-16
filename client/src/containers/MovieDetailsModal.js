@@ -1,24 +1,23 @@
 import React, { Component } from 'react'
+import '../styles/main.css'
 
 class MovieDetailsModal extends Component {
 
 
     render() {
-        const { onClose } = this.props
+        const { onClose, movie } = this.props
         
         return (
-            <div className='event-details-modal'>
-                <a href="#" class="close" onClick={onClose}/>
+            <div className='movie-details-modal'>
+                <a href="#" className="close" onClick={onClose}/>
                 <div>
-                    <h2>Modal</h2>
-                    <p>lakjsd;lfkaj;sdlfkja;lksjdfkljasdkfj
-                        al;skjdf;lkajsd;lkfja;lksdjf;lkajs;dlkfj
-                    </p>
+                    <img src={`https://image.tmdb.org/t/p/w45/${movie.imageUrl}`} alt='Movie image'/>
+                    <h5>{movie.title}</h5>
+                    <p>{movie.description}</p>
                 </div>
             </div>
         )
     }
-
 }
 
 export default MovieDetailsModal

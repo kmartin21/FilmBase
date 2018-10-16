@@ -1,3 +1,4 @@
+/******************* MODAL *******************/
 #modal-root {
     position: relative;
     z-index: 999;
@@ -6,20 +7,53 @@
 .modal {
     background-color: rgba(0,0,0,0.5);
     position: fixed;
-    height: 100px;
-    width: 100px;
+    height: 100%;
+    width: 100%;
     top: 0;
     left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.event-details-modal {
+.movie-details-modal {
     position: absolute;
-    background-color: red;
+    background-color: white;
     height: 70%;
     width: 90%;
     border-radius: 10px;
     display: block;
     overflow-y: scroll;
 }
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 32px;
+    height: 32px;
+    opacity: 0.3;
+  }
+  
+.close:hover {
+    opacity: 1;
+}
+
+.close:before, .close:after {
+    position: absolute;
+    left: 15px;
+    content: ' ';
+    height: 28px;
+    width: 2px;
+    background-color: #333;
+}
+.close:before {
+    transform: rotate(45deg);
+}
+.close:after {
+    transform: rotate(-45deg);
+}
+
+/**********************************************************/
 
 

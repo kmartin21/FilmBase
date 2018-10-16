@@ -4,7 +4,6 @@ import NavBar from './containers/NavBar'
 import Callback from './oauth/Callback'
 import ProfilePage from './components/ProfilePage'
 import HomePage from './components/HomePage'
-import auth0Client from './oauth/Auth'
 
 class App extends Component {
   render() {

@@ -10,11 +10,20 @@ class MoviesTable extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            show: false
+            show: false,
+            selectedMovie: {
+                id: null,
+                user: null,
+                title: null,
+                description: null,
+                imageUrl: null,
+                favorited: null
+            }
         }
     }
 
-    showModal = () => {
+    showModal = (selectedMovie) => {
+        this.setState({ selectedMovie: selectedMovie })
         this.setState({ show: true })
     }
 
@@ -48,8 +57,16 @@ class MoviesTable extends Component {
                 favorited = favoriteMovies.includes(parseInt(id))
             }
             
+            const movieObject = {
+                id: id,
+                user: user,
+                title: title,
+                description: description,
+                imageUrl: imageUrl,
+                favorited: favorited
+            }
             return <li>
-                <Movie id={id} user={user} title={title} description={description} imageUrl={imageUrl} favorited={favorited} onClick={() => this.showModal()} />
+                <Movie id={id} user={user} title={title} description={description} imageUrl={imageUrl} favorited={favorited} onClick={() => this.showModal(movieObject)} />
             </li>
         })
     }
@@ -60,21 +77,18 @@ class MoviesTable extends Component {
         const modal = this.state.show ? (
             <Modal>
                 <div className="modal">
-                    <MovieDetailsModal onClose={(e) => this.hideModal(e)} />
+                    <MovieDetailsModal movie={this.state.selectedMovie} onClose={(e) => this.hideModal(e)} />
                 </div>
             </Modal>
         ) : null
 
         return (
             <div>
-                {/* <div> */}
-                    {/* <ul> */}
-                        <div className="modal">
-                    {/* <MovieDetailsModal onClose={(e) => this.hideModal(e)} /> */}
-                    <p>alksdjf;lakjs</p>
+                <div>
+                    <ul>
+                        {movieItems}
+                    </ul>
                 </div>
-                    {/* </ul> */}
-                {/* </div> */}
                 {modal}
             </div>
         )
