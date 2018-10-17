@@ -14,7 +14,12 @@ class MovieDetailsModal extends Component {
                     <img src={`https://image.tmdb.org/t/p/w45/${movie.imageUrl}`} alt='Movie image'/>
                     <h5>{movie.title}</h5>
                     <p>{movie.description}</p>
-                    <p>opinion: {movie.opinion}</p>
+                    {movie.opinion && (
+                        <p>{movie.user.name}'s review: {movie.opinion}</p>
+                    )}
+                    {movie.userOpinion && (
+                        <p>Your review: {movie.userOpinion}</p>
+                    )}
                 </div>
             </div>
         )

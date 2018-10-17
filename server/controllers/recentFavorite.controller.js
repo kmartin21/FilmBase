@@ -34,13 +34,13 @@ exports.getRecents = (req, res) => {
                 const opinion = result.user.favoriteMovies.find(favoriteMovie => favoriteMovie.movie.equals(result.movie._id)).opinion
                 const movie = {
                     _id: result.movie._id,
-                    movieId: movie.movieId,
-                    title: movie.title,
-                    description: movie.description,
-                    image_url: movie.image_url,
+                    movieId: result.movie.movieId,
+                    title: result.movie.title,
+                    description: result.movie.description,
+                    image_url: result.movie.image_url,
                     opinion: opinion
                 }
-                console.log("MOVIE:", movie)
+                
                 return {
                     user: result.user,
                     movie: movie
