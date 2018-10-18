@@ -14,7 +14,17 @@ class ProfilePage extends Component {
         }
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.match.params.id !== this.props.match.params.id) {
+            this.fetchProfile()
+        }
+    }
+
     componentDidMount() {
+        this.fetchProfile()
+    }
+
+    fetchProfile = () => {
         const {params} = this.props.match
         
         fetch(`http://localhost:7001/user/${params.id}/profile`)

@@ -46,6 +46,7 @@ exports.getRecents = (req, res) => {
                     movie: movie
                 }
             })
+            
             res.status(201).json({ recentFavorites: recentFavorites })
         })
 }

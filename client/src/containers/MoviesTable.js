@@ -4,7 +4,6 @@ import auth0Client from '../oauth/Auth'
 import Modal from '../components/Modal'
 import MovieDetailsModal from '../containers/MovieDetailsModal'
 import '../styles/main.css'
-import { debug } from 'util';
 
 class MoviesTable extends Component {
 
@@ -49,17 +48,16 @@ class MoviesTable extends Component {
             const title = movie.title
             const description = movie.overview ? movie.overview : movie.description
             const opinion = movie.opinion ? movie.opinion : null
-            var userOpinion = null
+            var activeUserOpinion = null
             const imageUrl = movie.image_url ? movie.image_url : movie.poster_path
-            const id = movie.movieId ? movie.movieId : movie.id.toString()
+            const id = movie.movieId ? movie.movieId : movie.id
             const user = !fromSearch && movieData.user ? {
                 _id: movieData.user._id,
                 name: movieData.user.name
             } : null
-            if (!favoriteMovies.length && id) {
-                favorited = favoriteMovies.find(movie => movie.movieId === id) !== undefined
-                if (favorited) userOpinion = favoriteMovies.find(movie => movie.movieId === id).opinion 
-            }
+            
+            favorited = favoriteMovies.find(movie => movie.movieId === id) !== undefined
+            if (favorited) activeUserOpinion = favoriteMovies.find(movie => movie.movieId === id).opinion 
             
             const movieObject = {
                 id: id,
@@ -69,7 +67,7 @@ class MoviesTable extends Component {
                 imageUrl: imageUrl,
                 favorited: favorited,
                 opinion: opinion,
-                userOpinion: userOpinion
+                activeUserOpinion: activeUserOpinion
             }
             return <li>
                 <Movie id={id} user={user} title={title} description={description} imageUrl={imageUrl} favorited={favorited} onClick={() => this.showModal(movieObject)} />
