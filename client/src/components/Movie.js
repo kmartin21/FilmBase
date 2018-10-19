@@ -25,7 +25,8 @@ class Movie extends Component {
         fetch(`http://localhost:7001/user/${userId}/fav-movie/${id}`, {
             method: 'post',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${auth0Client.getIdToken()}`
             },
             body: JSON.stringify({
                 title: title,
@@ -46,7 +47,8 @@ class Movie extends Component {
         fetch(`http://localhost:7001/user/${userId}/fav-movie/${id}`, {
             method: 'delete',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${auth0Client.getIdToken()}`
             }
         })
         .then(response => response.json())
@@ -65,7 +67,8 @@ class Movie extends Component {
         fetch(`http://localhost:7001/user/${userId}/fav-movie/${id}/opinion`, {
             method: 'post',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${auth0Client.getIdToken()}`
             },
             body: JSON.stringify({
                 opinion: opinion
