@@ -18,7 +18,8 @@ class MoviesTable extends Component {
                 description: null,
                 imageUrl: null,
                 favorited: null
-            }
+            },
+            storedFavMovies: localStorage.getItem("favoriteMovies")
         }
     }
 
@@ -32,11 +33,19 @@ class MoviesTable extends Component {
         this.setState({ show: false })
     }
 
+    removeMovie = (id) => {
+        const storedFavMovies = this.state.storedFavMovies
+        
+        if (storedFavMovies !== null) {
+            this.setState({ storedFavMovies: JSON.parse(storedFavMovies).filter(movie => movie.movieId !== id) })
+        }
+    }
+
     createMovieItems() {
         if (!auth0Client.isAuthenticated()) localStorage.clear()
         const {fromSearch, moviesData} = this.props
         var finalMoviesData = fromSearch ? moviesData : moviesData.slice(0).reverse()
-        const storedFavMovies = localStorage.getItem("favoriteMovies")
+        const storedFavMovies = this.state.storedFavMovies
         var favorited = false
         var favoriteMovies = []
         if (storedFavMovies !== null) {
@@ -70,7 +79,7 @@ class MoviesTable extends Component {
                 activeUserOpinion: activeUserOpinion
             }
             return <li>
-                <Movie id={id} user={user} title={title} description={description} imageUrl={imageUrl} favorited={favorited} onClick={() => this.showModal(movieObject)} />
+                <Movie id={id} user={user} title={title} description={description} imageUrl={imageUrl} favorited={favorited} onClick={() => this.showModal(movieObject)} onRemoveMovie={(id) => this.removeMovie()} />
             </li>
         })
     }
@@ -81,7 +90,7 @@ class MoviesTable extends Component {
         const modal = this.state.show ? (
             <Modal>
                 <div className="modal">
-                    <MovieDetailsModal movie={this.state.selectedMovie} onClose={(e) => this.hideModal(e)} />
+                    <MovieDetailsModal movie={this.state.selectedMovie} onClose={(e) => this.hideModal(e)} onRemoveMovie={(id) => this.removeMovie()} />
                 </div>
             </Modal>
         ) : null

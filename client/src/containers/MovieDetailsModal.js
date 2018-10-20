@@ -49,6 +49,9 @@ class MovieDetailsModal extends Component {
     }
 
     unfavoriteMovie(id) {
+        const {onRemoveMovie} = this.props
+        onRemoveMovie(id)
+
         const userId = localStorage.getItem('userId')
         fetch(`http://localhost:7001/user/${userId}/fav-movie/${id}`, {
             method: 'delete',

@@ -43,6 +43,8 @@ class Movie extends Component {
     }
 
     unfavoriteMovie(id) {
+        const {onRemoveMovie} = this.props
+        onRemoveMovie(id)
         const userId = localStorage.getItem('userId')
         fetch(`http://localhost:7001/user/${userId}/fav-movie/${id}`, {
             method: 'delete',
@@ -80,7 +82,7 @@ class Movie extends Component {
     } 
 
     render() {
-        const {id, user, title, description, imageUrl, onClick} = this.props
+        const {id, user, title, description, imageUrl, onClick, onRemoveMovie} = this.props
         var {favorited} = this.props
         favorited = this.state.favorited !== null ? this.state.favorited : favorited
         return (
