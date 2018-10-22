@@ -14,7 +14,17 @@ class ProfilePage extends Component {
         }
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.match.params.id !== this.props.match.params.id) {
+            this.fetchProfile()
+        }
+    }
+
     componentDidMount() {
+        this.fetchProfile()
+    }
+
+    fetchProfile = () => {
         const {params} = this.props.match
         
         fetch(`http://localhost:7001/user/${params.id}/profile`)
@@ -28,7 +38,7 @@ class ProfilePage extends Component {
         return (
             <div>
                 <h3>{this.state.name}</h3>
-                <MoviesTable fromSearch={false} moviesData={this.state.favoriteMovies}/>
+                <MoviesTable removeable={true} fromSearch={false} moviesData={this.state.favoriteMovies}/>
             </div>
         )    
     }

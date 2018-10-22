@@ -26,6 +26,29 @@ class Auth {
     return this.idToken;
   }
 
+  fetchLocalStorageItems() {
+    return new Promise((resolve, reject) => {
+      fetch('http://localhost:7001/login', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({name: `${auth0Client.getProfile().name}`, username: `${auth0Client.getProfile().nickname}`})
+      })
+      .then(res => res.json())
+      .then(json => {
+        localStorage.setItem('userId', json.userId)
+        localStorage.setItem('favoriteMovies', JSON.stringify(json.favoriteMovies))
+        resolve()
+      })
+      .catch(error => {
+        alert(`ERROR: ${error.message}`)
+        reject(error.message)
+      })
+    })
+  }
+  
+
   handleAuthentication() {
     return new Promise((resolve, reject) => {
       this.auth0.parseHash((err, authResult) => {
@@ -35,12 +58,16 @@ class Auth {
         if (!authResult || !authResult.idToken) {
           return reject(err);
         }
-        this.idToken = authResult.idToken;
-        this.profile = authResult.idTokenPayload;
-        this.expiresAt = authResult.expiresIn * 1000 + new Date().getTime();
+        this.setSession(authResult)
         resolve();
       });
     })
+  }
+
+  setSession(authResult) {
+    this.idToken = authResult.idToken
+    this.profile = authResult.idTokenPayload
+    this.expiresAt = authResult.expiresIn * 1000 + new Date().getTime()
   }
 
   isAuthenticated() {
@@ -48,13 +75,32 @@ class Auth {
   }
 
   signIn() {
-    this.auth0.authorize();
+    this.auth0.authorize({
+      connection: 'google-oauth2'
+    })
   }
 
   signOut() {
-    this.idToken = null;
-    this.profile = null;
-    this.expiresAt = null;
+    this.auth0.logout({
+      returnTo: 'http://localhost:3000',
+      clientID: 'gec4UrR9vEWzdQBCrobGTdP5rnNUi4Bz',
+    });
+  }
+
+  silentAuth() {
+    return new Promise((resolve, reject) => {
+      this.auth0.checkSession({}, (err, authResult) => {
+        if (err) return reject(err);
+        this.setSession(authResult);
+        if (localStorage.getItem('userId') === null || localStorage.getItem('favoriteMovies') === null) {
+          const fetchLocalStorageItemsPromise = this.fetchLocalStorageItems()
+          fetchLocalStorageItemsPromise.then(() => resolve())
+          .catch(err => reject(err))
+        } else {
+          resolve()
+        }
+      });
+    });
   }
 }
 

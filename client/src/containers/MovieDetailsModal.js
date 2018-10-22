@@ -1,18 +1,24 @@
 import React, { Component } from 'react'
-import fetch from 'cross-fetch'
-import {Link} from 'react-router-dom'
-import auth0Client from '../oauth/Auth';
+import '../styles/main.css'
+import auth0Client from '../oauth/Auth'
 
-class Movie extends Component {
+class MovieDetailsModal extends Component {
+
     constructor(props) {
         super(props)
 
         this.state = {
-            favorited: null
+            isEditing: false,
+            favorited: this.props.movie.favorited,
+            opinion: this.props.movie.activeUserOpinion
         }
         this.favoriteMovie = this.favoriteMovie.bind(this)
         this.unfavoriteMovie = this.unfavoriteMovie.bind(this)
-        this.createOpinion = this.createOpinion.bind(this)
+        this.editOpinion = this.editOpinion.bind(this)
+    }
+
+    setIsEditing = () => {
+        this.setState({ isEditing: !this.state.isEditing })
     }
 
     favoriteMovie(id, title, description, imageUrl) {
@@ -42,9 +48,9 @@ class Movie extends Component {
         .catch(error => alert(`ERROR: ${error}`))
     }
 
-    unfavoriteMovie(id) {
-        const {onRemoveMovie} = this.props
-        
+    unfavoriteMovie = (e, id) => {
+        const {onRemoveMovie, onClose} = this.props
+
         const userId = localStorage.getItem('userId')
         fetch(`http://localhost:7001/user/${userId}/fav-movie/${id}`, {
             method: 'delete',
@@ -56,7 +62,11 @@ class Movie extends Component {
         .then(response => response.json())
         .then(json => {
             localStorage.setItem("favoriteMovies", JSON.stringify(json.favoriteMovies))
-            if(this.props.removeable) onRemoveMovie(id)
+            if (this.props.removeable) {
+                onClose(e)
+                onRemoveMovie(id)
+            }
+            
             this.setState({favorited: false})
         })
         .catch(error => {
@@ -64,7 +74,9 @@ class Movie extends Component {
         })
     }
 
-    createOpinion(id, opinion) {
+    editOpinion(id, opinion) {
+        this.setIsEditing()
+
         const userId = localStorage.getItem('userId')
 
         fetch(`http://localhost:7001/user/${userId}/fav-movie/${id}/opinion`, {
@@ -77,37 +89,43 @@ class Movie extends Component {
                 opinion: opinion
             })
         })
+        .then(response => response.json())
+        .then(json => {
+            localStorage.setItem("favoriteMovies", JSON.stringify(json.favoriteMovies))
+        })
         .catch(error => {
             alert(`ERROR: ${error}`)
         })
     } 
 
+    setOpinion = (e) => {
+        this.setState({opinion: e.target.value})
+    }
+
     render() {
-        const {id, user, title, description, imageUrl, onClick} = this.props
-        var {favorited} = this.props
-        favorited = this.state.favorited !== null ? this.state.favorited : favorited
+        const { onClose, movie } = this.props
+        
         return (
-            <div>
-                <img src={`https://image.tmdb.org/t/p/w45/${imageUrl}`} alt='Movie image' onClick={onClick}/>
-                <h5>{title}</h5>
-                <p>{description}</p>
+            <div className='movie-details-modal'>
+                <a href="#" className="close" onClick={onClose}/>
                 <div>
-                    {user &&
-                        <p>Favorited by <Link to={`/user/${user._id}/profile`}>{user.name}</Link></p>
-                    }
-                    <button onClick={favorited && auth0Client.isAuthenticated() ? this.unfavoriteMovie.bind(this, id) : this.favoriteMovie.bind(this, id, title, description, imageUrl)}>{favorited || this.state.favorited && auth0Client.isAuthenticated() ? 'Unfavorite' : 'Favorite'}</button>
-                    {favorited && auth0Client.isAuthenticated() &&
-                        <button onClick={this.createOpinion.bind(this, id, "Awesome movie!!")}>Write opinion</button>
-                    }
-                </div> 
+                    <img src={`https://image.tmdb.org/t/p/w45/${movie.imageUrl}`} alt='Movie image'/>
+                    <h5>{movie.title}</h5>
+                    <p>{movie.description}</p>
+                    {movie.opinion && (
+                        <p>{movie.user.name}'s review: {movie.opinion}</p>
+                    )}
+                    {this.state.favorited && (
+                        <div>
+                            <p>Your review: <input type="text" onChange={this.setOpinion} disabled={!this.state.isEditing} defaultValue={movie.activeUserOpinion}/></p>
+                            <button onClick={this.state.isEditing ? this.editOpinion.bind(this, movie.id, this.state.opinion) : this.setIsEditing}>{this.state.isEditing ? 'Save' : 'Edit'}</button>
+                        </div>
+                    )}
+                    <button onClick={this.state.favorited ? (e) => this.unfavoriteMovie(e, movie.id) : this.favoriteMovie.bind(this, movie.id, movie.title, movie.description, movie.image_url)}>{this.state.favorited ? 'Unfavorite' : 'Favorite'}</button>
+                </div>
             </div>
         )
     }
 }
 
-export default Movie
-
-
-
-
-
+export default MovieDetailsModal
