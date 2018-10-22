@@ -38,7 +38,7 @@ class ProfilePage extends Component {
         return (
             <div>
                 <h3>{this.state.name}</h3>
-                <MoviesTable fromSearch={false} moviesData={this.state.favoriteMovies}/>
+                <MoviesTable removeable={true} fromSearch={false} moviesData={this.state.favoriteMovies}/>
             </div>
         )    
     }

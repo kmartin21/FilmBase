@@ -48,9 +48,8 @@ class MovieDetailsModal extends Component {
         .catch(error => alert(`ERROR: ${error}`))
     }
 
-    unfavoriteMovie(id) {
-        const {onRemoveMovie} = this.props
-        onRemoveMovie(id)
+    unfavoriteMovie = (e, id) => {
+        const {onRemoveMovie, onClose} = this.props
 
         const userId = localStorage.getItem('userId')
         fetch(`http://localhost:7001/user/${userId}/fav-movie/${id}`, {
@@ -63,6 +62,11 @@ class MovieDetailsModal extends Component {
         .then(response => response.json())
         .then(json => {
             localStorage.setItem("favoriteMovies", JSON.stringify(json.favoriteMovies))
+            if (this.props.removeable) {
+                onClose(e)
+                onRemoveMovie(id)
+            }
+            
             this.setState({favorited: false})
         })
         .catch(error => {
@@ -117,7 +121,7 @@ class MovieDetailsModal extends Component {
                             <button onClick={this.state.isEditing ? this.editOpinion.bind(this, movie.id, this.state.opinion) : this.setIsEditing}>{this.state.isEditing ? 'Save' : 'Edit'}</button>
                         </div>
                     )}
-                    <button onClick={this.state.favorited ? this.unfavoriteMovie.bind(this, movie.id) : this.favoriteMovie.bind(this, movie.id, movie.title, movie.description, movie.image_url)}>{this.state.favorited ? 'Unfavorite' : 'Favorite'}</button>
+                    <button onClick={this.state.favorited ? (e) => this.unfavoriteMovie(e, movie.id) : this.favoriteMovie.bind(this, movie.id, movie.title, movie.description, movie.image_url)}>{this.state.favorited ? 'Unfavorite' : 'Favorite'}</button>
                 </div>
             </div>
         )

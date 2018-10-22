@@ -90,8 +90,6 @@ class Auth {
   silentAuth() {
     return new Promise((resolve, reject) => {
       this.auth0.checkSession({}, (err, authResult) => {
-        console.log("ERROR:", err)
-        console.log("AUTHRESULT:", authResult)
         if (err) return reject(err);
         this.setSession(authResult);
         if (localStorage.getItem('userId') === null || localStorage.getItem('favoriteMovies') === null) {

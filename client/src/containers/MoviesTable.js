@@ -19,7 +19,13 @@ class MoviesTable extends Component {
                 imageUrl: null,
                 favorited: null
             },
-            storedFavMovies: localStorage.getItem("favoriteMovies")
+            moviesData: this.props.fromSearch ? this.props.moviesData : this.props.moviesData.slice(0).reverse()
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.moviesData !== this.props.moviesData) {
+            this.setState({moviesData: this.props.fromSearch ? this.props.moviesData : this.props.moviesData.slice(0).reverse()})
         }
     }
 
@@ -34,25 +40,22 @@ class MoviesTable extends Component {
     }
 
     removeMovie = (id) => {
-        const storedFavMovies = this.state.storedFavMovies
+        const moviesData = this.state.moviesData.filter(movie => movie.movieId !== id)
         
-        if (storedFavMovies !== null) {
-            this.setState({ storedFavMovies: JSON.parse(storedFavMovies).filter(movie => movie.movieId !== id) })
-        }
+        this.setState({ moviesData })
     }
 
     createMovieItems() {
         if (!auth0Client.isAuthenticated()) localStorage.clear()
-        const {fromSearch, moviesData} = this.props
-        var finalMoviesData = fromSearch ? moviesData : moviesData.slice(0).reverse()
-        const storedFavMovies = this.state.storedFavMovies
+        const {fromSearch} = this.props
+        const storedFavMovies = localStorage.getItem("favoriteMovies")
         var favorited = false
         var favoriteMovies = []
         if (storedFavMovies !== null) {
             favoriteMovies = JSON.parse(storedFavMovies)
         }
 
-        return finalMoviesData.map((movieData) => {
+        return this.state.moviesData.map((movieData) => {
             const movie = movieData.movie ? movieData.movie : movieData
             const title = movie.title
             const description = movie.overview ? movie.overview : movie.description
@@ -79,7 +82,16 @@ class MoviesTable extends Component {
                 activeUserOpinion: activeUserOpinion
             }
             return <li>
-                <Movie id={id} user={user} title={title} description={description} imageUrl={imageUrl} favorited={favorited} onClick={() => this.showModal(movieObject)} onRemoveMovie={(id) => this.removeMovie()} />
+                <Movie 
+                    id={id} 
+                    user={user} 
+                    title={title} 
+                    description={description} 
+                    imageUrl={imageUrl} 
+                    favorited={favorited} 
+                    removeable={this.props.removeable}
+                    onClick={() => this.showModal(movieObject)} 
+                    onRemoveMovie={(id) => this.removeMovie()} />
             </li>
         })
     }
@@ -90,7 +102,11 @@ class MoviesTable extends Component {
         const modal = this.state.show ? (
             <Modal>
                 <div className="modal">
-                    <MovieDetailsModal movie={this.state.selectedMovie} onClose={(e) => this.hideModal(e)} onRemoveMovie={(id) => this.removeMovie()} />
+                    <MovieDetailsModal 
+                        movie={this.state.selectedMovie} 
+                        removeable={this.props.removeable}
+                        onClose={(e) => this.hideModal(e)} 
+                        onRemoveMovie={(id) => this.removeMovie()} />
                 </div>
             </Modal>
         ) : null
