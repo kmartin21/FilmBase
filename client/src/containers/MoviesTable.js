@@ -40,9 +40,9 @@ class MoviesTable extends Component {
     }
 
     removeMovie = (id) => {
-        const moviesData = this.state.moviesData.filter(movie => movie.movieId !== id)
+        const moviesData = this.state.moviesData.filter(favoriteMovie => favoriteMovie.movie.movieId !== id)
         
-        this.setState({ moviesData })
+        this.setState({ moviesData: moviesData })
     }
 
     createMovieItems() {
@@ -91,7 +91,7 @@ class MoviesTable extends Component {
                     favorited={favorited} 
                     removeable={this.props.removeable}
                     onClick={() => this.showModal(movieObject)} 
-                    onRemoveMovie={(id) => this.removeMovie()} />
+                    onRemoveMovie={(id) => this.removeMovie(id)} />
             </li>
         })
     }
@@ -106,7 +106,7 @@ class MoviesTable extends Component {
                         movie={this.state.selectedMovie} 
                         removeable={this.props.removeable}
                         onClose={(e) => this.hideModal(e)} 
-                        onRemoveMovie={(id) => this.removeMovie()} />
+                        onRemoveMovie={(id) => this.removeMovie(id)} />
                 </div>
             </Modal>
         ) : null

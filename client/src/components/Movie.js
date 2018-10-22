@@ -8,11 +8,17 @@ class Movie extends Component {
         super(props)
 
         this.state = {
-            favorited: null
+            favorited: this.props.favorited
         }
         this.favoriteMovie = this.favoriteMovie.bind(this)
         this.unfavoriteMovie = this.unfavoriteMovie.bind(this)
         this.createOpinion = this.createOpinion.bind(this)
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.favorited !== this.props.favorited) {
+            this.setState({ favorited: this.props.favorited })
+        }
     }
 
     favoriteMovie(id, title, description, imageUrl) {
@@ -84,8 +90,7 @@ class Movie extends Component {
 
     render() {
         const {id, user, title, description, imageUrl, onClick} = this.props
-        var {favorited} = this.props
-        favorited = this.state.favorited !== null ? this.state.favorited : favorited
+        const favorited = this.state.favorited
         return (
             <div>
                 <img src={`https://image.tmdb.org/t/p/w45/${imageUrl}`} alt='Movie image' onClick={onClick}/>
