@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').load()
+}
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
@@ -8,9 +11,10 @@ const recentFavorites = require('./routes/recentFavorite.route')
 const app = express()
 const mongoose = require('mongoose')
 
-const dbUrl = 'mongodb://kmartin:f1lmbas3!@ds263832.mlab.com:63832/filmbase'
-const mongoDB = process.env.MONGODB_URI || dbUrl
-mongoose.connect(mongoDB, { useNewUrlParser: true })
+const mongoDbURI = process.env.DB_URI
+const port = process.env.PORT
+
+mongoose.connect(mongoDbURI, { useNewUrlParser: true })
 mongoose.Promise = global.Promise
 const connection = mongoose.connection
 connection.on('open', () => {
@@ -29,7 +33,7 @@ app.use(morgan('dev'))
 app.use('/', user)
 app.use('/recent-favorites', recentFavorites)
 
-app.listen(7001, () => {
+app.listen(port, () => {
   console.log('listening on port 7001');
 });
 
