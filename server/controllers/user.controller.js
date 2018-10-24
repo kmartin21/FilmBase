@@ -116,7 +116,7 @@ exports.getUserProfile = (req, res) => {
         .exec((err, result) => {
             if (err) res.status(415).json({ error: `${err.message}` })
             const user = result[0]
-            res.json({ msg: 'Successfully retrieved user profile', name: user.name, favoriteMovies: user.favoriteMovies })
+            res.json({ msg: 'Successfully retrieved user profile', user: user, favoriteMovies: user.favoriteMovies })
         })
 }
 
@@ -130,7 +130,7 @@ getUserFavMovieObjs = (id) => {
                 const favoriteMoviesObjs = moviesResult[0].favoriteMovies.map(favoriteMovie => {
                     return {
                         movieId: favoriteMovie.movie.movieId,
-                        opinion: favoriteMovie.opinion ? favoriteMovie.opinion : ''
+                        opinion: favoriteMovie.opinion && favoriteMovie.opinion !== undefined ? favoriteMovie.opinion : ''
                     }
                 })
                 resolve(favoriteMoviesObjs)

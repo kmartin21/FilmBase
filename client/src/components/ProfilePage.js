@@ -8,7 +8,7 @@ class ProfilePage extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            name: '',
+            user: {},
             favoriteMovies: []
         }
     }
@@ -29,15 +29,20 @@ class ProfilePage extends Component {
         fetch(`http://localhost:7001/user/${params.id}/profile`)
         .then(response => response.json())
         .then(json => {
-            this.setState({ name: json.name, favoriteMovies: json.favoriteMovies })
+            this.setState({ user: json.user, favoriteMovies: json.favoriteMovies })
         })
     }
 
     render() {
+        var isActiveUserProfile = false
+        if (localStorage.getItem("userId") !== null && localStorage.getItem("userId") === this.props.match.params.id) {
+            isActiveUserProfile = true
+        }
+
         return (
             <div>
-                <h3>{this.state.name}</h3>
-                <MoviesTable removeable={true} fromSearch={false} moviesData={this.state.favoriteMovies}/>
+                <h3>{this.state.user.name}</h3>
+                <MoviesTable isActiveUserProfile={isActiveUserProfile} fromSearch={false} moviesData={this.state.favoriteMovies}/>
             </div>
         )    
     }

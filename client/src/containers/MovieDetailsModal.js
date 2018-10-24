@@ -62,7 +62,7 @@ class MovieDetailsModal extends Component {
         .then(response => response.json())
         .then(json => {
             localStorage.setItem("favoriteMovies", JSON.stringify(json.favoriteMovies))
-            if (this.props.removeable) {
+            if (this.props.isActiveUserProfile) {
                 onRemoveMovie(id)
                 onClose(e)
             }
