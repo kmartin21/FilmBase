@@ -54,11 +54,13 @@ class MoviesTable extends Component {
         if (storedFavMovies !== null) {
             favoriteMovies = JSON.parse(storedFavMovies)
         }
-
+        const a = this.state.moviesData
+        const b= ""
         return this.state.moviesData.map((movieData) => {
             const movie = movieData.movie ? movieData.movie : movieData
             const title = movie.title
-            const description = movie.overview ? movie.overview : movie.description
+            var description = movie.overview ? movie.overview : movie.description
+            if (description === undefined) description = ""
             const opinion = movie.opinion ? movie.opinion : null
             var activeUserOpinion = null
             const imageUrl = movie.image_url ? movie.image_url : movie.poster_path
@@ -68,8 +70,10 @@ class MoviesTable extends Component {
                 name: movieData.user.name
             } : null
             
-            favorited = favoriteMovies.find(movie => movie.movieId === id) !== undefined
-            if (favorited) activeUserOpinion = favoriteMovies.find(movie => movie.movieId === id).opinion 
+            if (this.props.removeable) favorited = true
+            else favorited = favoriteMovies.find(movie => movie.movieId === id) !== undefined
+
+            if (favorited && favoriteMovies.length > 0) activeUserOpinion = favoriteMovies.find(movie => movie.movieId === id).opinion 
             
             const movieObject = {
                 id: id,

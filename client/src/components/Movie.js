@@ -62,8 +62,8 @@ class Movie extends Component {
         .then(response => response.json())
         .then(json => {
             localStorage.setItem("favoriteMovies", JSON.stringify(json.favoriteMovies))
-            if(this.props.removeable) onRemoveMovie(id)
-            this.setState({favorited: false})
+            if (this.props.removeable) onRemoveMovie(id)
+            else this.setState({favorited: false})
         })
         .catch(error => {
             alert(`ERROR: ${error}`)
@@ -82,6 +82,10 @@ class Movie extends Component {
             body: JSON.stringify({
                 opinion: opinion
             })
+        })
+        .then(response => response.json())
+        .then(json => {
+            localStorage.setItem("favoriteMovies", JSON.stringify(json.favoriteMovies))
         })
         .catch(error => {
             alert(`ERROR: ${error}`)

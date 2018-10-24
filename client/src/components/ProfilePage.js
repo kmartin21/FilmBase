@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import fetch from 'cross-fetch'
 import MoviesTable from '../containers/MoviesTable' 
-import {withRouter} from 'react-router-dom';
-import auth0Client from '../oauth/Auth'
+import {withRouter} from 'react-router-dom'
 
 class ProfilePage extends Component {
 

@@ -8,13 +8,13 @@ exports.userCreate = (req, res) => {
         name: req.body.name,
         username: req.body.username
     })
-    
-    User.findOne({username: `${user.username}`}, function(err, result) {
+    console.log("USER PASSED IN:", user)
+    User.findOne({username: `${user.username}`}, function(err, foundUser) {
         if (err) { 
             res.status(415).json({ error: `${err.message}` })
         }
 
-        if (!result) {
+        if (!foundUser) {
             user.save((err, user) => {
                 if (err) res.status(415).json({ error: `${err.message}` })
 
@@ -23,8 +23,8 @@ exports.userCreate = (req, res) => {
                 .catch((err) => res.status(415).json({ error: `${err.message}` }))
             })
         } else {
-            const favMovieObjsPromise = getUserFavMovieObjs(user._id)
-            favMovieObjsPromise.then((favMovieObjs) => res.json({ userId: user._id, favoriteMovies: favMovieObjs }))
+            const favMovieObjsPromise = getUserFavMovieObjs(foundUser._id)
+            favMovieObjsPromise.then((favMovieObjs) => res.json({ userId: foundUser._id, favoriteMovies: favMovieObjs }))
             .catch((err) => res.status(415).json({ error: `${err.message}` }))
         }
     })
@@ -130,7 +130,7 @@ getUserFavMovieObjs = (id) => {
                 const favoriteMoviesObjs = moviesResult[0].favoriteMovies.map(favoriteMovie => {
                     return {
                         movieId: favoriteMovie.movie.movieId,
-                        opinion: favoriteMovie.opinion
+                        opinion: favoriteMovie.opinion ? favoriteMovies.opinion : ''
                     }
                 })
                 resolve(favoriteMoviesObjs)
