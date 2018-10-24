@@ -29,8 +29,9 @@ class MoviesTable extends Component {
         }
     }
 
-    showModal = (selectedMovie) => {
-        this.setState({ selectedMovie: selectedMovie })
+    showModal = (favorited, selectedMovie) => {
+        const movie = {...selectedMovie, favorited: favorited}
+        this.setState({ selectedMovie: movie })
         this.setState({ show: true })
     }
 
@@ -94,7 +95,7 @@ class MoviesTable extends Component {
                     imageUrl={imageUrl} 
                     favorited={favorited} 
                     removeable={this.props.removeable}
-                    onClick={() => this.showModal(movieObject)} 
+                    onClick={(favorited) => this.showModal(favorited, movieObject)} 
                     onRemoveMovie={(id) => this.removeMovie(id)} />
             </li>
         })

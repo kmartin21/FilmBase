@@ -92,12 +92,16 @@ class Movie extends Component {
         })
     } 
 
+    onClickImage = (favorited) => {
+        this.props.onClick(favorited)
+    }
+
     render() {
-        const {id, user, title, description, imageUrl, onClick} = this.props
+        const {id, user, title, description, imageUrl} = this.props
         const favorited = this.state.favorited
         return (
             <div>
-                <img src={`https://image.tmdb.org/t/p/w45/${imageUrl}`} alt='Movie image' onClick={onClick}/>
+                <img src={`https://image.tmdb.org/t/p/w45/${imageUrl}`} alt='Movie image' onClick={this.onClickImage.bind(this, favorited)}/>
                 <h5>{title}</h5>
                 <p>{description}</p>
                 <div>

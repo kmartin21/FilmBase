@@ -130,7 +130,7 @@ getUserFavMovieObjs = (id) => {
                 const favoriteMoviesObjs = moviesResult[0].favoriteMovies.map(favoriteMovie => {
                     return {
                         movieId: favoriteMovie.movie.movieId,
-                        opinion: favoriteMovie.opinion ? favoriteMovies.opinion : ''
+                        opinion: favoriteMovie.opinion ? favoriteMovie.opinion : ''
                     }
                 })
                 resolve(favoriteMoviesObjs)
