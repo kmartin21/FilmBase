@@ -34,7 +34,7 @@ app.use('/', user)
 app.use('/recent-favorites', recentFavorites)
 
 app.listen(port, () => {
-  console.log('listening on port 7001');
+  console.log('Listening on port:', port);
 });
 
 process.on('SIGINT', () => {

@@ -42,7 +42,7 @@ class HomePage extends Component {
             <div>
                 <SearchBar searchResults={this.searchResults}/>
                 <h6><strong>Recently favorited by others</strong></h6>
-                <MoviesTable removeable={false} fromSearch={this.state.fromSearch} moviesData={moviesData}/>
+                <MoviesTable isActiveUserProfile={false} fromSearch={this.state.fromSearch} moviesData={moviesData}/>
             </div>
         )
     }

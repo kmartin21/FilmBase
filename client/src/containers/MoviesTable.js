@@ -29,8 +29,9 @@ class MoviesTable extends Component {
         }
     }
 
-    showModal = (selectedMovie) => {
-        this.setState({ selectedMovie: selectedMovie })
+    showModal = (favorited, selectedMovie) => {
+        const movie = {...selectedMovie, favorited: favorited}
+        this.setState({ selectedMovie: movie })
         this.setState({ show: true })
     }
 
@@ -54,11 +55,12 @@ class MoviesTable extends Component {
         if (storedFavMovies !== null) {
             favoriteMovies = JSON.parse(storedFavMovies)
         }
-
+        
         return this.state.moviesData.map((movieData) => {
             const movie = movieData.movie ? movieData.movie : movieData
             const title = movie.title
-            const description = movie.overview ? movie.overview : movie.description
+            var description = movie.overview ? movie.overview : movie.description
+            if (description === undefined) description = ""
             const opinion = movie.opinion ? movie.opinion : null
             var activeUserOpinion = null
             const imageUrl = movie.image_url ? movie.image_url : movie.poster_path
@@ -68,8 +70,13 @@ class MoviesTable extends Component {
                 name: movieData.user.name
             } : null
             
-            favorited = favoriteMovies.find(movie => movie.movieId === id) !== undefined
-            if (favorited) activeUserOpinion = favoriteMovies.find(movie => movie.movieId === id).opinion 
+            if (this.props.isActiveUserProfile) favorited = true
+            else favorited = favoriteMovies.find(movie => movie.movieId === id) !== undefined
+
+            if (favorited && favoriteMovies.length > 0) {
+                const foundMovie = favoriteMovies.find(movie => movie.movieId === id)
+                if (foundMovie) activeUserOpinion = foundMovie.opinion 
+            }
             
             const movieObject = {
                 id: id,
@@ -89,8 +96,8 @@ class MoviesTable extends Component {
                     description={description} 
                     imageUrl={imageUrl} 
                     favorited={favorited} 
-                    removeable={this.props.removeable}
-                    onClick={() => this.showModal(movieObject)} 
+                    isActiveUserProfile={this.props.isActiveUserProfile}
+                    onClick={(favorited) => this.showModal(favorited, movieObject)} 
                     onRemoveMovie={(id) => this.removeMovie(id)} />
             </li>
         })
@@ -104,7 +111,7 @@ class MoviesTable extends Component {
                 <div className="modal">
                     <MovieDetailsModal 
                         movie={this.state.selectedMovie} 
-                        removeable={this.props.removeable}
+                        isActiveUserProfile={this.props.isActiveUserProfile}
                         onClose={(e) => this.hideModal(e)} 
                         onRemoveMovie={(id) => this.removeMovie(id)} />
                 </div>

@@ -62,8 +62,8 @@ class Movie extends Component {
         .then(response => response.json())
         .then(json => {
             localStorage.setItem("favoriteMovies", JSON.stringify(json.favoriteMovies))
-            if(this.props.removeable) onRemoveMovie(id)
-            this.setState({favorited: false})
+            if (this.props.isActiveUserProfile) onRemoveMovie(id)
+            else this.setState({favorited: false})
         })
         .catch(error => {
             alert(`ERROR: ${error}`)
@@ -83,21 +83,29 @@ class Movie extends Component {
                 opinion: opinion
             })
         })
+        .then(response => response.json())
+        .then(json => {
+            localStorage.setItem("favoriteMovies", JSON.stringify(json.favoriteMovies))
+        })
         .catch(error => {
             alert(`ERROR: ${error}`)
         })
     } 
 
+    onClickImage = (favorited) => {
+        this.props.onClick(favorited)
+    }
+
     render() {
-        const {id, user, title, description, imageUrl, onClick} = this.props
+        const {id, user, title, description, imageUrl, isActiveUserProfile} = this.props
         const favorited = this.state.favorited
         return (
             <div>
-                <img src={`https://image.tmdb.org/t/p/w45/${imageUrl}`} alt='Movie image' onClick={onClick}/>
+                <img src={`https://image.tmdb.org/t/p/w45/${imageUrl}`} alt='Movie image' onClick={this.onClickImage.bind(this, favorited)}/>
                 <h5>{title}</h5>
                 <p>{description}</p>
                 <div>
-                    {user &&
+                    {(user && !isActiveUserProfile) &&
                         <p>Favorited by <Link to={`/user/${user._id}/profile`}>{user.name}</Link></p>
                     }
                     <button onClick={favorited && auth0Client.isAuthenticated() ? this.unfavoriteMovie.bind(this, id) : this.favoriteMovie.bind(this, id, title, description, imageUrl)}>{favorited || this.state.favorited && auth0Client.isAuthenticated() ? 'Unfavorite' : 'Favorite'}</button>

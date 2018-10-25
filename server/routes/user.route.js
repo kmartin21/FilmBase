@@ -10,11 +10,11 @@ const checkJwt = jwt({
         cache: true,
         rateLimit: true,
         jwksRequestsPerMinute: 5,
-        jwksUri: `https://film-base.auth0.com/.well-known/jwks.json`
+        jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
     }),
 
-    audience: 'gec4UrR9vEWzdQBCrobGTdP5rnNUi4Bz',
-    issuer: `https://film-base.auth0.com/`,
+    audience: `${process.env.AUTH0_AUDIENCE}`,
+    issuer: `https://${process.env.AUTH0_DOMAIN}/`,
     algorithms: ['RS256']
 })
 

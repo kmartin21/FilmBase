@@ -8,9 +8,7 @@ exports.add = (userId, movieObjectId) => {
     })
 
     recentFavorite.save((err) => {
-        if (err) {
-            console.log("ERROR:", err.message)
-        }
+        if (err) console.log("ERROR:", err.message)
         console.log("Successfully saved recent favorite")
     })
 }
@@ -19,6 +17,7 @@ exports.remove = (userId, movieObjectId) => {
     RecentFavorite.find({user: userId, movie: movieObjectId})
     .remove(function(err) {
         if (err) console.log("Could not delete recent favorite:", err)
+        console.log("Successfully deleted recent favorite")
     })
 }
 
@@ -28,7 +27,6 @@ exports.getRecents = (req, res) => {
         .populate('movie')
         .exec(function(err, results) {
             if (err) res.status(415).json({ error: `${err.message}` })
-
             const recentFavorites = results.map(result => {
 
                 const opinion = result.user.favoriteMovies.find(favoriteMovie => favoriteMovie.movie.equals(result.movie._id)).opinion

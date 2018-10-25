@@ -1,15 +1,14 @@
 import React, { Component } from 'react'
 import fetch from 'cross-fetch'
 import MoviesTable from '../containers/MoviesTable' 
-import {withRouter} from 'react-router-dom';
-import auth0Client from '../oauth/Auth'
+import {withRouter} from 'react-router-dom'
 
 class ProfilePage extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            name: '',
+            user: {},
             favoriteMovies: []
         }
     }
@@ -30,15 +29,27 @@ class ProfilePage extends Component {
         fetch(`http://localhost:7001/user/${params.id}/profile`)
         .then(response => response.json())
         .then(json => {
-            this.setState({ name: json.name, favoriteMovies: json.favoriteMovies })
+            this.setState({ user: json.user, favoriteMovies: json.favoriteMovies })
         })
     }
 
     render() {
+        var isActiveUserProfile = false
+        if (localStorage.getItem("userId") !== null && localStorage.getItem("userId") === this.props.match.params.id) {
+            isActiveUserProfile = true
+        }
+
+        const moviesData = this.state.favoriteMovies.map(favoriteMovie => {
+            return {
+                user: this.state.user,
+                movie: favoriteMovie.movie
+            }
+        })
+
         return (
             <div>
-                <h3>{this.state.name}</h3>
-                <MoviesTable removeable={true} fromSearch={false} moviesData={this.state.favoriteMovies}/>
+                <h3>{this.state.user.name}</h3>
+                <MoviesTable isActiveUserProfile={isActiveUserProfile} fromSearch={false} user={this.state.user} moviesData={moviesData}/>
             </div>
         )    
     }

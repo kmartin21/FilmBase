@@ -62,9 +62,9 @@ class MovieDetailsModal extends Component {
         .then(response => response.json())
         .then(json => {
             localStorage.setItem("favoriteMovies", JSON.stringify(json.favoriteMovies))
-            if (this.props.removeable) {
-                onClose(e)
+            if (this.props.isActiveUserProfile) {
                 onRemoveMovie(id)
+                onClose(e)
             }
             
             this.setState({favorited: false})
@@ -103,7 +103,7 @@ class MovieDetailsModal extends Component {
     }
 
     render() {
-        const { onClose, movie } = this.props
+        const { onClose, movie, isActiveUserProfile } = this.props
         
         return (
             <div className='movie-details-modal'>
@@ -112,7 +112,7 @@ class MovieDetailsModal extends Component {
                     <img src={`https://image.tmdb.org/t/p/w45/${movie.imageUrl}`} alt='Movie image'/>
                     <h5>{movie.title}</h5>
                     <p>{movie.description}</p>
-                    {movie.opinion && (
+                    {(movie.opinion && !isActiveUserProfile) && (
                         <p>{movie.user.name}'s review: {movie.opinion}</p>
                     )}
                     {this.state.favorited && (
