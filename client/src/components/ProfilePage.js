@@ -39,10 +39,17 @@ class ProfilePage extends Component {
             isActiveUserProfile = true
         }
 
+        const moviesData = this.state.favoriteMovies.map(favoriteMovie => {
+            return {
+                user: this.state.user,
+                movie: favoriteMovie.movie
+            }
+        })
+
         return (
             <div>
                 <h3>{this.state.user.name}</h3>
-                <MoviesTable isActiveUserProfile={isActiveUserProfile} fromSearch={false} moviesData={this.state.favoriteMovies}/>
+                <MoviesTable isActiveUserProfile={isActiveUserProfile} fromSearch={false} user={this.state.user} moviesData={moviesData}/>
             </div>
         )    
     }

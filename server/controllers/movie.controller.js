@@ -12,10 +12,7 @@ exports.saveMovieIfDoesNotExist = (movieId, body) => {
                     description: body.description,
                     image_url: body.imageUrl
                 })
-                console.log("MOVIE TO SAVE:", movie)
                 movie.save((err, mov) => {
-                    console.log("SAVE NEW MOVIE ERR:", err)
-                    console.log("SAVE MOVIE MOV:", mov)
                     if (err) reject(err)
                     resolve(mov._id)
                 })
