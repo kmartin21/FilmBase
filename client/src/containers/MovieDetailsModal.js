@@ -113,11 +113,11 @@ class MovieDetailsModal extends Component {
                     <h5>{movie.title}</h5>
                     <p>{movie.description}</p>
                     {(movie.opinion && !isActiveUserProfile) && (
-                        <p>{movie.user.name}'s review: {movie.opinion}</p>
+                        <p>{movie.user.name}'s opinion: {movie.opinion}</p>
                     )}
                     {this.state.favorited && (
                         <div>
-                            <p>Your review: <input type="text" onChange={this.setOpinion} disabled={!this.state.isEditing} defaultValue={movie.activeUserOpinion}/></p>
+                            <p>Your opinion: <input type="text" onChange={this.setOpinion} disabled={!this.state.isEditing} defaultValue={movie.activeUserOpinion}/></p>
                             <button onClick={this.state.isEditing ? this.editOpinion.bind(this, movie.id, this.state.opinion) : this.setIsEditing}>{this.state.isEditing ? 'Save' : 'Edit'}</button>
                         </div>
                     )}

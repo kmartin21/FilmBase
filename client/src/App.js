@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import {Route, withRouter} from 'react-router-dom'
+import { BrowserRouter as Router, Route, withRouter } from 'react-router-dom'
 import auth0Client from './oauth/Auth';
 import NavBar from './containers/NavBar'
 import Callback from './oauth/Callback'
 import ProfilePage from './components/ProfilePage'
 import HomePage from './components/HomePage'
-import SecuredRoute from './components/SecuredRoute/SecuredRoute'
+import SecuredRoute from './components/SecuredRoute'
 
 class App extends Component {
   constructor(props) {
@@ -35,17 +35,19 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <NavBar/>
-        <Route exact path='/callback' component={Callback}/>
-        <SecuredRoute path='/user/:id/profile'
-          component={ProfilePage}
-          checkingSession={this.state.checkingSession} />
-        <SecuredRoute path='/'
-          component={HomePage}
-          checkingSession={this.state.checkingSession} />
-      </div>
-    );
+      <Router>
+        <div>
+          <NavBar/>
+          <Route exact path='/callback' component={Callback}/>
+          <SecuredRoute path='/user/:id/profile'
+            component={ProfilePage}
+            checkingSession={this.state.checkingSession} />
+          <SecuredRoute path='/'
+            component={HomePage}
+            checkingSession={this.state.checkingSession} />
+        </div>
+      </Router> 
+    )
   }
 }
 
