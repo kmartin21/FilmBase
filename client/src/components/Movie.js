@@ -97,7 +97,7 @@ class Movie extends Component {
     }
 
     render() {
-        const {id, user, title, description, imageUrl, isActiveUserProfile} = this.props
+        const {id, userName, userId, title, description, imageUrl} = this.props
         const favorited = this.state.favorited
         return (
             <div>
@@ -105,13 +105,10 @@ class Movie extends Component {
                 <h5>{title}</h5>
                 <p>{description}</p>
                 <div>
-                    {(user && !isActiveUserProfile) &&
-                        <p>Favorited by <Link to={`/user/${user._id}/profile`}>{user.name}</Link></p>
+                    {(userName !== undefined) &&
+                        <p>Favorited by <Link to={`/user/${userId}/profile`}>{userName}</Link></p>
                     }
                     <button onClick={favorited && auth0Client.isAuthenticated() ? this.unfavoriteMovie.bind(this, id) : this.favoriteMovie.bind(this, id, title, description, imageUrl)}>{favorited || this.state.favorited && auth0Client.isAuthenticated() ? 'Unfavorite' : 'Favorite'}</button>
-                    {favorited && auth0Client.isAuthenticated() &&
-                        <button onClick={this.createOpinion.bind(this, id, "Awesome movie!!")}>Write opinion</button>
-                    }
                 </div> 
             </div>
         )

@@ -1,6 +1,11 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import auth0Client from './Auth';
+import * as userApi from '../api/UserApi'
+import {
+  setLoggedInUserId,
+  setLoggedInUserFavMovies
+} from '../actions/User'
 
 class Callback extends Component {
   async componentDidMount() {
@@ -12,22 +17,15 @@ class Callback extends Component {
       return
     }
 
-    fetch('http://localhost:7001/login', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({name: `${auth0Client.getProfile().name}`, username: `${auth0Client.getProfile().nickname}`})
-    })
-    .then(res => res.json())
+    const { dispatch } = this.props
+    userApi.loginUser()
     .then(json => {
-      localStorage.setItem('userId', json.userId)
-      localStorage.setItem('favoriteMovies', JSON.stringify(json.favoriteMovies))
-      
+      dispatch(setLoggedInUserId(json.userId))
+      dispatch(setLoggedInUserFavMovies(json.favoriteMovies))
       this.props.history.replace('/')
     })
-    .catch(error => {
-      alert(`ERROR: ${error.message}`)
+    .catch(err => {
+      alert(`ERROR: ${err.message}`)
       this.props.history.replace('/')
     })
   }
@@ -35,8 +33,8 @@ class Callback extends Component {
   render() {
     return (
       <div></div>
-    );
+    )
   }
 }
 
-export default withRouter(Callback);
+export default withRouter(Callback)

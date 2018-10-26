@@ -8,7 +8,7 @@ exports.userCreate = (req, res) => {
         name: req.body.name,
         username: req.body.username
     })
-    console.log("USER PASSED IN:", user)
+    
     User.findOne({username: `${user.username}`}, function(err, foundUser) {
         if (err) { 
             res.status(415).json({ error: `${err.message}` })

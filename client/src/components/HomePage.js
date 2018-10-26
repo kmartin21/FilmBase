@@ -16,15 +16,15 @@ class HomePage extends Component {
     }
 
     componentDidMount() {
-        fetch(`http://localhost:7001/recent-favorites`, {
-            method: 'get',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(json => this.setState({ fromSearch: false, recentFavorites: json.recentFavorites }))
-        .catch(error => alert(`ERROR: ${error}`))
+        // fetch(`http://localhost:7001/recent-favorites`, {
+        //     method: 'get',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     }
+        // })
+        // .then(response => response.json())
+        // .then(json => this.setState({ fromSearch: false, recentFavorites: json.recentFavorites }))
+        // .catch(error => alert(`ERROR: ${error}`))
     }
 
     searchResults = (searchData) => {
@@ -40,9 +40,9 @@ class HomePage extends Component {
         
         return (
             <div>
-                <SearchBar searchResults={this.searchResults}/>
+                <SearchBar/>
                 <h6><strong>Recently favorited by others</strong></h6>
-                <MoviesTable isActiveUserProfile={false} fromSearch={this.state.fromSearch} moviesData={moviesData}/>
+                <MoviesTable isActiveUserProfile={false}/>
             </div>
         )
     }

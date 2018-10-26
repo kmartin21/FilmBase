@@ -1,7 +1,7 @@
 import fetch from 'cross-fetch'
 
 export const favoriteMovie = (userId, id, title, description, imageUrl) => {
-    return fetch(`${process.env.API_BASE_URL}user/${userId}/fav-movie/${id}`, {
+    return fetch(`${process.env.REACT_APP_API_BASE_URL}user/${userId}/fav-movie/${id}`, {
                 method: 'post',
                 headers: {
                     'Content-Type': 'application/json',
@@ -19,7 +19,7 @@ export const favoriteMovie = (userId, id, title, description, imageUrl) => {
 }
 
 export const unfavoriteMovie = (userId, id) => {
-    return fetch(`${process.env.API_BASE_URL}user/${userId}/fav-movie/${id}`, {
+    return fetch(`${process.env.REACT_APP_API_BASE_URL}user/${userId}/fav-movie/${id}`, {
                 method: 'delete',
                 headers: {
                     'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ export const unfavoriteMovie = (userId, id) => {
 }
 
 export const editOpinion = (userId, id, opinion) => {
-    return fetch(`${process.env.API_BASE_URL}user/${userId}/fav-movie/${id}/opinion`, {
+    return fetch(`${process.env.REACT_APP_API_BASE_URL}user/${userId}/fav-movie/${id}/opinion`, {
                 method: 'post',
                 headers: {
                     'Content-Type': 'application/json',

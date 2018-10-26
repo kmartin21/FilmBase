@@ -1,24 +1,16 @@
-import React, {Component} from 'react'
-import fetch from 'cross-fetch'
-
-const API_KEY = '0eef4fac41107b63d486049ebbbe4ca1'
-const API_URL = 'https://api.themoviedb.org/3/search/movie'
+import React, { Component } from 'react'
+import { connect } from 'react-redux' 
+import {
+    fetchSearchedMovies
+} from '../actions/Movies'
 
 class SearchBar extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            query: '',
-            results: []
+            query: ''
         }
-    }
-
-    getSearchResults = (query) => {
-        fetch(`${API_URL}?api_key=${API_KEY}&language=en-US&query=${query}&page=1&include_adult=false`)
-        .then(response => response.json())
-        .then(json => this.props.searchResults(json.results))
-        .catch(error => console.log("ERR: ", error))
     }
 
     handleInputChange = (e) => {
@@ -27,10 +19,8 @@ class SearchBar extends Component {
         }, () => {
             if(this.state.query && this.state.query.length > 1) {
                 if (this.state.query.length % 2 === 0) {
-                    this.getSearchResults(this.state.query)
+                    this.props.fetchSearchedMovies(this.state.query)
                 }
-            } else {
-                this.props.searchResults([])
             }
         })
     }
@@ -47,4 +37,10 @@ class SearchBar extends Component {
     }
 }
 
-export default SearchBar
+const mapDispatchToProps = (dispatch) => (
+    {
+        fetchSearchedMovies: (query) => dispatch(fetchSearchedMovies(query))
+    }
+)
+
+export default connect(null, mapDispatchToProps)(SearchBar)

@@ -5,9 +5,14 @@ import {
     FETCH_RECENT_FAV_MOVIES_BEGIN,
     FETCH_RECENT_FAV_MOVIES_SUCCESS,
     FETCH_RECENT_FAV_MOVIES_FAILURE
-} from './ActionTypes'
+} from '../actions/ActionTypes'
 
-export const searchedMovies = (state = {}, action) => {
+export const searchedMovies = (state = {
+    isLoading: false,
+    err: null,
+    fromSearch: false,
+    movies: []
+}, action) => {
     switch (action.type) {
         case FETCH_SEARCHED_MOVIES_BEGIN:
             return {
@@ -34,12 +39,12 @@ export const searchedMovies = (state = {}, action) => {
 }
 
 const createSearchedMovieObjs = (movies) => {
-    return searchedMovieObjs = movies.map(movie => (
+    return movies.map(movie => (
         {
             id: movie.id,
             title: movie.title,
             imageUrl: movie.poster_path,
-            description: movie.description
+            description: movie.overview
         }
     ))
 }

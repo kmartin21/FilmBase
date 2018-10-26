@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux'
-import * as moviesReducers from '../reducers/Movies'
+import {
+    searchedMovies
+} from '../reducers/Movies'
 
 export default combineReducers({
-    moviesReducers
+    searchedMovies
 })

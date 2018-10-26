@@ -19,7 +19,7 @@ export const fetchRecentFavMoviesBegin = () => ({
 export const fetchSearchedMoviesSuccess = (json) => ({
     type: FETCH_SEARCHED_MOVIES_SUCCESS,
     payload: {
-        movies: json
+        movies: json.results
     }
 })
 
@@ -47,6 +47,7 @@ export const fetchRecentFavMoviesFailure = (err) => ({
 export const fetchSearchedMovies = (query) => {
     return (dispatch) => {
         dispatch(fetchSearchedMoviesBegin())
+        
         return moviesApi.searchMovies(query)
             .then(json => dispatch(fetchSearchedMoviesSuccess(json)))
             .catch(err => dispatch(fetchSearchedMoviesFailure(err)))
