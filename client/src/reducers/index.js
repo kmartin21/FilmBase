@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux'
 import {
-    searchedMovies
+    searchedMovies,
+    recentFavMovies
 } from '../reducers/Movies'
 
 export default combineReducers({
-    searchedMovies
+    searchedMovies,
+    recentFavMovies
 })

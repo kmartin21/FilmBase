@@ -4,7 +4,8 @@ import {
     FETCH_SEARCHED_MOVIES_FAILURE,
     FETCH_RECENT_FAV_MOVIES_BEGIN,
     FETCH_RECENT_FAV_MOVIES_SUCCESS,
-    FETCH_RECENT_FAV_MOVIES_FAILURE
+    FETCH_RECENT_FAV_MOVIES_FAILURE,
+    CLEAR_SEARCHED_MOVIES
 } from './ActionTypes'
 import * as moviesApi from '../api/MoviesApi'
 
@@ -26,7 +27,7 @@ export const fetchSearchedMoviesSuccess = (json) => ({
 export const fetchRecentMoviesSuccess = (json) => ({
     type: FETCH_RECENT_FAV_MOVIES_SUCCESS,
     payload: {
-        movies: json
+        movies: json.recentFavorites
     }
 })
 
@@ -44,6 +45,10 @@ export const fetchRecentFavMoviesFailure = (err) => ({
     }
 })
 
+export const clearSearchedMovies = () => ({
+    type: CLEAR_SEARCHED_MOVIES
+})
+
 export const fetchSearchedMovies = (query) => {
     return (dispatch) => {
         dispatch(fetchSearchedMoviesBegin())
@@ -58,7 +63,7 @@ export const fetchRecentFavMovies = () => {
     return (dispatch) => {
         dispatch(fetchRecentFavMoviesBegin())
         return moviesApi.getRecentFavMovies()
-            .then(json => fetchRecentMoviesSuccess(json))
+            .then(json => dispatch(fetchRecentMoviesSuccess(json)))
             .catch(err => dispatch(fetchRecentFavMoviesFailure(err)))
     }
 }

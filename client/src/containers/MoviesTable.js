@@ -5,7 +5,6 @@ import Modal from '../components/Modal'
 import MovieDetailsModal from '../containers/MovieDetailsModal'
 import { connect } from 'react-redux'
 import '../styles/main.css'
-import { stat } from 'fs';
 
 class MoviesTable extends Component {
 
@@ -126,7 +125,6 @@ class MoviesTable extends Component {
 
     render() {
         const movieList = this.createMovieList()
-        console.log("RENDER:", movieList)
         const favorited = false
         const modal = this.state.show ? (
             <Modal>
@@ -160,8 +158,9 @@ class MoviesTable extends Component {
 }
 
 const mapStateToProps = (state) => {
-    const movies = state.searchedMovies.movies
-
+    console.log("STATE:", state)
+    const movies = state.searchedMovies.searchedMovies.length > 0 ? state.searchedMovies.searchedMovies : state.recentFavMovies.recentFavMovies
+    console.log("MOVIES:", movies)
     return {
         movies
     }

@@ -1,52 +1,38 @@
 import React, {Component} from 'react'
 import SearchBar from './SearchBar'
 import MoviesTable from '../containers/MoviesTable'
-import fetch from 'cross-fetch'
+import { connect } from 'react-redux'
 import auth0Client from '../oauth/Auth'
+import { fetchRecentFavMovies } from '../actions/Movies';
 
 class HomePage extends Component {
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            fromSearch: false,
-            searchData: [], 
-            recentFavorites: []
-        }
-    }
-
     componentDidMount() {
-        // fetch(`http://localhost:7001/recent-favorites`, {
-        //     method: 'get',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     }
-        // })
-        // .then(response => response.json())
-        // .then(json => this.setState({ fromSearch: false, recentFavorites: json.recentFavorites }))
-        // .catch(error => alert(`ERROR: ${error}`))
-    }
-
-    searchResults = (searchData) => {
-        this.setState({ fromSearch: searchData.length, searchData })
+        this.props.fetchRecentFavMovies()
     }
 
     render() {
-        var moviesData = this.state.searchData.length ? this.state.searchData : this.state.recentFavorites
+        // var moviesData = this.state.searchData.length ? this.state.searchData : this.state.recentFavorites
 
-        if (!this.state.fromSearch && auth0Client.isAuthenticated()) {
-            moviesData = this.state.recentFavorites.filter(movie => movie.user._id !== localStorage.getItem('userId'))
-        }
+        // if (!this.state.fromSearch && auth0Client.isAuthenticated()) {
+        //     moviesData = this.state.recentFavorites.filter(movie => movie.user._id !== localStorage.getItem('userId'))
+        // }
         
         return (
             <div>
-                <SearchBar/>
+                <SearchBar />
                 <h6><strong>Recently favorited by others</strong></h6>
-                <MoviesTable isActiveUserProfile={false}/>
+                <MoviesTable isActiveUserProfile={false} />
             </div>
         )
     }
 }
 
-export default HomePage
+const mapDispatchToProps = (dispatch) => (
+    {
+        fetchRecentFavMovies: () => dispatch(fetchRecentFavMovies())
+    }
+)
+
+export default connect(null, mapDispatchToProps)(HomePage)
     

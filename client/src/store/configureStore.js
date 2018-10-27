@@ -5,13 +5,6 @@ import rootReducer from '../reducers'
 
 const loggerMiddleware = createLogger()
 
-const initialState = {
-    isLoading: false,
-    err: null,
-    fromSearch: false,
-    movies: []
-}
-
 export default function configureStore() {
     return createStore(
         rootReducer,

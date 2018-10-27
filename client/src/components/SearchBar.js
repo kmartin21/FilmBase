@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux' 
 import {
-    fetchSearchedMovies
+    fetchSearchedMovies,
+    clearSearchedMovies
 } from '../actions/Movies'
 
 class SearchBar extends Component {
@@ -14,13 +15,17 @@ class SearchBar extends Component {
     }
 
     handleInputChange = (e) => {
+        const { dispatch } = this.props
+
         this.setState({
             query: e.target.value
         }, () => {
-            if(this.state.query && this.state.query.length > 1) {
+            if (this.state.query && this.state.query.length > 1) {
                 if (this.state.query.length % 2 === 0) {
                     this.props.fetchSearchedMovies(this.state.query)
                 }
+            } else {
+                this.props.clearSearchedMovies()
             }
         })
     }
@@ -39,7 +44,8 @@ class SearchBar extends Component {
 
 const mapDispatchToProps = (dispatch) => (
     {
-        fetchSearchedMovies: (query) => dispatch(fetchSearchedMovies(query))
+        fetchSearchedMovies: (query) => dispatch(fetchSearchedMovies(query)),
+        clearSearchedMovies: () => dispatch(clearSearchedMovies())
     }
 )
 
