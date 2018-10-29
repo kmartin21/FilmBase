@@ -15,7 +15,6 @@ class SearchBar extends Component {
     }
 
     handleInputChange = (e) => {
-        const { dispatch } = this.props
 
         this.setState({
             query: e.target.value

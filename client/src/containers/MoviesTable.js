@@ -116,6 +116,7 @@ class MoviesTable extends Component {
                     description={movie.description}
                     favorited={favorited}
                     favoritedBy={movie.favoritedBy}
+                    user_id={movie.user_id}
                     isActiveUserProfile={this.props.isActiveUserProfile}
                     onClick={(favorited) => this.showModal(favorited, movie)}
                     onRemoveMovie={(id) => this.removeMovie(id)}/>
@@ -159,7 +160,7 @@ class MoviesTable extends Component {
 
 const mapStateToProps = (state) => {
     console.log("STATE:", state)
-    const movies = state.searchedMovies.searchedMovies.length > 0 ? state.searchedMovies.searchedMovies : state.recentFavMovies.recentFavMovies
+    const movies = state.searchedMovies.movies.length > 0 ? state.searchedMovies.movies : state.recentFavMovies.movies
     console.log("MOVIES:", movies)
     return {
         movies

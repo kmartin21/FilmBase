@@ -12,7 +12,7 @@ export const searchedMovies = (state = {
     isLoading: false,
     err: null,
     fromSearch: false,
-    searchedMovies: []
+    movies: []
 }, action) => {
     switch (action.type) {
         case FETCH_SEARCHED_MOVIES_BEGIN:
@@ -27,7 +27,7 @@ export const searchedMovies = (state = {
                 isLoading: false,
                 err: null,
                 fromSearch: true,
-                searchedMovies: createSearchedMovieObjs(action.payload.movies)
+                movies: createSearchedMovieObjs(action.payload.movies)
             }
         case FETCH_SEARCHED_MOVIES_FAILURE:
             return {
@@ -40,7 +40,7 @@ export const searchedMovies = (state = {
                 isLoading: false,
                 err: null,
                 fromSearch: true,
-                searchedMovies: []
+                movies: []
             }
         default:
             return state
@@ -51,7 +51,7 @@ export const recentFavMovies = (state = {
     isLoading: false,
     err: null,
     fromSearch: false,
-    recentFavMovies: []
+    movies: []
 }, action) => {
     switch (action.type) {
         case FETCH_RECENT_FAV_MOVIES_BEGIN:
@@ -66,7 +66,7 @@ export const recentFavMovies = (state = {
                 isLoading: false,
                 err: null,
                 fromSearch: false,
-                recentFavMovies: createRecentFavMoviesObjs(action.payload.movies)
+                movies: createRecentFavMoviesObjs(action.payload.movies)
             }
         case FETCH_RECENT_FAV_MOVIES_FAILURE:
             return {
