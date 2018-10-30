@@ -43,7 +43,7 @@ class App extends Component {
         this.setState({ checkingSession: false })
         return
       }
-      alert(`CANT LOGIN: ${err.message}`)
+      console.log(err.message)
     }
     this.setState({ checkingSession: false })
   }

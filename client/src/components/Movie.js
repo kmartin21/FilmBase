@@ -91,9 +91,9 @@ class Movie extends Component {
             alert(`ERROR: ${error}`)
         })
     } 
-
-    onClickImage = (favorited) => {
-        this.props.onClick(favorited)
+    
+    onClickImage = () => {
+        this.props.onClick(this.props.favorited, this.props.id)
     }
 
     render() {
@@ -101,7 +101,7 @@ class Movie extends Component {
         const favorited = this.state.favorited
         return (
             <div>
-                <img src={`https://image.tmdb.org/t/p/w45/${imageUrl}`} alt='Movie image' onClick={this.onClickImage.bind(this, favorited)}/>
+                <img src={`https://image.tmdb.org/t/p/w45/${imageUrl}`} alt='Movie image' onClick={this.onClickImage.bind(this)}/>
                 <h5>{title}</h5>
                 <p>{description}</p>
                 <div>

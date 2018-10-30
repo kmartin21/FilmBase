@@ -103,25 +103,25 @@ class MovieDetailsModal extends Component {
     }
 
     render() {
-        const { onClose, movie, isActiveUserProfile } = this.props
+        const { id, title, imageUrl, description, favorited, favoritedBy, opinion, isProfile, isActiveUserProfile, onClose, onRemoveMovie } = this.props
         
         return (
             <div className='movie-details-modal'>
                 <a href="#" className="close" onClick={onClose}/>
                 <div>
-                    <img src={`https://image.tmdb.org/t/p/w45/${movie.imageUrl}`} alt='Movie image'/>
-                    <h5>{movie.title}</h5>
-                    <p>{movie.description}</p>
-                    {(movie.opinion && !isActiveUserProfile) && (
-                        <p>{movie.user.name}'s opinion: {movie.opinion}</p>
+                    <img src={`https://image.tmdb.org/t/p/w45/${imageUrl}`} alt='Movie image'/>
+                    <h5>{title}</h5>
+                    <p>{description}</p>
+                    {(opinion && !isProfile) && (
+                        <p>{favoritedBy}'s opinion: {opinion}</p>
                     )}
-                    {this.state.favorited && (
+                    {favorited && (
                         <div>
                             <p>Your opinion: <input type="text" onChange={this.setOpinion} disabled={!this.state.isEditing} defaultValue={movie.activeUserOpinion}/></p>
-                            <button onClick={this.state.isEditing ? this.editOpinion.bind(this, movie.id, this.state.opinion) : this.setIsEditing}>{this.state.isEditing ? 'Save' : 'Edit'}</button>
+                            <button onClick={this.state.isEditing ? this.editOpinion.bind(this, id, opinion) : this.setIsEditing}>{this.state.isEditing ? 'Save' : 'Edit'}</button>
                         </div>
                     )}
-                    <button onClick={this.state.favorited ? (e) => this.unfavoriteMovie(e, movie.id) : this.favoriteMovie.bind(this, movie.id, movie.title, movie.description, movie.image_url)}>{this.state.favorited ? 'Unfavorite' : 'Favorite'}</button>
+                    <button onClick={this.state.favorited ? (e) => this.unfavoriteMovie(e, id) : this.favoriteMovie.bind(this, id, title, description, imageUrl)}>{this.state.favorited ? 'Unfavorite' : 'Favorite'}</button>
                 </div>
             </div>
         )
