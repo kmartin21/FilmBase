@@ -1,7 +1,7 @@
 import {
     SET_LOGGED_IN_USER_ID,
     SET_LOGGED_IN_USER_FAV_MOVIES
-} from './ActionTypes'
+} from '../actions/ActionTypes'
 
 export const loggedInUserInfo = (state = {
     id: null,

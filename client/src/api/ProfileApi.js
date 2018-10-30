@@ -1,6 +1,7 @@
 import fetch from 'cross-fetch'
 
 export const getProfile = (id) => {
+    console.log(`${process.env.REACT_APP_API_BASE_URL}user/${id}/profile`)
     return fetch(`${process.env.REACT_APP_API_BASE_URL}user/${id}/profile`, {
                 method: 'get',
                 headers: {

@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import SearchBar from './SearchBar'
 import MoviesTable from '../containers/MoviesTable'
 import { connect } from 'react-redux'
-import auth0Client from '../oauth/Auth'
 import { fetchRecentFavMovies } from '../actions/Movies';
 
 class HomePage extends Component {
@@ -22,7 +21,7 @@ class HomePage extends Component {
             <div>
                 <SearchBar />
                 <h6><strong>Recently favorited by others</strong></h6>
-                <MoviesTable isActiveUserProfile={false} />
+                <MoviesTable isProfile={false} isActiveProfile={false} />
             </div>
         )
     }

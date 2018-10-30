@@ -66,7 +66,7 @@ export const recentFavMovies = (state = {
                 isLoading: false,
                 err: null,
                 fromSearch: false,
-                movies: createRecentFavMoviesObjs(action.payload.movies)
+                movies: createRecentFavMoviesObjs(action.payload.movies).slice(0).reverse()
             }
         case FETCH_RECENT_FAV_MOVIES_FAILURE:
             return {

@@ -158,10 +158,14 @@ class MoviesTable extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    console.log("STATE:", state)
-    const movies = state.searchedMovies.movies.length > 0 ? state.searchedMovies.movies : state.recentFavMovies.movies
-    console.log("MOVIES:", movies)
+const mapStateToProps = (state, ownProps) => {
+    var movies = []
+    if (ownProps.isProfile) {
+        movies = state.profile.movies
+    } else {
+        movies = state.searchedMovies.movies.length > 0 ? state.searchedMovies.movies : state.recentFavMovies.movies
+    }
+    
     return {
         movies
     }
