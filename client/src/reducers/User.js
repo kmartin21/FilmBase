@@ -1,6 +1,7 @@
 import {
     SET_LOGGED_IN_USER_ID,
-    SET_LOGGED_IN_USER_FAV_MOVIES
+    SET_LOGGED_IN_USER_FAV_MOVIES,
+    LOGOUT_USER
 } from '../actions/ActionTypes'
 
 export const loggedInUserInfo = (state = {
@@ -17,6 +18,11 @@ export const loggedInUserInfo = (state = {
             return {
                 ...state,
                 favoriteMovies: action.payload.favoriteMovies
+            }
+        case LOGOUT_USER: 
+            return {
+                id: null,
+                favoriteMovies: []
             }
         default:
             return state

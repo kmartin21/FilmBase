@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import auth0Client from './Auth';
 import * as userApi from '../api/UserApi'
+import { connect } from 'react-redux'
 import {
   setLoggedInUserId,
   setLoggedInUserFavMovies
@@ -17,11 +18,10 @@ class Callback extends Component {
       return
     }
 
-    const { dispatch } = this.props
     userApi.loginUser()
     .then(json => {
-      dispatch(setLoggedInUserId(json.userId))
-      dispatch(setLoggedInUserFavMovies(json.favoriteMovies))
+      this.props.setLoggedInUserId(json.userId)
+      this.props.setLoggedInUserFavMovies(json.favoriteMovies)
       this.props.history.replace('/')
     })
     .catch(err => {
@@ -37,4 +37,11 @@ class Callback extends Component {
   }
 }
 
-export default withRouter(Callback)
+const mapDispatchToProps = (dispatch) => (
+  {
+    setLoggedInUserId: (id) => dispatch(setLoggedInUserId(id)),
+    setLoggedInUserFavMovies: (favMovies) => dispatch(setLoggedInUserFavMovies(favMovies))
+  }
+)
+
+export default withRouter(connect(null, mapDispatchToProps)(Callback))

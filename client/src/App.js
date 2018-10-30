@@ -7,6 +7,7 @@ import ProfilePage from './components/ProfilePage'
 import HomePage from './components/HomePage'
 import SecuredRoute from './components/SecuredRoute'
 import * as userApi from './api/UserApi'
+import { connect } from 'react-redux'
 import {
   setLoggedInUserId,
   setLoggedInUserFavMovies
@@ -28,22 +29,21 @@ class App extends Component {
     try {
       await auth0Client.silentAuth()
 
-      const {dispatch} = this.props
       userApi.loginUser()
       .then(json => {
-        dispatch(setLoggedInUserId(json.userId))
-        dispatch(setLoggedInUserFavMovies(json.favoriteMovies))
+        this.props.setLoggedInUserId(json.userId)
+        this.props.setLoggedInUserFavMovies(json.favoriteMovies)
         this.forceUpdate()
       })
       .catch(err => {
-        alert(`ERROR: ${err.message}`)
+        alert(`CANT LOGIN: ${err.message}`)
       })
     } catch (err) {
       if (err.error === 'login_required') {
         this.setState({ checkingSession: false })
         return
       }
-      console.log(err.error)
+      alert(`CANT LOGIN: ${err.message}`)
     }
     this.setState({ checkingSession: false })
   }
@@ -64,4 +64,11 @@ class App extends Component {
   }
 }
 
-export default withRouter(App);
+const mapDispatchToProps = (dispatch) => (
+  {
+    setLoggedInUserId: (id) => dispatch(setLoggedInUserId(id)),
+    setLoggedInUserFavMovies: (favMovies) => dispatch(setLoggedInUserFavMovies(favMovies))
+  }
+)
+
+export default withRouter(connect(null, mapDispatchToProps)(App));

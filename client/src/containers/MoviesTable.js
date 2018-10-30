@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import Movie from '.././components/Movie'
-import auth0Client from '../oauth/Auth'
 import Modal from '../components/Modal'
 import MovieDetailsModal from '../containers/MovieDetailsModal'
 import { connect } from 'react-redux'
