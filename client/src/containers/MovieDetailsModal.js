@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import '../styles/main.css'
-import auth0Client from '../oauth/Auth'
 
 class MovieDetailsModal extends Component {
 
@@ -9,119 +8,48 @@ class MovieDetailsModal extends Component {
 
         this.state = {
             isEditing: false,
-            favorited: this.props.movie.favorited,
-            opinion: this.props.movie.activeUserOpinion
+            activeUserOpinion: this.props.activeUserOpinion
         }
-        this.favoriteMovie = this.favoriteMovie.bind(this)
-        this.unfavoriteMovie = this.unfavoriteMovie.bind(this)
-        this.editOpinion = this.editOpinion.bind(this)
     }
 
     setIsEditing = () => {
         this.setState({ isEditing: !this.state.isEditing })
     }
 
-    favoriteMovie(id, title, description, imageUrl) {
-        if (!auth0Client.isAuthenticated()) {
-            alert("Sign in to add movies to your favorites")
-            return
-        }
-        const userId = localStorage.getItem('userId')
-
-        fetch(`http://localhost:7001/user/${userId}/fav-movie/${id}`, {
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${auth0Client.getIdToken()}`
-            },
-            body: JSON.stringify({
-                title: title,
-                description: description,
-                imageUrl: imageUrl
-            })
-        })
-        .then(response => response.json())
-        .then(json => {
-            localStorage.setItem("favoriteMovies", JSON.stringify(json.favoriteMovies))
-            this.setState({favorited: true})
-        })
-        .catch(error => alert(`ERROR: ${error}`))
-    }
-
-    unfavoriteMovie = (e, id) => {
-        const {onRemoveMovie, onClose} = this.props
-
-        const userId = localStorage.getItem('userId')
-        fetch(`http://localhost:7001/user/${userId}/fav-movie/${id}`, {
-            method: 'delete',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${auth0Client.getIdToken()}`
-            }
-        })
-        .then(response => response.json())
-        .then(json => {
-            localStorage.setItem("favoriteMovies", JSON.stringify(json.favoriteMovies))
-            if (this.props.isActiveUserProfile) {
-                onRemoveMovie(id)
-                onClose(e)
-            }
-            
-            this.setState({favorited: false})
-        })
-        .catch(error => {
-            alert(`ERROR: ${error}`)
-        })
-    }
-
-    editOpinion(id, opinion) {
+    editOpinion = (id) => {
         this.setIsEditing()
+        this.props.editOpinion(id, this.state.activeUserOpinion)
+    }
 
-        const userId = localStorage.getItem('userId')
-
-        fetch(`http://localhost:7001/user/${userId}/fav-movie/${id}/opinion`, {
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${auth0Client.getIdToken()}`
-            },
-            body: JSON.stringify({
-                opinion: opinion
-            })
-        })
-        .then(response => response.json())
-        .then(json => {
-            localStorage.setItem("favoriteMovies", JSON.stringify(json.favoriteMovies))
-        })
-        .catch(error => {
-            alert(`ERROR: ${error}`)
-        })
-    } 
+    unfavoriteMovie = (id) => {
+        this.setState({ activeUserOpinion: "" })
+        this.props.unfavoriteMovie(id)
+    }
 
     setOpinion = (e) => {
-        this.setState({opinion: e.target.value})
+        this.setState({activeUserOpinion: e.target.value})
     }
 
     render() {
-        const { onClose, movie, isActiveUserProfile } = this.props
+        const { id, title, imageUrl, description, favorited, favoritedBy, opinion, isActiveUserProfile, onClose, favoriteMovie, unfavoriteMovie, editOpinion } = this.props
         
         return (
             <div className='movie-details-modal'>
                 <a href="#" className="close" onClick={onClose}/>
                 <div>
-                    <img src={`https://image.tmdb.org/t/p/w45/${movie.imageUrl}`} alt='Movie image'/>
-                    <h5>{movie.title}</h5>
-                    <p>{movie.description}</p>
-                    {(movie.opinion && !isActiveUserProfile) && (
-                        <p>{movie.user.name}'s review: {movie.opinion}</p>
+                    <img src={`https://image.tmdb.org/t/p/w45/${imageUrl}`} alt='Movie image'/>
+                    <h5>{title}</h5>
+                    <p>{description}</p>
+                    {(opinion !== undefined && !isActiveUserProfile) && (
+                        <p>{favoritedBy}'s opinion: {opinion}</p>
                     )}
-                    {this.state.favorited && (
+                    {favorited && (
                         <div>
-                            <p>Your review: <input type="text" onChange={this.setOpinion} disabled={!this.state.isEditing} defaultValue={movie.activeUserOpinion}/></p>
-                            <button onClick={this.state.isEditing ? this.editOpinion.bind(this, movie.id, this.state.opinion) : this.setIsEditing}>{this.state.isEditing ? 'Save' : 'Edit'}</button>
+                            <p>Your opinion: <input type="text" onChange={this.setOpinion} disabled={!this.state.isEditing} defaultValue={this.state.activeUserOpinion}/></p>
+                            <button onClick={this.state.isEditing ? this.editOpinion.bind(this, id, this.state.activeUserOpinion) : this.setIsEditing}>{this.state.isEditing ? 'Save' : 'Edit'}</button>
                         </div>
                     )}
-                    <button onClick={this.state.favorited ? (e) => this.unfavoriteMovie(e, movie.id) : this.favoriteMovie.bind(this, movie.id, movie.title, movie.description, movie.image_url)}>{this.state.favorited ? 'Unfavorite' : 'Favorite'}</button>
+                    <button onClick={favorited ? this.unfavoriteMovie.bind(this, id) :  () => favoriteMovie(id, title, description, imageUrl)}>{favorited ? 'Unfavorite' : 'Favorite'}</button>
                 </div>
             </div>
         )
