@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { Route, withRouter } from 'react-router-dom'
 import auth0Client from './oauth/Auth';
-import NavBar from './containers/NavBar'
+import NavBar from './NavBar'
 import Callback from './oauth/Callback'
-import ProfilePage from './components/ProfilePage'
-import HomePage from './components/HomePage'
-import SecuredRoute from './components/SecuredRoute'
-import * as userApi from './api/UserApi'
+import ProfilePage from './ProfilePage'
+import HomePage from './HomePage'
+import SecuredRoute from '../components/SecuredRoute'
+import * as userApi from '../api/UserApi'
 import { connect } from 'react-redux'
 import {
   setLoggedInUserId,
   setLoggedInUserFavMovies
-} from './actions/User'
+} from '../actions/User'
 
 class App extends Component {
   constructor(props) {

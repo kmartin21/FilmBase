@@ -40,7 +40,9 @@ const createUserFavMovieObjs = (movies) => {
     return movies.map(favoriteMovie => (
         {
             ...favoriteMovie.movie,
-            imageUrl: favoriteMovie.movie.image_url
+            id: favoriteMovie.movie.movieId,
+            imageUrl: favoriteMovie.movie.image_url,
+            favoritedBy: favoriteMovie.user.name
         }
     ))
 }

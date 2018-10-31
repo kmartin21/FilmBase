@@ -1,5 +1,5 @@
 import fetch from 'cross-fetch'
-import auth0Client from '../oauth/Auth'
+import auth0Client from '../containers/oauth/Auth'
 
 export const loginUser = () => {
     return fetch(`${process.env.REACT_APP_API_BASE_URL}login`, {

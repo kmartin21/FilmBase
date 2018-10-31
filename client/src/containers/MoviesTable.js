@@ -4,6 +4,11 @@ import Modal from '../components/Modal'
 import MovieDetailsModal from '../containers/MovieDetailsModal'
 import { connect } from 'react-redux'
 import '../styles/main.css'
+import {
+    favoriteMovie,
+    unfavoriteMovie,
+    editOpinion
+} from '../actions/Movie'
 
 class MoviesTable extends Component {
 
@@ -11,13 +16,12 @@ class MoviesTable extends Component {
         super(props)
         this.state = {
             show: false,
-            selectedMovie: {}
+            selectedMovieId: null
         }
     }
 
-    showModal = (favorited, id) => {
-        const movie = {...selectedMovie, favorited: favorited}
-        this.setState({ selectedMovie: movie })
+    showModal = (id) => {
+        this.setState({ selectedMovieId: id })
         this.setState({ show: true })
     }
 
@@ -26,44 +30,62 @@ class MoviesTable extends Component {
         this.setState({ show: false })
     }
 
-    removeMovie = (id) => {
-        const moviesData = this.state.moviesData.filter(favoriteMovie => favoriteMovie.movie.movieId !== id)
-        
-        this.setState({ moviesData: moviesData })
+    favoriteMovie = (id, title, description, imageUrl) => {
+        this.props.favoriteMovie(this.props.userId, id, title, description, imageUrl)
+    }
+
+    unfavoriteMovie = (id) => {
+        this.props.unfavoriteMovie(this.props.userId, id)
+    }
+
+    editOpinion = (id, opinion) => {
+        this.props.editOpinion(this.props.userId, id, opinion)
     }
 
     createMovieList = () => {
-        const favorited = false
-       
-        return this.props.movies.map(movie => (
-            <li>
+        return this.props.movies.map(movie => {
+            const favorited = this.props.activeUserFavMovies.find(userFavMovie => userFavMovie.id === movie.id) !== undefined
+            
+            return <li>
                 <Movie
-                    movie={movie}
-                    isActiveUserProfile={this.props.isActiveUserProfile}
-                    onClick={(favorited) => this.showModal(favorited, movie)}
-                    onRemoveMovie={(id) => this.removeMovie(id)}/>
+                    id={movie.id}
+                    title={movie.title}
+                    imageUrl={movie.imageUrl}
+                    description={movie.description}
+                    favorited={favorited}
+                    favoritedBy={movie.favoritedBy}
+                    user_id={movie.user_id}
+                    isProfile={this.props.isProfile}
+                    onClickImage={(id) => this.showModal(id)}
+                    favoriteMovie={(id, title, description, imageUrl) => this.favoriteMovie(id, title, description, imageUrl)}
+                    unfavoriteMovie={(id) => this.unfavoriteMovie(id)}/>
             </li>
-        ))
+        })
     }
 
     render() {
         const movieList = this.createMovieList()
-        const favorited = false
+        const selectedIsFavorited = this.props.activeUserFavMovies.find(userFavMovie => userFavMovie.id === this.state.selectedMovieId)
+        const movie = this.props.movies.find(movie => movie.id === this.state.selectedMovieId)
+        
         const modal = this.state.show ? (
             <Modal>
                 <div className="modal">
                     <MovieDetailsModal 
-                        id={this.state.selectedMovie.id}
-                        title={this.state.selectedMovie.title}
-                        imageUrl={this.state.selectedMovie.imageUrl}
-                        description={this.state.selectedMovie.description}
-                        favorited={favorited}
-                        favoritedBy={this.state.selectedMovie.favoritedBy}
-                        opinion={this.state.selectedMovie.opinion}
+                        id={movie.id}
+                        title={movie.title}
+                        imageUrl={movie.imageUrl}
+                        description={movie.description}
+                        favorited={selectedIsFavorited !== undefined}
+                        favoritedBy={movie.favoritedBy}
+                        opinion={!this.props.isActiveUserProfile ? movie.opinion : undefined}
+                        activeUserOpinion={selectedIsFavorited !== undefined ? selectedIsFavorited.opinion : undefined}
                         isProfile={this.props.isProfile}
                         isActiveUserProfile={this.props.isActiveUserProfile}
                         onClose={(e) => this.hideModal(e)} 
-                        onRemoveMovie={(id) => this.removeMovie(id)} />
+                        favoriteMovie={(id, title, description, imageUrl) => this.favoriteMovie(id, title, description, imageUrl)}
+                        unfavoriteMovie={(id) => this.unfavoriteMovie(id)}
+                        editOpinion={(id, opinion) => this.editOpinion(id, opinion)}/>
                 </div>
             </Modal>
         ) : null
@@ -83,21 +105,35 @@ class MoviesTable extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     var movies = []
-    const activeUserFavMovies = state.loggedInUserInfo.favMovies
+    const activeUserFavMovies = state.loggedInUserInfo.favoriteMovies
+    const userId = state.loggedInUserInfo.id
 
     if (ownProps.isProfile) {
         movies = state.profile.movies
     } else {
-        movies = state.searchedMovies.movies.length > 0 ? state.searchedMovies.movies : state.recentFavMovies.movies
+        if (state.searchedMovies.movies.length > 0) {
+            movies = state.searchedMovies.movies
+        } else {
+            movies = userId ? state.recentFavMovies.movies.filter(movie => movie.user_id !== userId) : state.recentFavMovies.movies
+        }
     }
     
     return {
         activeUserFavMovies,
-        movies
+        movies,
+        userId
     }
 }
 
-export default connect(mapStateToProps)(MoviesTable)
+const mapDispatchToProps = (dispatch) => (
+    {
+        favoriteMovie: (userId, id, title, description, imageUrl) => dispatch(favoriteMovie(userId, id, title, description, imageUrl)),
+        unfavoriteMovie: (userId, id) => dispatch(unfavoriteMovie(userId, id)),
+        editOpinion: (userId, id, opinion) => dispatch(editOpinion(userId, id, opinion))
+    }
+)
+
+export default connect(mapStateToProps, mapDispatchToProps)(MoviesTable)
 
 
 

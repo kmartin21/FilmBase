@@ -1,6 +1,6 @@
 import React from 'react'
 import {Link, withRouter} from 'react-router-dom'
-import auth0Client from '../oauth/Auth'
+import auth0Client from './oauth/Auth'
 import { connect } from 'react-redux'
 import {
   logoutUser

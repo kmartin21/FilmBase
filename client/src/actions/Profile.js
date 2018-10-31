@@ -27,6 +27,7 @@ export const fetchProfileFailure = (err) => ({
 export const fetchProfile = (id) => {
     return (dispatch) => {
         dispatch(fetchProfileBegin())
+        
         return profileApi.getProfile(id)
             .then(json => dispatch(fetchProfileSuccess(json)))
             .catch(err => dispatch(fetchProfileFailure(err)))

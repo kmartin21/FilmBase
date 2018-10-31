@@ -93,7 +93,7 @@ const createSearchedMovieObjs = (movies) => {
 const createRecentFavMoviesObjs = (movies) => {
     return movies.map(recentFavMovie => (
         {
-            id: recentFavMovie.movie.id,
+            id: recentFavMovie.movie.movieId,
             title: recentFavMovie.movie.title,
             imageUrl: recentFavMovie.movie.image_url,
             description: recentFavMovie.movie.description,

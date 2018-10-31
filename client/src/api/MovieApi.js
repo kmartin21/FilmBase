@@ -1,4 +1,5 @@
 import fetch from 'cross-fetch'
+import auth0Client from '../containers/oauth/Auth'
 
 export const favoriteMovie = (userId, id, title, description, imageUrl) => {
     return fetch(`${process.env.REACT_APP_API_BASE_URL}user/${userId}/fav-movie/${id}`, {

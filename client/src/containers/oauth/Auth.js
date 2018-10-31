@@ -30,14 +30,14 @@ class Auth {
     return new Promise((resolve, reject) => {
       this.auth0.parseHash((err, authResult) => {
         if (err) {
-          return reject(err);
+          return reject(err)
         }
         if (!authResult || !authResult.idToken) {
-          return reject(err);
+          return reject(err)
         }
         this.setSession(authResult)
-        resolve();
-      });
+        resolve()
+      })
     })
   }
 
@@ -48,7 +48,7 @@ class Auth {
   }
 
   isAuthenticated() {
-    return new Date().getTime() < this.expiresAt;
+    return new Date().getTime() < this.expiresAt
   }
 
   signIn() {

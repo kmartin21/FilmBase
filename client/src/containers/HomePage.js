@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import SearchBar from './SearchBar'
-import MoviesTable from '../containers/MoviesTable'
+import MoviesTable from './MoviesTable'
 import { connect } from 'react-redux'
 import { fetchRecentFavMovies } from '../actions/Movies';
 
@@ -11,12 +11,6 @@ class HomePage extends Component {
     }
 
     render() {
-        // var moviesData = this.state.searchData.length ? this.state.searchData : this.state.recentFavorites
-
-        // if (!this.state.fromSearch && auth0Client.isAuthenticated()) {
-        //     moviesData = this.state.recentFavorites.filter(movie => movie.user._id !== localStorage.getItem('userId'))
-        // }
-        
         return (
             <div>
                 <SearchBar />

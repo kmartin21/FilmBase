@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import auth0Client from './Auth';
-import * as userApi from '../api/UserApi'
+import * as userApi from '../../api/UserApi'
 import { connect } from 'react-redux'
 import {
   setLoggedInUserId,
   setLoggedInUserFavMovies
-} from '../actions/User'
+} from '../../actions/User'
 
 class Callback extends Component {
   async componentDidMount() {
