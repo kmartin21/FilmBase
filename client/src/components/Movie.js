@@ -97,8 +97,8 @@ class Movie extends Component {
     }
 
     render() {
-        const {id, favoritedBy, user_id, title, description, imageUrl} = this.props
-        const favorited = this.state.favorited
+        const {id, favorited, favoritedBy, user_id, title, description, imageUrl} = this.props.movie
+        
         return (
             <div>
                 <img src={`https://image.tmdb.org/t/p/w45/${imageUrl}`} alt='Movie image' onClick={this.onClickImage.bind(this)}/>

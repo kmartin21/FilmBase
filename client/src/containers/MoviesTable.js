@@ -38,13 +38,7 @@ class MoviesTable extends Component {
         return this.props.movies.map(movie => (
             <li>
                 <Movie
-                    id={movie.id}
-                    title={movie.title}
-                    imageUrl={movie.imageUrl}
-                    description={movie.description}
-                    favorited={favorited}
-                    favoritedBy={movie.favoritedBy}
-                    user_id={movie.user_id}
+                    movie={movie}
                     isActiveUserProfile={this.props.isActiveUserProfile}
                     onClick={(favorited) => this.showModal(favorited, movie)}
                     onRemoveMovie={(id) => this.removeMovie(id)}/>
