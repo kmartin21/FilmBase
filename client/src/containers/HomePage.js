@@ -12,7 +12,7 @@ class HomePage extends Component {
 
     render() {
         return (
-            <div>
+            <div className="home-page">
                 <SearchBar />
                 <h6><strong>Recently favorited by others</strong></h6>
                 <MoviesTable isProfile={false} isActiveProfile={false} />

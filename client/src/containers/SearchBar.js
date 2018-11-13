@@ -4,6 +4,7 @@ import {
     fetchSearchedMovies,
     clearSearchedMovies
 } from '../actions/Movies'
+import '../styles/main.css'
 
 class SearchBar extends Component {
 
@@ -35,6 +36,7 @@ class SearchBar extends Component {
                 <input
                     placeholder="Search for..."
                     onChange={this.handleInputChange}
+                    className="search-input"
                 />
             </form>
         )

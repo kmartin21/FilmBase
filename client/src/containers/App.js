@@ -50,7 +50,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="app">
         <NavBar/>
         <Route exact path='/callback' component={Callback}/>
         <SecuredRoute path='/user/:id/profile'
