@@ -1,21 +1,75 @@
 /******************* GENERAL *******************/
-.app {
-    background-color: #EDEFF5;
-    
+body {
+    background-color: #F9F9F9;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+/**********************************************************/
+
+/******************* NAV BAR *******************/
+nav {
+    height: 70px;
+    background-color: #34495e;
+}
+
+.nav-brand {
+    float: left;
+    color: white;
+}
+
+.nav-login {
+    float: right;
+}
+
+.nav-loggedIn {
+    float: right;
 }
 
 /**********************************************************/
 
 /******************* SEARCH BAR *******************/
-.search-input {
+.search__input {
     width: 60%;
     margin: 0 20%;
     height: 50px;
+    margin-top: 30px;
     border: none;
     border-radius: 5px;
+    background: white url(../images/search.svg) no-repeat scroll 10px 13px;
+    padding-left: 50px; 
+    font-size: 18px;
+    outline: none;
+    box-shadow:         0px 2px 0px 0px #ccc;
+}
+
+.search__input::placeholder {
+    color: #BFBFBF;
 }
 
 /**********************************************************/
+
+
+/******************* RECENTS PAGE *******************/
+.recents-page__header {
+    margin-left: 30px;
+    color: #3E414C;
+}
+
+/**********************************************************/
+
+
+/******************* MOVIE CARD *******************/
+.movie {
+    background-color: white;
+    width: 300px;
+    height: 350px;
+    margin-bottom: 10px;
+}
+
+/**********************************************************/
+
 
 /******************* MODAL *******************/
 #modal-root {

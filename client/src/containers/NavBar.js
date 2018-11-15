@@ -14,21 +14,22 @@ function NavBar(props) {
   }
 
   return (
-    <nav className="navbar navbar-dark bg-primary fixed-top">
-      <Link className="navbar-brand" to="/">
-        FilmBase
-      </Link>
+    <nav>
+        <Link className="nav-brand" to="/">
+          FilmBase
+        </Link>
+      
       {
         !auth0Client.isAuthenticated() &&
-        <button className="btn btn-dark" onClick={auth0Client.signIn}>Sign In</button>
+        <button className="nav-login" onClick={auth0Client.signIn}>Sign In</button>
       }
       {
         auth0Client.isAuthenticated() &&
         <div>
-          <Link className="mr-2 text-white" to={`/user/${props.userId}/profile`}>
+          <Link className="nav-loggedIn"to={`/user/${props.userId}/profile`}>
             {auth0Client.getProfile().name}
           </Link>
-          <button className="btn btn-dark" onClick={() => {signOut()}}>Sign Out</button>
+          <button onClick={() => {signOut()}}>Sign Out</button>
         </div>
       }
     </nav>

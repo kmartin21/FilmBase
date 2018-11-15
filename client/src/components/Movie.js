@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import auth0Client from '../containers/oauth/Auth'
 
 const Movie = ({ id, favorited, favoritedBy, user_id, title, description, imageUrl, isProfile, favoriteMovie, unfavoriteMovie, onClickImage }) => (
-    <div>
+    <div className="movie">
         <img src={`https://image.tmdb.org/t/p/w45/${imageUrl}`} alt='Movie image' onClick={() => onClickImage(id)}/>
         <h5>{title}</h5>
         <p>{description}</p>

@@ -34,9 +34,9 @@ class SearchBar extends Component {
         return (
             <form>
                 <input
-                    placeholder="Search for..."
+                    placeholder="Search for any movie"
                     onChange={this.handleInputChange}
-                    className="search-input"
+                    className="search__input"
                 />
             </form>
         )
