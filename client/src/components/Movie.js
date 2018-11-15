@@ -4,9 +4,9 @@ import auth0Client from '../containers/oauth/Auth'
 
 const Movie = ({ id, favorited, favoritedBy, user_id, title, description, imageUrl, isProfile, favoriteMovie, unfavoriteMovie, onClickImage }) => (
     <div className="movie">
-        <img src={`https://image.tmdb.org/t/p/w45/${imageUrl}`} alt='Movie image' onClick={() => onClickImage(id)}/>
-        <h5>{title}</h5>
-        <p>{description}</p>
+        <img className="movie__image" src={`https://image.tmdb.org/t/p/w185/${imageUrl}`} alt='Movie image' onClick={() => onClickImage(id)}/>
+        <h5 className="movie__title">{title}</h5>
+        {/* <p>{description}</p> */}
         <div>
             {(favoritedBy !== undefined && !isProfile) &&
                 <p>Favorited by <Link to={`/user/${user_id}/profile`}>{favoritedBy}</Link></p>
