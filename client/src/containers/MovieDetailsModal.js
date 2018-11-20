@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import '../styles/main.css'
 import downArrow from '../images/down-arrow.svg'
-import TextEllipsis from 'react-text-ellipsis'
+import LinesEllipsis from 'react-lines-ellipsis'
 
 class MovieDetailsModal extends Component {
 
@@ -40,20 +40,28 @@ class MovieDetailsModal extends Component {
     }
 
     setShowOverflow = () => {
-        this.setState({ collapsed: false, showOverflow: true })
+        this.setState({ collapsed: false, showOverflow: true, showReadMoreIcon: false })
     }
 
     setShowReadMoreIcon = () => {
         this.setState({ showReadMoreIcon: !this.state.showReadMoreIcon })
     }
 
+    handleReflow = (rleState) => {
+        const {clamped} = rleState
+
+        if (clamped && !this.state.showReadMoreIcon) {
+            this.setShowReadMoreIcon()
+        }
+      }
+
     render() {
         const { id, title, imageUrl, description, favorited, favoritedBy, opinion, isActiveUserProfile, onClose, favoriteMovie, unfavoriteMovie, editOpinion } = this.props
-        
+
         return (
             <div className='movie-details-modal__container'>
                 <a href="#" className="close" onClick={onClose}/>
-                <div className="movie-details__container">
+                <div>
                     <img className="movie-details__image" src={`https://image.tmdb.org/t/p/w500/${imageUrl}`} alt='Movie image'/>
                     <div className="movie-details__info-container">
                     <h5 className="movie-details__title">{title}</h5>
@@ -62,24 +70,20 @@ class MovieDetailsModal extends Component {
                                 <p className="movie-details__description--overflow">{description}</p> :
                                 <p className="movie-details__description">{description}</p>
                             )]
-                            
-                            :
-                            <TextEllipsis 
-                                lines={1} 
-                                tag={'p'} 
-                                ellipsisChars={'...'}
-                                tagClass={'movie-details__description'}
-                                onResult={(result) => { 
-                                    if (result === TextEllipsis.RESULT.TRUNCATED && !this.state.showReadMoreIcon)
-                                        this.setShowReadMoreIcon()
-                                    else 
-                                        this.setCollapsed(false)
-                                    }}>
-                                {description}
-                            </TextEllipsis>
+                            : 
+                            <div className="movie-details__description">
+                                <LinesEllipsis
+                                    text={description}
+                                    maxLine='1'
+                                    ellipsis='...'
+                                    trimRight
+                                    onReflow={this.handleReflow}
+                                    basedOn='letters'
+                                />
+                            </div>
                         }
-                    
-                        {this.state.collapsed &&
+                        
+                        {this.state.showReadMoreIcon &&
                             <img className="movie-details__more-btn" src={downArrow} alt='Read more button' onClick={() => this.setShowOverflow()}/>
                         }
                     </div>
