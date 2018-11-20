@@ -9,13 +9,22 @@ const Movie = ({ id, favorited, favoritedBy, user_id, title, description, imageU
     <div className="movie">
         <img className="movie__favorite-button" src={favorited ? starFilled : starEmpty} alt='Favorite button' onClick={favorited && auth0Client.isAuthenticated() ? () => unfavoriteMovie(id) : () => favoriteMovie(id, title, description, imageUrl)}/>
         <img className="movie__image" src={`https://image.tmdb.org/t/p/w185/${imageUrl}`} alt='Movie image' onClick={() => onClickImage(id)}/>
-        <p className="movie__title">{title}</p>
+        <div className="movie__title-container">
+            <TextEllipsis 
+                lines={2} 
+                tag={'p'} 
+                ellipsisChars={'...'}
+                tagClass={'movie__title'}>
+                {title}
+            </TextEllipsis>
+        </div>
         {favoritedBy === undefined &&
-            <div className="movie__description">
+            <div className="movie__description-container">
                 <TextEllipsis 
-                    lines={4} 
+                    lines={3} 
                     tag={'p'} 
-                    ellipsisChars={'...'}>
+                    ellipsisChars={'...'}
+                    tagClass={'movie__description'}>
                     {description}
                 </TextEllipsis>
             </div>

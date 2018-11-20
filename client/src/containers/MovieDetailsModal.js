@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import '../styles/main.css'
+import downArrow from '../images/down-arrow.svg'
+import TextEllipsis from 'react-text-ellipsis'
 
 class MovieDetailsModal extends Component {
 
@@ -8,7 +10,10 @@ class MovieDetailsModal extends Component {
 
         this.state = {
             isEditing: false,
-            activeUserOpinion: this.props.activeUserOpinion
+            activeUserOpinion: this.props.activeUserOpinion,
+            collapsed: true,
+            showOverflow: false, 
+            showReadMoreIcon: false
         }
     }
 
@@ -27,19 +32,58 @@ class MovieDetailsModal extends Component {
     }
 
     setOpinion = (e) => {
-        this.setState({activeUserOpinion: e.target.value})
+        this.setState({ activeUserOpinion: e.target.value })
+    }
+
+    setCollapsed = (collapsed) => {
+        this.setState({ collapsed })
+    }
+
+    setShowOverflow = () => {
+        this.setState({ collapsed: false, showOverflow: true })
+    }
+
+    setShowReadMoreIcon = () => {
+        this.setState({ showReadMoreIcon: !this.state.showReadMoreIcon })
     }
 
     render() {
         const { id, title, imageUrl, description, favorited, favoritedBy, opinion, isActiveUserProfile, onClose, favoriteMovie, unfavoriteMovie, editOpinion } = this.props
         
         return (
-            <div className='movie-details-modal'>
+            <div className='movie-details-modal__container'>
                 <a href="#" className="close" onClick={onClose}/>
-                <div>
-                    <img src={`https://image.tmdb.org/t/p/w45/${imageUrl}`} alt='Movie image'/>
-                    <h5>{title}</h5>
-                    <p>{description}</p>
+                <div className="movie-details__container">
+                    <img className="movie-details__image" src={`https://image.tmdb.org/t/p/w500/${imageUrl}`} alt='Movie image'/>
+                    <div className="movie-details__info-container">
+                    <h5 className="movie-details__title">{title}</h5>
+                        {!this.state.collapsed ?
+                            [(this.state.showOverflow ? 
+                                <p className="movie-details__description--overflow">{description}</p> :
+                                <p className="movie-details__description">{description}</p>
+                            )]
+                            
+                            :
+                            <TextEllipsis 
+                                lines={1} 
+                                tag={'p'} 
+                                ellipsisChars={'...'}
+                                tagClass={'movie-details__description'}
+                                onResult={(result) => { 
+                                    if (result === TextEllipsis.RESULT.TRUNCATED && !this.state.showReadMoreIcon)
+                                        this.setShowReadMoreIcon()
+                                    else 
+                                        this.setCollapsed(false)
+                                    }}>
+                                {description}
+                            </TextEllipsis>
+                        }
+                    
+                        {this.state.collapsed &&
+                            <img className="movie-details__more-btn" src={downArrow} alt='Read more button' onClick={() => this.setShowOverflow()}/>
+                        }
+                    </div>
+
                     {(opinion !== undefined && !isActiveUserProfile) && (
                         <p>{favoritedBy}'s opinion: {opinion}</p>
                     )}
