@@ -8,7 +8,7 @@ import TextEllipsis from 'react-text-ellipsis'
 const Movie = ({ id, favorited, favoritedBy, user_id, title, description, imageUrl, isProfile, favoriteMovie, unfavoriteMovie, onClickImage }) => (
     <div className="movie">
         <img className="movie__favorite-button" src={favorited ? starFilled : starEmpty} alt='Favorite button' onClick={favorited && auth0Client.isAuthenticated() ? () => unfavoriteMovie(id) : () => favoriteMovie(id, title, description, imageUrl)}/>
-        <img className="movie__image" src={`https://image.tmdb.org/t/p/w185/${imageUrl}`} alt='Movie image' onClick={() => onClickImage(id)}/>
+        <img className="movie__image" src={`https://image.tmdb.org/t/p/w185/${imageUrl}`} alt='Movie' onClick={() => onClickImage(id)}/>
         <div className="movie__title-container">
             <TextEllipsis 
                 lines={2} 

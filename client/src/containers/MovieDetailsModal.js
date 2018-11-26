@@ -86,11 +86,16 @@ class MovieDetailsModal extends Component {
                         {this.state.showReadMoreIcon &&
                             <img className="movie-details__more-btn" src={downArrow} alt='Read more button' onClick={() => this.setShowOverflow()}/>
                         }
+
+                        {(opinion !== undefined && !isActiveUserProfile) && (
+                            <div>
+                                <h5 className="movie-details__opinion-header">{favoritedBy}'s opinion</h5>
+                                <p className="movie-details__opinion">{opinion}</p>
+                            </div>
+                        )}
                     </div>
 
-                    {(opinion !== undefined && !isActiveUserProfile) && (
-                        <p>{favoritedBy}'s opinion: {opinion}</p>
-                    )}
+                    
                     {favorited && (
                         <div>
                             <p>Your opinion: <input type="text" onChange={this.setOpinion} disabled={!this.state.isEditing} defaultValue={this.state.activeUserOpinion}/></p>

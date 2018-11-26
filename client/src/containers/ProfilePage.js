@@ -6,10 +6,6 @@ import { fetchProfile } from '../actions/Profile'
 
 class ProfilePage extends Component {
 
-    constructor(props) {
-        super(props)
-    }
-
     componentDidUpdate(prevProps) {
         if (prevProps.match.params.id !== this.props.match.params.id) {
             this.props.fetchProfile(this.props.match.params.id)
