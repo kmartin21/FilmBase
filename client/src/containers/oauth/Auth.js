@@ -44,6 +44,7 @@ class Auth {
   setSession(authResult) {
     this.idToken = authResult.idToken
     this.profile = authResult.idTokenPayload
+    debugger
     this.expiresAt = authResult.expiresIn * 1000 + new Date().getTime()
   }
 

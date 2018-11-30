@@ -26,7 +26,6 @@ class MoviesTable extends Component {
     }
 
     hideModal = (e) => {
-        console.log("HIDE MODAL")
         e.preventDefault()
         this.setState({ show: false })
     }
