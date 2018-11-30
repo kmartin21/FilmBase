@@ -203,7 +203,7 @@ li {
 
 .movie-details__image {
     width: 60%;
-    height: 70%;
+    height: 100%;
 }
 
 .movie-details__info-container {
@@ -228,7 +228,8 @@ li {
 
 .movie-details__description--overflow {
     padding-left: 10px;
-    overflow: scroll;
+    max-height: 20vh;
+    overflow-y: scroll;
 }
 
 .movie-details__more-btn {
@@ -253,7 +254,8 @@ li {
     padding-top: 0;
     margin-top: 0;
     padding-left: 10px;
-    overflow: scroll;
+    max-height: 50vh;
+    overflow-y: scroll;
 }
 
 /**********************************************************/
