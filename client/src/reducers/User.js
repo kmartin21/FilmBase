@@ -1,6 +1,5 @@
 import {
-    SET_LOGGED_IN_USER_ID,
-    SET_LOGGED_IN_USER_FAV_MOVIES,
+    SET_LOGGED_IN_USER_INFO,
     LOGOUT_USER,
     FAVORITE_MOVIE_SUCCESS,
     FAVORITE_MOVIE_FAILURE,
@@ -12,18 +11,20 @@ import {
 
 export const loggedInUserInfo = (state = {
     id: null,
+    imageUrl: null,
     favoriteMovies: []
 }, action) => {
     switch (action.type) {
-        case SET_LOGGED_IN_USER_ID:
+        case SET_LOGGED_IN_USER_INFO:
             return {
-                ...state,
-                id: action.payload.id
+                id: action.payload.id,
+                name: action.payload.name,
+                imageUrl: action.payload.imageUrl,
+                favoriteMovies: createLoggedInUserFavMovieObjs(action.payload.favoriteMovies)
             }
         case FAVORITE_MOVIE_SUCCESS:
         case UNFAVORITE_MOVIE_SUCCESS:
         case EDIT_OPINION_SUCCESS:
-        case SET_LOGGED_IN_USER_FAV_MOVIES:
             return {
                 ...state,
                 favoriteMovies: createLoggedInUserFavMovieObjs(action.payload.favoriteMovies)

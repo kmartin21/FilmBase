@@ -20,16 +20,16 @@ exports.userCreate = (req, res) => {
                 if (err) res.status(415).json({ error: `${err.message}` })
 
                 const favMovieObjsPromise = getUserFavMovieObjs(user._id)
-                favMovieObjsPromise.then((favMovieObjs) => res.status(201).json({ userId: user._id, favoriteMovies: favMovieObjs }))
+                favMovieObjsPromise.then((favMovieObjs) => res.status(201).json({ userId: user._id, name: user.name, imageUrl: user.imageUrl, favoriteMovies: favMovieObjs }))
                 .catch((err) => res.status(415).json({ error: `${err.message}` }))
             })
         } else {
             const imageUrl = `${user.imageUrl}`
-            User.update({_id: foundUser._id}, {$set: {"imageUrl": imageUrl}}, (err) => {
+            User.updateOne({_id: foundUser._id}, {$set: {"imageUrl": imageUrl}}, (err) => {
                 if (err) res.status(415).json({ error: `${err.message}` })
 
                 const favMovieObjsPromise = getUserFavMovieObjs(foundUser._id)
-                favMovieObjsPromise.then((favMovieObjs) => res.json({ userId: foundUser._id, favoriteMovies: favMovieObjs }))
+                favMovieObjsPromise.then((favMovieObjs) => res.json({ userId: foundUser._id, name: user.name, imageUrl: user.imageUrl, favoriteMovies: favMovieObjs }))
                 .catch((err) => res.status(415).json({ error: `${err.message}` }))
             })
         }

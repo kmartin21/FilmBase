@@ -9,8 +9,7 @@ import SecuredRoute from '../components/SecuredRoute'
 import * as userApi from '../api/UserApi'
 import { connect } from 'react-redux'
 import {
-  setLoggedInUserId,
-  setLoggedInUserFavMovies
+  setLoggedInUserInfo
 } from '../actions/User'
 
 class App extends Component {
@@ -31,8 +30,7 @@ class App extends Component {
 
       userApi.loginUser()
       .then(json => {
-        this.props.setLoggedInUserId(json.userId)
-        this.props.setLoggedInUserFavMovies(json.favoriteMovies)
+        this.props.setLoggedInUserInfo(json)
         this.forceUpdate()
       })
       .catch(err => {
@@ -66,8 +64,7 @@ class App extends Component {
 
 const mapDispatchToProps = (dispatch) => (
   {
-    setLoggedInUserId: (id) => dispatch(setLoggedInUserId(id)),
-    setLoggedInUserFavMovies: (favMovies) => dispatch(setLoggedInUserFavMovies(favMovies))
+    setLoggedInUserInfo: (json) => dispatch(setLoggedInUserInfo(json))
   }
 )
 
