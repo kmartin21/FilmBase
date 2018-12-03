@@ -46,7 +46,7 @@ class MoviesTable extends Component {
         return this.props.movies.map(movie => {
             const favorited = this.props.activeUserFavMovies.find(userFavMovie => userFavMovie.id === movie.id) !== undefined
             
-            return <li>
+            return <li className="movie-table__item">
                 <Movie
                     id={movie.id}
                     title={movie.title}

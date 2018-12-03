@@ -13,6 +13,7 @@ export const fetchProfileSuccess = (json) => ({
     type: FETCH_PROFILE_SUCCESS,
     payload: {
         name: json.user.name,
+        imageUrl: json.user.imageUrl,
         movies: json.favoriteMovies
     }
 })

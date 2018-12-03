@@ -19,14 +19,13 @@ class ProfilePage extends Component {
 
     render() {
         const isActiveUserProfile = (this.props.userId !== null && this.props.userId === this.props.match.params.id)
-        const imageUrl = auth0Client.profile.picture
-        debugger
-        
+        const imageUrl = this.props.imageUrl
+
         return (
             <div>
                 <div className="profile__user-info-container">
-                    
-                    <h3>{this.props.name}</h3>
+                    <img className="profile__user-image" src={imageUrl} alt='Profile'/>
+                    <h2 className="profile__user-name">{this.props.name}</h2>
                 </div>
                 <MoviesTable isProfile={true} isActiveUserProfile={isActiveUserProfile} />
             </div>
@@ -37,7 +36,8 @@ class ProfilePage extends Component {
 const mapStateToProps = (state) => (
     {
         userId: state.loggedInUserInfo.id,
-        name: state.profile.name ? state.profile.name : ''
+        name: state.profile.name ? state.profile.name : '',
+        imageUrl: state.profile.imageUrl ? state.profile.imageUrl : '' 
     }
 )
 

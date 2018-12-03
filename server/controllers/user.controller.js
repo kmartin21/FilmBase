@@ -6,7 +6,8 @@ const mongoose = require('mongoose')
 exports.userCreate = (req, res) => {
     const user = new User({
         name: req.body.name,
-        username: req.body.username
+        username: req.body.username,
+        imageUrl: req.body.imageUrl
     })
     
     User.findOne({username: `${user.username}`}, function(err, foundUser) {
@@ -23,9 +24,14 @@ exports.userCreate = (req, res) => {
                 .catch((err) => res.status(415).json({ error: `${err.message}` }))
             })
         } else {
-            const favMovieObjsPromise = getUserFavMovieObjs(foundUser._id)
-            favMovieObjsPromise.then((favMovieObjs) => res.json({ userId: foundUser._id, favoriteMovies: favMovieObjs }))
-            .catch((err) => res.status(415).json({ error: `${err.message}` }))
+            const imageUrl = `${user.imageUrl}`
+            User.update({_id: foundUser._id}, {$set: {"imageUrl": imageUrl}}, (err) => {
+                if (err) res.status(415).json({ error: `${err.message}` })
+
+                const favMovieObjsPromise = getUserFavMovieObjs(foundUser._id)
+                favMovieObjsPromise.then((favMovieObjs) => res.json({ userId: foundUser._id, favoriteMovies: favMovieObjs }))
+                .catch((err) => res.status(415).json({ error: `${err.message}` }))
+            })
         }
     })
 }

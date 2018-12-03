@@ -22,6 +22,7 @@ export const profile = (state = {
                 isLoading: false,
                 err: null,
                 name: action.payload.name,
+                imageUrl: action.payload.imageUrl,
                 movies: createUserFavMovieObjs(action.payload.movies).slice(0).reverse()
             }
         case FETCH_PROFILE_FAILURE:
