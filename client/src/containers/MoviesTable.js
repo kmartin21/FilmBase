@@ -83,8 +83,6 @@ class MoviesTable extends Component {
                         isProfile={this.props.isProfile}
                         isActiveUserProfile={this.props.isActiveUserProfile}
                         onClose={(e) => this.hideModal(e)} 
-                        favoriteMovie={(id, title, description, imageUrl) => this.favoriteMovie(id, title, description, imageUrl)}
-                        unfavoriteMovie={(id) => this.unfavoriteMovie(id)}
                         editOpinion={(id, opinion) => this.editOpinion(id, opinion)}/>
                 </div>
             </Modal>

@@ -71,7 +71,7 @@ class MovieDetailsModal extends Component {
     }
 
     render() {
-        const { id, title, imageUrl, favorited, favoritedBy, description, opinion, isActiveUserProfile, onClose, favoriteMovie, unfavoriteMovie, editOpinion } = this.props
+        const { id, title, imageUrl, favorited, favoritedBy, description, opinion, isActiveUserProfile, onClose} = this.props
         return (
             <div className='movie-details-modal__container'>
                 <a href="#" className="close" onClick={onClose}/>
@@ -101,7 +101,7 @@ class MovieDetailsModal extends Component {
                             <img className="movie-details__more-btn" src={downArrow} alt='Read more button' onClick={() => this.setDescriptionShowOverflow()}/>
                         }
 
-                        {(opinion !== undefined && !isActiveUserProfile) ? 
+                        {(opinion !== undefined && !isActiveUserProfile) && 
                             [(!this.state.opinionIsCollapsed) ?
                                 [(this.state.opinionShowOverflow ? 
                                     <div>
@@ -129,20 +129,20 @@ class MovieDetailsModal extends Component {
                                     </div>
                                 </div>
                             ]
-                            :
-                            [(favorited) && 
-                                <div>
-                                    <h5 className="movie-details__opinion-header">Your opinion</h5>
-                                    <div className="movie-details__opinion">
-                                        <textarea className="movie-details__opinion--textarea" onChange={this.setOpinion} disabled={!this.state.isEditing} defaultValue={this.state.activeUserOpinion} placeholder="Give your opinion..."/>
-                                        <button className="movie-details__opinion-btn" onClick={this.state.isEditing ? this.editOpinion.bind(this, id, this.state.activeUserOpinion) : this.setIsEditing}>{this.state.isEditing ? 'Save' : 'Edit'}</button>
-                                    </div>
-                                </div>
-                            ]
                         }
 
                         {this.state.showReadMoreOpinionIcon &&
                             <img className="movie-details__more-btn" src={downArrow} alt='Read more button' onClick={() => this.setOpinionShowOverflow()}/>
+                        }
+
+                        {(favorited) && 
+                            <div>
+                                <h5 className="movie-details__opinion-header">Your opinion</h5>
+                                <div className="movie-details__opinion">
+                                    <textarea className="movie-details__opinion--textarea" onChange={this.setOpinion} disabled={!this.state.isEditing} defaultValue={this.state.activeUserOpinion} placeholder="Give your opinion..."/>
+                                    <button className="movie-details__opinion-btn" onClick={this.state.isEditing ? this.editOpinion.bind(this, id, this.state.activeUserOpinion) : this.setIsEditing}>{this.state.isEditing ? 'Save' : 'Edit'}</button>
+                                </div>
+                            </div>
                         }
                     </div>
                 </div>

@@ -14,7 +14,9 @@ class HomePage extends Component {
         return (
             <div>
                 <SearchBar />
-                <h4 className="recents-page__header">Recently favorited by others</h4>
+                {!this.props.isSearching && 
+                    <h4 className="recents-page__header">Recently favorited by others</h4>
+                }
                 <MoviesTable isProfile={false} isActiveProfile={false} />
             </div>
         )
@@ -27,5 +29,11 @@ const mapDispatchToProps = (dispatch) => (
     }
 )
 
-export default connect(null, mapDispatchToProps)(HomePage)
+const mapStateToProps = (state) => (
+    {
+        isSearching: state.searchedMovies.movies.length > 0 
+    }
+)
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage)
     
