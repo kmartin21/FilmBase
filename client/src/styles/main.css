@@ -410,7 +410,18 @@ nav {
 
 /**********************************************************/
 
+/******************* ERROR PAGE *******************/
+.error-message {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 80vh;
+    color: '#757575';
+}
 
+/**********************************************************/
 
 
 

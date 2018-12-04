@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Route, withRouter } from 'react-router-dom'
+import { Route, withRouter, Switch } from 'react-router-dom'
 import auth0Client from './oauth/Auth';
 import NavBar from './NavBar'
 import Callback from './oauth/Callback'
 import ProfilePage from './ProfilePage'
 import HomePage from './HomePage'
+import ErrorPage from '../components/ErrorPage'
 import SecuredRoute from '../components/SecuredRoute'
 import * as userApi from '../api/UserApi'
 import { connect } from 'react-redux'
@@ -50,13 +51,22 @@ class App extends Component {
     return (
       <div className="app">
         <NavBar/>
-        <Route exact path='/callback' component={Callback}/>
-        <SecuredRoute path='/user/:id/profile'
-          component={ProfilePage}
-          checkingSession={this.state.checkingSession} />
-        <SecuredRoute path='/'
-          component={HomePage}
-          checkingSession={this.state.checkingSession} />
+        <Switch>
+          <Route exact path='/callback' component={Callback}/>
+          <SecuredRoute path='/user/:id/profile'
+            component={ProfilePage}
+            checkingSession={this.state.checkingSession} />
+          <SecuredRoute exact path='/'
+            component={HomePage}
+            checkingSession={this.state.checkingSession} />
+          <Route path="*" render={ () => {
+                return (
+                  <div>
+                    <ErrorPage errorMessage="404. Sorry, we couldn't find that page."/>
+                  </div>
+                )
+            }} />
+        </Switch>
       </div>
     )
   }
