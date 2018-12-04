@@ -1,10 +1,9 @@
 /******************* GENERAL *******************/
 body {
-    /* background-color: #F9F9F9; */
     background-color: #F5F6FA;
     margin: 0;
     padding: 0;
-    font-family: sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 /**********************************************************/
@@ -71,6 +70,41 @@ nav {
     width: 15px;
     height: 15px;
     padding-right: 60px;
+    cursor: pointer;
+}
+
+.nav__more-options-list {
+    background-color: white;
+    position: absolute;
+    top: 40px;
+    right: 27px;
+    height: 30px;
+    list-style: none;
+    padding: 0;
+    border-color: rgb(172, 172, 172);
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    box-shadow: 0px 1px 0px 0px #ccc;
+}
+
+.nav__more-options-list::after {
+    content:"";
+    position: absolute;
+    right: 29px;
+    top: -8px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 10px 10px 10px;
+    border-color: transparent transparent white transparent;
+    z-index: 9998;
+}
+
+.nav__more-options-list-item {
+    padding: 7px 15px;
+    font-size: 13px;
+    color: rgb(119, 119, 119);
     cursor: pointer;
 }
 
@@ -312,6 +346,43 @@ nav {
     padding-left: 10px;
     max-height: 50vh;
     overflow-y: scroll;
+}
+
+.movie-details__opinion--textarea {
+    padding-top: 0;
+    margin-top: 0;
+    width: 95%;
+    height: 30vh;
+    resize: none;
+    font-family: Arial, Helvetica, sans-serif; 
+    font-size: 16px;
+    background-color: white;
+    border-width: 2px;
+    border-color: #E8E8E8;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    outline: none;
+}
+
+.movie-details__opinion-btn {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: solid;
+    border-radius: 3px;
+    border-width: 1px;
+    border-color: rgb(165, 165, 165);
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    font-size: 16px;
+    color: rgb(97, 97, 97);
+    padding: 8px 15px;
+}
+
+.movie-details__opinion-btn:hover {
+    border-color: rgb(133, 133, 133);
+    color: rgb(73, 73, 73);
 }
 
 /**********************************************************/

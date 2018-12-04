@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import auth0Client from '../containers/oauth/Auth'
 import starEmpty from '../images/star-empty.svg'
 import starFilled from '../images/star-filled.svg'
