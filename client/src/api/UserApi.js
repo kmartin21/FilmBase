@@ -13,12 +13,14 @@ export const loginUser = () => {
             })
             .then(handleNetworkErrors)
             .then(res => res.json())
-            .catch(err => err)
+            .catch(err => {
+                throw err
+            })
 }
 
 const handleNetworkErrors = (response) => {
     if (!response.ok) {
-        throw new Error(response.statusText)
+        throw new Error(response.status)
     }
     return response
 }

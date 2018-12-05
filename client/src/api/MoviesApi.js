@@ -4,7 +4,9 @@ export const searchMovies = (query) => {
     return fetch(`${process.env.REACT_APP_MOVIE_DB_API_BASE_URL}search/movie?api_key=${process.env.REACT_APP_MOVIE_DB_API_KEY}&language=en-US&query=${query}&page=1&include_adult=false`)
            .then(handleNetworkErrors)
            .then(response => response.json())
-           .catch(err => err)
+           .catch(err => {
+               throw err
+           })
 }
 
 export const getRecentFavMovies = () => {
@@ -16,12 +18,14 @@ export const getRecentFavMovies = () => {
             })
             .then(handleNetworkErrors)
             .then(response => response.json())
-            .catch(err => err)
+            .catch(err => {
+                throw err
+            })
 }
 
 const handleNetworkErrors = (response) => {
     if (!response.ok) {
-        throw new Error(response.statusText)
+        throw new Error(response.status)
     }
     return response
 }

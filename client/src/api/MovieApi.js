@@ -16,7 +16,9 @@ export const favoriteMovie = (userId, id, title, description, imageUrl) => {
             })
             .then(handleNetworkErrors)
             .then(response => response.json())
-            .catch(err => err)
+            .catch(err => {
+                throw err
+            })
 }
 
 export const unfavoriteMovie = (userId, id) => {
@@ -29,7 +31,9 @@ export const unfavoriteMovie = (userId, id) => {
             })
             .then(handleNetworkErrors)
             .then(response => response.json())
-            .catch(err => err)
+            .catch(err => {
+                throw err
+            })
 }
 
 export const editOpinion = (userId, id, opinion) => {
@@ -45,12 +49,14 @@ export const editOpinion = (userId, id, opinion) => {
             })
             .then(handleNetworkErrors)
             .then(response => response.json())
-            .catch(err => err)
+            .catch(err => {
+                throw err
+            })
 }
 
 const handleNetworkErrors = (response) => {
     if (!response.ok) {
-        throw new Error(response.statusText)
+        throw new Error(response.status)
     }
     return response
 }

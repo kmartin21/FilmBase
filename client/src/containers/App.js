@@ -53,7 +53,7 @@ class App extends Component {
         <NavBar/>
         <Switch>
           <Route exact path='/callback' component={Callback}/>
-          <SecuredRoute path='/user/:id/profile'
+          <SecuredRoute exact path='/user/:id/profile'
             component={ProfilePage}
             checkingSession={this.state.checkingSession} />
           <SecuredRoute exact path='/'
@@ -62,7 +62,7 @@ class App extends Component {
           <Route path="*" render={ () => {
                 return (
                   <div>
-                    <ErrorPage errorMessage="404. Sorry, we couldn't find that page."/>
+                    <ErrorPage errorMessage="404. Looks like you're a bit lost, we couldn't find that page."/>
                   </div>
                 )
             }} />
