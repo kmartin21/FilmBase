@@ -30,6 +30,9 @@ class ProfilePage extends Component {
                 case 500:
                     errorPage = <ErrorPage errorMessage="500. Oops, something went wrong on our end. We're working to fix this."/>
                     break
+                default: 
+                    errorPage = <ErrorPage errorMessage="500. Oops, something went wrong on our end. We're working to fix this."/>
+                    break
             }
         }
 
