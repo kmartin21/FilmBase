@@ -6,6 +6,7 @@ import {
   logoutUser
 } from '../actions/User'
 import downArrowWhite from '../images/down-arrow-white.svg'
+import logo from '../images/logo.png'
 
 class NavBar extends Component {
 
@@ -32,6 +33,7 @@ class NavBar extends Component {
         <div className="nav__container">
           <div className="nav__title-container">
             <Link className="nav__title" to="/">
+                <img className="nav__logo" src={logo} alt='Logo'/>
                 <h3>Filmbase</h3>
             </Link>
           </div>
@@ -44,11 +46,11 @@ class NavBar extends Component {
 
           {auth0Client.isAuthenticated() &&
             <div className="nav__login-container">
-              <img className="nav__user-image" src={`${this.props.imageUrl}`} alt='Logged in user'/>
+              <img className="nav__user-image" src={`${this.props.imageUrl}`} alt='User'/>
               <Link className="nav__user-name" to={`/user/${this.props.userId}/profile`}>
                 <h4>{this.props.name}</h4>
               </Link>
-              <img className="nav__more-options-btn" src={downArrowWhite} alt='More options' onClick={() => this.setShowDropdown()}/>
+              <img className="nav__more-options-btn" src={downArrowWhite} alt='Options' onClick={() => this.setShowDropdown()}/>
             </div>
           }
 
