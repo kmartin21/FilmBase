@@ -144,11 +144,12 @@ nav {
     cursor: pointer;
     overflow: hidden;
     outline: none;
-    font-size: 16px;
+    font-size: 15px;
     color: #393939;
     padding: 8px 8px;
-    margin-left: 45%;
-    margin-right: 45%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /**********************************************************/
@@ -350,7 +351,7 @@ nav {
     cursor: pointer;
     overflow: hidden;
     outline: none;
-    font-size: 16px;
+    font-size: 15px;
     color: #393939;
     margin-top: 10%;
     padding: 8px 5px;

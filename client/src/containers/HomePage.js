@@ -18,7 +18,7 @@ class HomePage extends Component {
                     <div>
                         <h2 className="site-info__header">Discover new films. Show your favorites. <br/> Let your opinion be heard on any movie.</h2>
                         <p className="site-info__description">Sign in to see your collection of favorite movies, leave an opinion, <br/>see other opinions and discover movies you haven't seen yet.</p>
-                        <button className="site-info__login-btn" onClick={auth0Client.signIn}>Sign in with Google</button>
+                        <button className="site-info__login-btn" onClick={auth0Client.signIn}>Sign In With Google</button>
                     </div>
                 }
                 <SearchBar />

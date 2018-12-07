@@ -32,13 +32,13 @@ class NavBar extends Component {
         <div className="nav__container">
           <div className="nav__title-container">
             <Link className="nav__title" to="/">
-                <h3>FilmBase</h3>
+                <h3>Filmbase</h3>
             </Link>
           </div>
           
           {!auth0Client.isAuthenticated() &&
             <div className="nav__login-container">
-              <button className="nav__login-btn" onClick={auth0Client.signIn}>Sign In</button>
+              <button className="nav__login-btn" onClick={auth0Client.signIn}>Sign In With Google</button>
             </div>
           }
 
