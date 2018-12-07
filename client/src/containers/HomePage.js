@@ -3,6 +3,7 @@ import SearchBar from './SearchBar'
 import MoviesTable from './MoviesTable'
 import { connect } from 'react-redux'
 import { fetchRecentFavMovies } from '../actions/Movies';
+import auth0Client from '../containers/oauth/Auth'
 
 class HomePage extends Component {
 
@@ -12,7 +13,14 @@ class HomePage extends Component {
 
     render() {
         return (
-            <div>
+            <div className="home-page__container">
+                {!this.props.userId &&
+                    <div>
+                        <h2 className="site-info__header">Discover new films. Show your favorites. <br/> Let your opinion be heard on any movie.</h2>
+                        <p className="site-info__description">Sign in to see your collection of favorite movies, leave an opinion, <br/>see other opinions and discover movies you haven't seen yet.</p>
+                        <button className="site-info__login-btn" onClick={auth0Client.signIn}>Sign in with Google</button>
+                    </div>
+                }
                 <SearchBar />
                 {!this.props.isSearching && 
                     <h4 className="recents-page__header">Recently favorited by others</h4>
@@ -30,7 +38,8 @@ const mapDispatchToProps = (dispatch) => (
 )
 
 const mapStateToProps = (state) => (
-    {
+    {   
+        userId: state.loggedInUserInfo.id,
         isSearching: state.searchedMovies.movies.length > 0 
     }
 )

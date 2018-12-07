@@ -29,11 +29,6 @@ class MovieDetailsModal extends Component {
         this.props.editOpinion(id, this.state.activeUserOpinion)
     }
 
-    unfavoriteMovie = (id) => {
-        this.setState({ activeUserOpinion: "" })
-        this.props.unfavoriteMovie(id)
-    }
-
     setOpinion = (e) => {
         this.setState({ activeUserOpinion: e.target.value })
     }

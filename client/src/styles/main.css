@@ -110,6 +110,49 @@ nav {
 
 /**********************************************************/
 
+/******************* HOME PAGE *******************/
+.home-page__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/**********************************************************/
+
+/******************* SITE INFO *******************/
+.site-info__header {
+    text-align: center;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.site-info__description {
+    color: #393939;
+    padding-top: 0;
+    margin-top: 10px;
+    font-size: 17px;
+    text-align: center;
+}
+
+.site-info__login-btn {
+    background-color: white;
+    background-repeat: no-repeat;
+    border: solid;
+    border-radius: 3px;
+    border-width: 1px;
+    border-color: rgb(111, 169, 255);
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    font-size: 16px;
+    color: #393939;
+    padding: 8px 8px;
+    margin-left: 45%;
+    margin-right: 45%;
+}
+
+/**********************************************************/
+
 /******************* SEARCH BAR *******************/
 .search__input {
     width: 60%;
@@ -233,13 +276,13 @@ nav {
 /**********************************************************/
 
 
-/******************* MODAL *******************/
+/******************* MODALS *******************/
 #modal-root {
     position: relative;
     z-index: 999;
 }
 
-.modal {
+.movie-details-modal {
     background-color: rgba(0,0,0,0.5);
     position: fixed;
     height: 100%;
@@ -259,6 +302,58 @@ nav {
     border-radius: 10px;
     display: block;
     overflow-y: scroll;
+}
+
+.login-modal {
+    background-color: rgba(0,0,0,0.5);
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-modal__container {
+    position: absolute;
+    background-color: rgb(233, 238, 255);;
+    height: 40%;
+    width: 30%;
+    border-radius: 5px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.login-modal__header {
+    margin-top: 10%;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.login-modal__description {
+    color: #393939;
+    width: 80%;
+    font-size: 17px;
+    text-align: center;
+}
+
+.login-modal__login-btn {
+    background-color: white;
+    background-repeat: no-repeat;
+    border: solid;
+    border-radius: 3px;
+    border-width: 1px;
+    border-color: rgb(111, 169, 255);
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    font-size: 16px;
+    color: #393939;
+    margin-top: 10%;
+    padding: 8px 5px;
 }
 
 .close {

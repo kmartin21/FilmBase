@@ -4,6 +4,7 @@ import auth0Client from '../containers/oauth/Auth'
 import starEmpty from '../images/star-empty.svg'
 import starFilled from '../images/star-filled.svg'
 import TextEllipsis from 'react-text-ellipsis'
+import { connect } from 'react-redux'
 
 class Movie extends Component {
 
@@ -22,7 +23,9 @@ class Movie extends Component {
     }
 
     favoriteMovie = (id, title, description, imageUrl) => {
-        this.setState({ favorited: true })
+        if (this.props.userId) {
+            this.setState({ favorited: true })
+        }
         this.props.favoriteMovie(id, title, description, imageUrl)
     }
 
@@ -69,7 +72,15 @@ class Movie extends Component {
     }
 }
 
-export default Movie
+const mapStateToProps = (state) => {
+    const userId = state.loggedInUserInfo.id
+
+    return {
+        userId
+    }
+}
+
+export default connect(mapStateToProps)(Movie)
 
 
 
