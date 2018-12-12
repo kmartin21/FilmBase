@@ -115,7 +115,7 @@ class MoviesTable extends Component {
         return (
             <div>
                 <div>
-                    <ul>
+                    <ul className="movie-list__container">
                         {movieList}
                     </ul>
                 </div>
