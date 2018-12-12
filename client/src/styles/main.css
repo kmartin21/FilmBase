@@ -181,10 +181,25 @@ nav {
     font-size: 18px;
     outline: none;
     box-shadow: 0px 2px 0px 0px #ccc;
+    box-sizing: border-box;
 }
 
 .search__input::placeholder {
     color: #BFBFBF;
+}
+
+.search__input--logged-in-user {
+    width: 60%;
+    margin: 0 20%;
+    height: 50px;
+    margin-top: 100px;
+    border: none;
+    border-radius: 5px;
+    background: white url(../images/search.svg) no-repeat scroll 10px 13px;
+    padding-left: 50px; 
+    font-size: 18px;
+    outline: none;
+    box-shadow: 0px 2px 0px 0px #ccc;
 }
 
 /**********************************************************/
@@ -548,6 +563,21 @@ nav {
         margin: 0 5%;
         height: 50px;
         margin-top: 30px;
+        border: none;
+        border-radius: 5px;
+        background: white url(../images/search.svg) no-repeat scroll 10px 13px;
+        padding-left: 50px; 
+        font-size: 18px;
+        outline: none;
+        box-shadow: 0px 2px 0px 0px #ccc;
+        box-sizing: border-box;
+    }
+
+    .search__input--logged-in-user {
+        width: 90%;
+        margin: 0 5%;
+        height: 50px;
+        margin-top: 100px;
         border: none;
         border-radius: 5px;
         background: white url(../images/search.svg) no-repeat scroll 10px 13px;

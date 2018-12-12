@@ -33,11 +33,19 @@ class SearchBar extends Component {
     render() {
         return (
             <form>
-                <input
-                    placeholder="Search for any movie"
-                    onChange={this.handleInputChange}
-                    className="search__input"
-                />
+                {!this.props.userIsLoggedIn ?
+                    <input
+                        placeholder="Search for any movie"
+                        onChange={this.handleInputChange}
+                        className="search__input"
+                    />
+                    :
+                    <input
+                        placeholder="Search for any movie"
+                        onChange={this.handleInputChange}
+                        className="search__input--logged-in-user"
+                    />
+                }
             </form>
         )
     }

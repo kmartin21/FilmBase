@@ -21,7 +21,7 @@ class HomePage extends Component {
                         <button className="site-info__login-btn" onClick={auth0Client.signIn}>Sign In With Google</button>
                     </div>
                 }
-                <SearchBar />
+                <SearchBar userIsLoggedIn={this.props.userId !== null}/>
                 {!this.props.isSearching && 
                     <h4 className="recents-page__header">Recently favorited by others</h4>
                 }
