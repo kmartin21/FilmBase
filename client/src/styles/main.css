@@ -15,6 +15,7 @@ nav {
     display: flex;
     flex-flow: column;
     position: fixed;
+    top: 0;
     width: 100%;
 }
 
@@ -133,11 +134,15 @@ nav {
 /**********************************************************/
 
 /******************* SITE INFO *******************/
+
+/**/
 .site-info__header {
     margin-top: 100px;
     text-align: center;
     margin-bottom: 0;
     padding-bottom: 0;
+    /* new */
+    font-size: 20px;
 }
 
 .site-info__description {
@@ -146,6 +151,8 @@ nav {
     margin-top: 10px;
     font-size: 17px;
     text-align: center;
+    /* new */
+    margin-top: 20px;
 }
 
 .site-info__login-btn {
@@ -170,8 +177,8 @@ nav {
 
 /******************* SEARCH BAR *******************/
 .search__input {
-    width: 60%;
-    margin: 0 20%;
+    width: 90%;
+    margin: 0 5%;
     height: 50px;
     margin-top: 30px;
     border: none;
@@ -189,8 +196,8 @@ nav {
 }
 
 .search__input--logged-in-user {
-    width: 60%;
-    margin: 0 20%;
+    width: 90%;
+    margin: 0 5%;
     height: 50px;
     margin-top: 100px;
     border: none;
@@ -200,6 +207,7 @@ nav {
     font-size: 18px;
     outline: none;
     box-shadow: 0px 2px 0px 0px #ccc;
+    box-sizing: border-box;
 }
 
 /**********************************************************/
@@ -207,16 +215,28 @@ nav {
 
 /******************* RECENTS PAGE *******************/
 .recents-page__header {
-    margin-left: 60px;
+    margin-left: 5%;
     color: #3E414C;
 }
 
 /**********************************************************/
 
 /******************* MOVIE TABLE *******************/
+.movie-list__container {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0;
+    margin-left: 5%;
+    list-style: none;
+}
+
 .movie-table__item {
-    display: inline-block;
-    padding-left: 20px;
+    padding: 0;
+    margin: 0;
+    width: 50%;
+    box-sizing: border-box;
 }
 
 /**********************************************************/
@@ -328,7 +348,7 @@ nav {
     position: absolute;
     background-color: white;
     height: 80%;
-    width: 60%;
+    width: 95%;
     border-radius: 10px;
     display: block;
     overflow-y: scroll;
@@ -418,14 +438,16 @@ nav {
 
 .movie-details__image {
     width: 60%;
-    height: 100%;
+    height: 50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
 }
 
 .movie-details__info-container {
-    position: relative;
-    top: 60px;
-    width: 40%;
-    float: right;
+    display: block;
+    width: 100%;
 }
 
 .movie-details__title {
@@ -516,7 +538,7 @@ nav {
 .profile__user-info-container {
     width: 20%;
     margin-left: 60px;
-    margin-top: 30px;
+    padding-top: 100px;
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -548,80 +570,15 @@ nav {
 
 /**********************************************************/
 
-/******************* MEDIA ONLY QUERY *******************/
-@media only screen and (max-width: 765px) {
-    .site-info__header {
-        font-size: 20px;
-    }
 
-    .site-info__description {
-        margin-top: 20px;
-    }
 
-    .search__input {
-        width: 90%;
-        margin: 0 5%;
-        height: 50px;
-        margin-top: 30px;
-        border: none;
-        border-radius: 5px;
-        background: white url(../images/search.svg) no-repeat scroll 10px 13px;
-        padding-left: 50px; 
-        font-size: 18px;
-        outline: none;
-        box-shadow: 0px 2px 0px 0px #ccc;
-        box-sizing: border-box;
-    }
-
-    .search__input--logged-in-user {
-        width: 90%;
-        margin: 0 5%;
-        height: 50px;
-        margin-top: 100px;
-        border: none;
-        border-radius: 5px;
-        background: white url(../images/search.svg) no-repeat scroll 10px 13px;
-        padding-left: 50px; 
-        font-size: 18px;
-        outline: none;
-        box-shadow: 0px 2px 0px 0px #ccc;
-        box-sizing: border-box;
-    }
-
-    .recents-page__header {
-        margin-left: 5%;
-        color: #3E414C;
-    }
-
-    .movie-table__item {
-        padding: 0;
-        margin: 0;
-        width: 50%;
-        box-sizing: border-box;
-    }
-
-    .movie-list__container {
-        display: flex;
-        flex-flow: row;
-        align-items: center;
-        flex-wrap: wrap;
-        padding: 0;
-        margin-left: 5%;
-    }
-
-    .movie {
-        background-color: white;
-        width: 200px;
-        height: 380px;
-        margin-bottom: 10px;
-        border-radius: 8px;
-    }
-
+/******************* MEDIA ONLY QUERIES *******************/
+@media only screen and (min-width: 1195px) {
     .movie-details-modal__container {
         position: absolute;
         background-color: white;
         height: 80%;
-        width: 95%;
+        width: 60%;
         border-radius: 10px;
         display: block;
         overflow-y: scroll;
@@ -629,27 +586,43 @@ nav {
 
     .movie-details__image {
         width: 60%;
-        height: 50%;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 50px;
-    }
-    
-    .movie-details__info-container {
-        display: block;
-        width: 100%;
+        height: 100%;
+        margin-top: 0;
+        padding-top: 0;
+        float: left;
     }
 
+    .movie-details__info-container {
+        position: relative;
+        top: 60px;
+        width: 40%;
+        float: right;
+    }
+}
+
+@media only screen and (min-width: 900px) {
+    .search__input {
+        width: 60%;
+        margin: 0 20%;
+    }
+    
+    .search__input--logged-in-user {
+        width: 60%;
+        margin: 0 20%;
+    }
+
+    .recents-page__header {
+        margin-left: 60px;
+    }
+
+    .movie-table__item {
+        display: inline-block;
+        padding-left: 20px;
+        width: auto;
+    }    
+
     .login-modal__container {
-        position: absolute;
-        background-color: rgb(233, 238, 255);;
-        height: 40%;
-        width: 80%;
-        border-radius: 5px;
-        display: flex;
-        flex-flow: column;
-        align-items: center;
+        width: 80%;   
     }
 }
 

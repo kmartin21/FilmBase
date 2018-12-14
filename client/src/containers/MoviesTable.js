@@ -5,7 +5,6 @@ import MovieDetailsModal from '../containers/MovieDetailsModal'
 import LoginModal from '../containers/LoginModal'
 import { connect } from 'react-redux'
 import '../styles/main.css'
-import auth0client from '../containers/oauth/Auth'
 import {
     favoriteMovie,
     unfavoriteMovie,
