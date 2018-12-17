@@ -12,8 +12,13 @@ import { connect } from 'react-redux'
 import {
   setLoggedInUserInfo
 } from '../actions/User'
+import PropTypes from 'prop-types'
 
 class App extends Component {
+  static propTypes = {
+    setLoggedInUserInfo: PropTypes.func.isRequired
+  }
+
   constructor(props) {
     super(props)
     this.state = {
@@ -52,20 +57,20 @@ class App extends Component {
       <div className="app">
         <NavBar/>
         <Switch>
-          <Route exact path='/callback' component={Callback}/>
+          {/* <Route exact path='/callback' component={Callback}/>
           <SecuredRoute exact path='/user/:id/profile'
             component={ProfilePage}
-            checkingSession={this.state.checkingSession} />
+            checkingSession={this.state.checkingSession} /> */}
           <SecuredRoute exact path='/'
             component={HomePage}
             checkingSession={this.state.checkingSession} />
-          <Route path="*" render={ () => {
+          {/* <Route path="*" render={ () => {
                 return (
                   <div>
                     <ErrorPage errorMessage="404. Looks like you're a bit lost, we couldn't find that page."/>
                   </div>
                 )
-            }} />
+            }} /> */}
         </Switch>
       </div>
     )

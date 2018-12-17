@@ -5,8 +5,13 @@ import {
     clearSearchedMovies
 } from '../actions/Movies'
 import '../styles/main.css'
+import PropTypes from 'prop-types'
 
 class SearchBar extends Component {
+    static PropTypes = {
+        fetchSearchedMovies: PropTypes.func.isRequired,
+        clearSearchedMovies: PropTypes.func.isRequired
+    }
 
     constructor(props) {
         super(props)

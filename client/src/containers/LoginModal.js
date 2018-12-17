@@ -1,5 +1,6 @@
 import React from 'react'
 import auth0Client from '../containers/oauth/Auth'
+import PropTypes from 'prop-types'
 
 const LoginModal = ({ onClose }) => (
     <div className="login-modal__container">
@@ -9,6 +10,10 @@ const LoginModal = ({ onClose }) => (
         <button className="login-modal__login-btn" onClick={auth0Client.signIn}>Sign In With Google</button>
     </div>
 )
+
+LoginModal.propTypes = {
+    onClose: PropTypes.func.isRequired
+}
 
 export default LoginModal
 

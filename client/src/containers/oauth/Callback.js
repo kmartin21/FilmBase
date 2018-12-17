@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types'
 import {withRouter} from 'react-router-dom';
 import auth0Client from './Auth';
 import * as userApi from '../../api/UserApi'
@@ -8,6 +9,10 @@ import {
 } from '../../actions/User'
 
 class Callback extends Component {
+  static propTypes = {
+    setLoggedInUserInfo: PropTypes.func.isRequired
+  }
+
   async componentDidMount() {
     try {
       await auth0Client.handleAuthentication()

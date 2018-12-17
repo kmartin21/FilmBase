@@ -2,8 +2,23 @@ import React, { Component } from 'react'
 import '../styles/main.css'
 import downArrow from '../images/down-arrow.svg'
 import LinesEllipsis from 'react-lines-ellipsis'
+import PropTypes from 'prop-types'
 
 class MovieDetailsModal extends Component {
+    static propTypes = {
+        id: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        imageUrl: PropTypes.string.isRequired,
+        description: PropTypes.string.isRequired,
+        favorited: PropTypes.bool.isRequired,
+        favoritedBy: PropTypes.string.isRequired, 
+        opinion: PropTypes.string.isRequired,
+        activeUserOpinion: PropTypes.string.isRequired,
+        isProfile: PropTypes.bool.isRequired,
+        isActiveUserProfile: PropTypes.bool.isRequired,
+        onClose: PropTypes.func.isRequired, 
+        editOpinion: PropTypes.func.isRequired
+    }
 
     constructor(props) {
         super(props)

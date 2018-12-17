@@ -7,8 +7,15 @@ import {
 } from '../actions/User'
 import downArrowWhite from '../images/down-arrow-white.svg'
 import logo from '../images/logo.png'
+import PropTypes from 'prop-types'
 
 class NavBar extends Component {
+  static PropTypes = {
+    userId: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    imageUrl: PropTypes.string.isRequired,
+    logoutUser: PropTypes.func.isRequired
+  }
 
   constructor(props) {
     super(props)

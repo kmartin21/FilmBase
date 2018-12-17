@@ -10,8 +10,19 @@ import {
     unfavoriteMovie,
     editOpinion
 } from '../actions/Movie'
+import PropTypes from 'prop-types'
 
 class MoviesTable extends Component {
+    static PropTypes = {
+        isProfile: PropTypes.bool.isRequired,
+        isActiveUserProfile: PropTypes.bool.isRequired,
+        activeUserFavMovies: PropTypes.array.isRequired,
+        movies: PropTypes.array.isRequired,
+        userId: PropTypes.string.isRequired,
+        favoriteMovie: PropTypes.func.isRequired,
+        unfavoriteMovie: PropTypes.func.isRequired,
+        editOpinion: PropTypes.func.isRequired
+    }
 
     constructor(props) {
         super(props)

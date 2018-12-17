@@ -4,8 +4,16 @@ import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import { fetchProfile } from '../actions/Profile'
 import ErrorPage from '../components/ErrorPage'
+import PropTypes from 'prop-types'
 
 class ProfilePage extends Component {
+    static propTypes = {
+        userId: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        imageUrl: PropTypes.string.isRequired,
+        err: PropTypes.object.isRequired,
+        fetchProfile: PropTypes.func.isRequired
+    }
 
     componentDidUpdate(prevProps) {
         if (prevProps.match.params.id !== this.props.match.params.id) {
