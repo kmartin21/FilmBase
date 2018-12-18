@@ -7,11 +7,11 @@ import auth0Client from '../containers/oauth/Auth'
 import PropTypes from 'prop-types'
 
 class HomePage extends Component {
-    // static propTypes = {
-    //     fetchRecentFavMovies: PropTypes.func.isRequired,
-    //     userId: PropTypes.string,
-    //     isSearching: PropTypes.bool.isRequired
-    // }
+    static propTypes = {
+        fetchRecentFavMovies: PropTypes.func.isRequired,
+        userId: PropTypes.string,
+        isSearching: PropTypes.bool.isRequired
+    }
 
     componentDidMount() {
         this.props.fetchRecentFavMovies()
