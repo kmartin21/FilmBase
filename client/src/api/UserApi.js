@@ -7,16 +7,20 @@ export const loginUser = () => {
                 headers: {
                 'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({name: `${auth0Client.getProfile().name}`, username: `${auth0Client.getProfile().nickname}`})
+                body: JSON.stringify({name: `${auth0Client.getProfile().name}`, 
+                                      username: `${auth0Client.getProfile().nickname}`,
+                                      imageUrl: `${auth0Client.getProfile().picture}`})
             })
             .then(handleNetworkErrors)
             .then(res => res.json())
-            .catch(err => err)
+            .catch(err => {
+                throw err
+            })
 }
 
 const handleNetworkErrors = (response) => {
     if (!response.ok) {
-        throw new Error(response.statusText)
+        throw new Error(response.status)
     }
     return response
 }

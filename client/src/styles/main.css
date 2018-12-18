@@ -1,10 +1,336 @@
-/******************* MODAL *******************/
+/******************* GENERAL *******************/
+body {
+    background-color: #F5F6FA;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/**********************************************************/
+
+/******************* NAV BAR *******************/
+nav {
+    height: 70px;
+    background-color: #2860FF;
+    display: flex;
+    flex-flow: column;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.nav__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.nav__title-container {
+    padding-left: 60px;
+    display: flex;
+    align-items: center;
+}
+
+.nav__logo {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 5px;
+}
+
+.nav__title {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.nav__login-container {
+    display: flex;
+    align-items: center;
+}
+
+.nav__login-btn {
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    border: none;
+    overflow: hidden;
+    outline: none;
+    color: white;
+    font-size: 1em;
+    font-weight: bold;
+    padding-right: 60px;
+    cursor: pointer;
+}
+
+.nav__user-name {
+    color: white;
+    padding-left: 20px;
+    padding-right: 15px;
+    text-decoration: none;
+}
+
+.nav__user-image {
+    width: 40px;
+    height: auto;
+    border-radius: 50%;
+    border: 3px solid white;
+    float: right;
+}
+
+.nav__more-options-btn {
+    width: 15px;
+    height: 15px;
+    padding-right: 60px;
+    cursor: pointer;
+}
+
+.nav__more-options-list {
+    background-color: white;
+    position: absolute;
+    top: 40px;
+    right: 27px;
+    height: 30px;
+    list-style: none;
+    padding: 0;
+    border-color: rgb(172, 172, 172);
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    box-shadow: 0px 1px 0px 0px #ccc;
+}
+
+.nav__more-options-list::after {
+    content:"";
+    position: absolute;
+    right: 29px;
+    top: -8px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 10px 10px 10px;
+    border-color: transparent transparent white transparent;
+    z-index: 9998;
+}
+
+.nav__more-options-list-item {
+    padding: 7px 15px;
+    font-size: 13px;
+    color: rgb(119, 119, 119);
+    cursor: pointer;
+}
+
+/**********************************************************/
+
+/******************* HOME PAGE *******************/
+.home-page__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+/**********************************************************/
+
+/******************* SITE INFO *******************/
+
+/**/
+.site-info__header {
+    margin-top: 100px;
+    text-align: center;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    /* new */
+    font-size: 20px;
+}
+
+.site-info__description {
+    color: #393939;
+    padding-top: 0;
+    margin-top: 10px;
+    font-size: 17px;
+    text-align: center;
+    /* new */
+    margin-top: 20px;
+}
+
+.site-info__login-btn {
+    background-color: white;
+    background-repeat: no-repeat;
+    border: solid;
+    border-radius: 3px;
+    border-width: 1px;
+    border-color: rgb(111, 169, 255);
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    font-size: 15px;
+    color: #393939;
+    padding: 8px 8px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/**********************************************************/
+
+/******************* SEARCH BAR *******************/
+.search__input {
+    width: 90%;
+    margin: 30px 5% 0 5%;
+    height: 50px;
+    border: none;
+    border-radius: 5px;
+    background: white url(../images/search.svg) no-repeat scroll 10px 13px;
+    padding-left: 50px; 
+    font-size: 18px;
+    outline: none;
+    box-shadow: 0px 2px 0px 0px #ccc;
+    box-sizing: border-box;
+}
+
+.search__input::placeholder {
+    color: #BFBFBF;
+}
+
+.search__input--logged-in-user {
+    width: 90%;
+    margin: 100px 5% 0 5%;
+    height: 50px;
+    border: none;
+    border-radius: 5px;
+    background: white url(../images/search.svg) no-repeat scroll 10px 13px;
+    padding-left: 50px; 
+    font-size: 18px;
+    outline: none;
+    box-shadow: 0px 2px 0px 0px #ccc;
+    box-sizing: border-box;
+}
+
+/**********************************************************/
+
+
+/******************* RECENTS PAGE *******************/
+.recents-page__header {
+    margin-left: 5%;
+    color: #3E414C;
+}
+
+/**********************************************************/
+
+/******************* MOVIE TABLE *******************/
+.movie-list__container {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0;
+    margin-left: 5%;
+    list-style: none;
+}
+
+.movie-table__item {
+    padding: 0;
+    margin: 0;
+    width: 50%;
+    box-sizing: border-box;
+}
+
+/**********************************************************/
+
+
+/******************* MOVIE CARD *******************/
+.movie {
+    background-color: white;
+    width: 200px;
+    height: 380px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+.movie__favorite-button {
+    width: 15px;
+    height: 15px;
+    padding-top: 10px;
+    padding-left: 88%;
+    display: block;
+    cursor: pointer;
+}
+
+.movie__image {
+    width: 95%;
+    height: 220px;
+    display: block;
+    margin: 0 auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    cursor: pointer;
+}
+
+.movie__title-container {
+    width: 90%;
+}
+
+.movie__title {
+    float: left;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    font-weight: 600;
+    color: #393939;
+    display: block;
+}
+
+.movie__description-container {
+    width: 90%
+}
+
+.movie__description {
+    float: left;
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1; 
+    line-height: 13px;        
+    max-height: 13px * 2;       
+}
+
+.movie__favorited-by {
+    float: left;
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 13px;
+    color: #858585;
+}
+
+.movie__description--link {
+    text-decoration: none;
+    color: #2860FF;
+    font-weight: bold;
+}
+
+.movie__description--link:visited {
+    text-decoration: none;
+    color: #2860FF;
+    font-weight: bold;
+}
+
+/**********************************************************/
+
+
+/******************* MODALS *******************/
 #modal-root {
     position: relative;
     z-index: 999;
 }
 
-.modal {
+.movie-details-modal {
     background-color: rgba(0,0,0,0.5);
     position: fixed;
     height: 100%;
@@ -16,23 +342,81 @@
     justify-content: center;
 }
 
-.movie-details-modal {
+.movie-details-modal__container {
     position: absolute;
     background-color: white;
-    height: 70%;
-    width: 90%;
+    height: 80%;
+    width: 95%;
     border-radius: 10px;
     display: block;
     overflow-y: scroll;
 }
 
+.login-modal {
+    background-color: rgba(0,0,0,0.5);
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-modal__container {
+    position: absolute;
+    background-color: rgb(233, 238, 255);
+    height: 320px;
+    width: 220px;
+    border-radius: 5px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.login-modal__header {
+    margin-top: 10%;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.login-modal__description {
+    color: #393939;
+    width: 80%;
+    font-size: 17px;
+    text-align: center;
+}
+
+.login-modal__login-btn {
+    background-color: white;
+    background-repeat: no-repeat;
+    border: solid;
+    border-radius: 3px;
+    border-width: 1px;
+    border-color: rgb(111, 169, 255);
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    font-size: 15px;
+    color: #393939;
+    margin-top: 10%;
+    padding: 8px 5px;
+}
+
 .close {
     position: absolute;
     right: 20px;
-    top: 20px;
+    top: 0;
+    padding-top: 0;
+    margin-top: 0;
     width: 32px;
     height: 32px;
     opacity: 0.3;
+    background-color: transparent;
+    border: 1px solid transparent;
+    cursor: pointer;
+    outline: none;
   }
   
 .close:hover {
@@ -47,11 +431,208 @@
     width: 2px;
     background-color: #333;
 }
+
 .close:before {
     transform: rotate(45deg);
 }
+
 .close:after {
     transform: rotate(-45deg);
+}
+
+.movie-details__image {
+    width: 60%;
+    height: 50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+}
+
+.movie-details__info-container {
+    display: block;
+    width: 100%;
+}
+
+.movie-details__title {
+    font-size: 24px; 
+    padding-left: 10px;
+    color: #393939;
+    display: block;
+    padding-top: 0;
+    margin-top: 0;
+}
+
+.movie-details__description {
+    padding-left: 10px;
+}
+
+.movie-details__description--overflow {
+    padding-left: 10px;
+    max-height: 15vh;
+    overflow-y: scroll;
+}
+
+.movie-details__more-btn {
+    padding-left: 45%;
+}
+
+.movie-details__opinion-header {
+    font-size: 16px; 
+    padding-top: 10px;
+    padding-left: 10px;
+    color: #393939;
+    display: block;
+}
+
+.movie-details__opinion {
+    padding-top: 0;
+    margin-top: 0;
+    padding-left: 10px;
+}
+
+.movie-details__opinion--overflow {
+    padding-top: 0;
+    margin-top: 0;
+    padding-left: 10px;
+    max-height: 20vh;
+    overflow-y: scroll;
+}
+
+.movie-details__opinion--textarea {
+    padding-top: 0;
+    margin-top: 0;
+    width: 95%;
+    height: 20vh;
+    resize: none;
+    font-family: Arial, Helvetica, sans-serif; 
+    font-size: 16px;
+    background-color: white;
+    border-width: 2px;
+    border-color: #E8E8E8;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    outline: none;
+}
+
+.movie-details__opinion-btn {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: solid;
+    border-radius: 3px;
+    border-width: 1px;
+    border-color: rgb(165, 165, 165);
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    font-size: 16px;
+    color: rgb(97, 97, 97);
+    padding: 8px 15px;
+}
+
+.movie-details__opinion-btn:hover {
+    border-color: rgb(133, 133, 133);
+    color: rgb(73, 73, 73);
+}
+
+/**********************************************************/
+
+/******************* PROFILE *******************/
+.profile__user-info-container {
+    width: 20%;
+    margin-left: 60px;
+    padding-top: 100px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.profile__user-image {
+    width: 50%;
+    height: 50%;
+    border-radius: 50%; 
+}
+
+.profile__user-name {
+    padding-left: 20px;
+    color: #393939;
+}
+
+/**********************************************************/
+
+/******************* ERROR PAGE *******************/
+.error-message {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 80vh;
+    color: '#757575';
+}
+
+/**********************************************************/
+
+
+
+/******************* MEDIA ONLY QUERIES *******************/
+@media only screen and (min-width: 750px) {
+    .login-modal__container {
+        height: 40%;
+        width: 30%;
+    }
+}
+
+@media only screen and (min-width: 900px) {
+    .search__input {
+        width: 60%;
+        margin-left: 20%;
+        margin-right: 20%;
+    }
+    
+    .search__input--logged-in-user {
+        width: 60%;
+        margin-left: 20%;
+        margin-right: 20%;
+    }
+
+    .recents-page__header {
+        margin-left: 60px;
+    }
+
+    .movie-table__item {
+        display: inline-block;
+        padding-left: 20px;
+        width: auto;
+    }    
+}
+
+@media only screen and (min-width: 1195px) {
+    .movie-details-modal__container {
+        position: absolute;
+        background-color: white;
+        height: 80%;
+        width: 60%;
+        border-radius: 10px;
+        display: block;
+        overflow-y: scroll;
+    }
+
+    .movie-details__image {
+        width: 60%;
+        height: 100%;
+        margin-top: 0;
+        padding-top: 0;
+        float: left;
+    }
+
+    .movie-details__info-container {
+        position: relative;
+        top: 60px;
+        width: 40%;
+        float: right;
+    }
 }
 
 /**********************************************************/

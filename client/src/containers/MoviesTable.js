@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import Movie from '.././components/Movie'
 import Modal from '../components/Modal'
 import MovieDetailsModal from '../containers/MovieDetailsModal'
+import LoginModal from '../containers/LoginModal'
 import { connect } from 'react-redux'
 import '../styles/main.css'
 import {
@@ -9,29 +10,54 @@ import {
     unfavoriteMovie,
     editOpinion
 } from '../actions/Movie'
+import PropTypes from 'prop-types'
 
 class MoviesTable extends Component {
+    static propTypes = {
+        isProfile: PropTypes.bool.isRequired,
+        isActiveUserProfile: PropTypes.bool.isRequired,
+        activeUserFavMovies: PropTypes.array.isRequired,
+        movies: PropTypes.array.isRequired,
+        userId: PropTypes.string,
+        favoriteMovie: PropTypes.func.isRequired,
+        unfavoriteMovie: PropTypes.func.isRequired,
+        editOpinion: PropTypes.func.isRequired
+    }
 
     constructor(props) {
         super(props)
         this.state = {
-            show: false,
+            showDetailsModal: false,
+            showLoginModal: false,
             selectedMovieId: null
         }
     }
 
-    showModal = (id) => {
+    showDetailsModal = (id) => {
         this.setState({ selectedMovieId: id })
-        this.setState({ show: true })
+        this.setState({ showDetailsModal: true })
     }
 
-    hideModal = (e) => {
+    showLoginModal = () => {
+        this.setState({ showLoginModal: true })
+    }
+
+    hideDetailsModal = (e) => {
         e.preventDefault()
-        this.setState({ show: false })
+        this.setState({ showDetailsModal: false })
+    }
+
+    hideLoginModal = (e) => {
+        e.preventDefault()
+        this.setState({ showLoginModal: false })
     }
 
     favoriteMovie = (id, title, description, imageUrl) => {
-        this.props.favoriteMovie(this.props.userId, id, title, description, imageUrl)
+        if (!this.props.userId) {
+            this.showLoginModal()
+        } else {
+            this.props.favoriteMovie(this.props.userId, id, title, description, imageUrl)
+        }
     }
 
     unfavoriteMovie = (id) => {
@@ -46,7 +72,7 @@ class MoviesTable extends Component {
         return this.props.movies.map(movie => {
             const favorited = this.props.activeUserFavMovies.find(userFavMovie => userFavMovie.id === movie.id) !== undefined
             
-            return <li>
+            return <li key={movie.id.toString()} className="movie-table__item">
                 <Movie
                     id={movie.id}
                     title={movie.title}
@@ -56,7 +82,7 @@ class MoviesTable extends Component {
                     favoritedBy={movie.favoritedBy}
                     user_id={movie.user_id}
                     isProfile={this.props.isProfile}
-                    onClickImage={(id) => this.showModal(id)}
+                    onClickImage={(id) => this.showDetailsModal(id)}
                     favoriteMovie={(id, title, description, imageUrl) => this.favoriteMovie(id, title, description, imageUrl)}
                     unfavoriteMovie={(id) => this.unfavoriteMovie(id)}/>
             </li>
@@ -68,9 +94,9 @@ class MoviesTable extends Component {
         const selectedIsFavorited = this.props.activeUserFavMovies.find(userFavMovie => userFavMovie.id === this.state.selectedMovieId)
         const movie = this.props.movies.find(movie => movie.id === this.state.selectedMovieId)
         
-        const modal = this.state.show ? (
+        const detailsModal = this.state.showDetailsModal ? (
             <Modal>
-                <div className="modal">
+                <div className="movie-details-modal">
                     <MovieDetailsModal 
                         id={movie.id}
                         title={movie.title}
@@ -82,10 +108,16 @@ class MoviesTable extends Component {
                         activeUserOpinion={selectedIsFavorited !== undefined ? selectedIsFavorited.opinion : undefined}
                         isProfile={this.props.isProfile}
                         isActiveUserProfile={this.props.isActiveUserProfile}
-                        onClose={(e) => this.hideModal(e)} 
-                        favoriteMovie={(id, title, description, imageUrl) => this.favoriteMovie(id, title, description, imageUrl)}
-                        unfavoriteMovie={(id) => this.unfavoriteMovie(id)}
+                        onClose={(e) => this.hideDetailsModal(e)} 
                         editOpinion={(id, opinion) => this.editOpinion(id, opinion)}/>
+                </div>
+            </Modal>
+        ) : null
+
+        const loginModal = this.state.showLoginModal ? (
+            <Modal>
+                <div className="login-modal">
+                    <LoginModal onClose={(e) => this.hideLoginModal(e)}/>
                 </div>
             </Modal>
         ) : null
@@ -93,11 +125,12 @@ class MoviesTable extends Component {
         return (
             <div>
                 <div>
-                    <ul>
+                    <ul className="movie-list__container">
                         {movieList}
                     </ul>
                 </div>
-                {modal}
+                {detailsModal}
+                {loginModal}
             </div>
         )
     }

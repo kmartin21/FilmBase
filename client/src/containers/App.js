@@ -1,19 +1,24 @@
 import React, { Component } from 'react';
-import { Route, withRouter } from 'react-router-dom'
+import { Route, withRouter, Switch } from 'react-router-dom'
 import auth0Client from './oauth/Auth';
 import NavBar from './NavBar'
 import Callback from './oauth/Callback'
 import ProfilePage from './ProfilePage'
 import HomePage from './HomePage'
+import ErrorPage from '../components/ErrorPage'
 import SecuredRoute from '../components/SecuredRoute'
 import * as userApi from '../api/UserApi'
 import { connect } from 'react-redux'
 import {
-  setLoggedInUserId,
-  setLoggedInUserFavMovies
+  setLoggedInUserInfo
 } from '../actions/User'
+import PropTypes from 'prop-types'
 
 class App extends Component {
+  static propTypes = {
+    setLoggedInUserInfo: PropTypes.func.isRequired
+  }
+
   constructor(props) {
     super(props)
     this.state = {
@@ -31,8 +36,7 @@ class App extends Component {
 
       userApi.loginUser()
       .then(json => {
-        this.props.setLoggedInUserId(json.userId)
-        this.props.setLoggedInUserFavMovies(json.favoriteMovies)
+        this.props.setLoggedInUserInfo(json)
         this.forceUpdate()
       })
       .catch(err => {
@@ -50,15 +54,24 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="app">
         <NavBar/>
-        <Route exact path='/callback' component={Callback}/>
-        <SecuredRoute path='/user/:id/profile'
-          component={ProfilePage}
-          checkingSession={this.state.checkingSession} />
-        <SecuredRoute path='/'
-          component={HomePage}
-          checkingSession={this.state.checkingSession} />
+        <Switch>
+          <Route exact path='/callback' component={Callback}/>
+          <SecuredRoute exact path='/user/:id/profile'
+            component={ProfilePage}
+            checkingSession={this.state.checkingSession} />
+          <SecuredRoute exact path='/'
+            component={HomePage}
+            checkingSession={this.state.checkingSession} />
+          <Route path="*" render={ () => {
+                return (
+                  <div>
+                    <ErrorPage errorMessage="404. Looks like you're a bit lost, we couldn't find that page."/>
+                  </div>
+                )
+            }} />
+        </Switch>
       </div>
     )
   }
@@ -66,8 +79,7 @@ class App extends Component {
 
 const mapDispatchToProps = (dispatch) => (
   {
-    setLoggedInUserId: (id) => dispatch(setLoggedInUserId(id)),
-    setLoggedInUserFavMovies: (favMovies) => dispatch(setLoggedInUserFavMovies(favMovies))
+    setLoggedInUserInfo: (json) => dispatch(setLoggedInUserInfo(json))
   }
 )
 

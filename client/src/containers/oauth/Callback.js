@@ -1,14 +1,18 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types'
 import {withRouter} from 'react-router-dom';
 import auth0Client from './Auth';
 import * as userApi from '../../api/UserApi'
 import { connect } from 'react-redux'
 import {
-  setLoggedInUserId,
-  setLoggedInUserFavMovies
+  setLoggedInUserInfo
 } from '../../actions/User'
 
 class Callback extends Component {
+  static propTypes = {
+    setLoggedInUserInfo: PropTypes.func.isRequired
+  }
+
   async componentDidMount() {
     try {
       await auth0Client.handleAuthentication()
@@ -20,8 +24,7 @@ class Callback extends Component {
 
     userApi.loginUser()
     .then(json => {
-      this.props.setLoggedInUserId(json.userId)
-      this.props.setLoggedInUserFavMovies(json.favoriteMovies)
+      this.props.setLoggedInUserInfo(json)
       this.props.history.replace('/')
     })
     .catch(err => {
@@ -39,8 +42,7 @@ class Callback extends Component {
 
 const mapDispatchToProps = (dispatch) => (
   {
-    setLoggedInUserId: (id) => dispatch(setLoggedInUserId(id)),
-    setLoggedInUserFavMovies: (favMovies) => dispatch(setLoggedInUserFavMovies(favMovies))
+    setLoggedInUserInfo: (json) => dispatch(setLoggedInUserInfo(json))
   }
 )
 

@@ -1,14 +1,37 @@
 import React, { Component } from 'react'
 import '../styles/main.css'
+import downArrow from '../images/down-arrow.svg'
+import LinesEllipsis from 'react-lines-ellipsis'
+import PropTypes from 'prop-types'
 
 class MovieDetailsModal extends Component {
+    static propTypes = {
+        id: PropTypes.number.isRequired,
+        title: PropTypes.string.isRequired,
+        imageUrl: PropTypes.string.isRequired,
+        description: PropTypes.string.isRequired,
+        favorited: PropTypes.bool.isRequired,
+        favoritedBy: PropTypes.string, 
+        opinion: PropTypes.string,
+        activeUserOpinion: PropTypes.string,
+        isProfile: PropTypes.bool.isRequired,
+        isActiveUserProfile: PropTypes.bool,
+        onClose: PropTypes.func.isRequired, 
+        editOpinion: PropTypes.func.isRequired
+    }
 
     constructor(props) {
         super(props)
 
         this.state = {
             isEditing: false,
-            activeUserOpinion: this.props.activeUserOpinion
+            activeUserOpinion: this.props.activeUserOpinion,
+            descriptionIsCollapsed: true,
+            opinionIsCollapsed: true,
+            descriptionShowOverflow: false,
+            opinionShowOverflow: false,
+            showReadMoreDescriptionIcon: false,
+            showReadMoreOpinionIcon: false,
         }
     }
 
@@ -21,35 +44,117 @@ class MovieDetailsModal extends Component {
         this.props.editOpinion(id, this.state.activeUserOpinion)
     }
 
-    unfavoriteMovie = (id) => {
-        this.setState({ activeUserOpinion: "" })
-        this.props.unfavoriteMovie(id)
+    setOpinion = (e) => {
+        this.setState({ activeUserOpinion: e.target.value })
     }
 
-    setOpinion = (e) => {
-        this.setState({activeUserOpinion: e.target.value})
+    setDescriptionShowOverflow = () => {
+        this.setState({ descriptionIsCollapsed: false, descriptionShowOverflow: true, showReadMoreDescriptionIcon: false })
+    }
+
+    setOpinionShowOverflow = () => {
+        this.setState({ opinionIsCollapsed: false, opinionShowOverflow: true, showReadMoreOpinionIcon: false })
+    }
+
+    setShowReadMoreDescriptionIcon = () => {
+        this.setState({ showReadMoreDescriptionIcon: !this.state.showReadMoreDescriptionIcon })
+    }
+
+    setShowReadMoreOpinionIcon = () => {
+        this.setState({ showReadMoreOpinionIcon: !this.state.showReadMoreOpinionIcon })
+    }
+
+    handleDescriptionClamped = (rleState) => {
+        const {clamped} = rleState
+
+        if (clamped && !this.state.showReadMoreDescriptionIcon) {
+            this.setShowReadMoreDescriptionIcon()
+        }
+    }
+
+    handleOpinionClamped = (rleState) => {
+        const {clamped} = rleState
+
+        if (clamped && !this.state.showReadMoreOpinionIcon) {
+            this.setShowReadMoreOpinionIcon()
+        }
     }
 
     render() {
-        const { id, title, imageUrl, description, favorited, favoritedBy, opinion, isActiveUserProfile, onClose, favoriteMovie, unfavoriteMovie, editOpinion } = this.props
-        
+        const { id, title, imageUrl, favorited, favoritedBy, description, opinion, isActiveUserProfile, onClose} = this.props
         return (
-            <div className='movie-details-modal'>
-                <a href="#" className="close" onClick={onClose}/>
+            <div className='movie-details-modal__container'>
+                <button className="close" onClick={onClose}/>
                 <div>
-                    <img src={`https://image.tmdb.org/t/p/w45/${imageUrl}`} alt='Movie image'/>
-                    <h5>{title}</h5>
-                    <p>{description}</p>
-                    {(opinion !== undefined && !isActiveUserProfile) && (
-                        <p>{favoritedBy}'s opinion: {opinion}</p>
-                    )}
-                    {favorited && (
-                        <div>
-                            <p>Your opinion: <input type="text" onChange={this.setOpinion} disabled={!this.state.isEditing} defaultValue={this.state.activeUserOpinion}/></p>
-                            <button onClick={this.state.isEditing ? this.editOpinion.bind(this, id, this.state.activeUserOpinion) : this.setIsEditing}>{this.state.isEditing ? 'Save' : 'Edit'}</button>
-                        </div>
-                    )}
-                    <button onClick={favorited ? this.unfavoriteMovie.bind(this, id) :  () => favoriteMovie(id, title, description, imageUrl)}>{favorited ? 'Unfavorite' : 'Favorite'}</button>
+                    <img className="movie-details__image" src={`https://image.tmdb.org/t/p/w500/${imageUrl}`} alt='Movie cover'/>
+                    <div className="movie-details__info-container">
+                    <h5 className="movie-details__title">{title}</h5>
+                        {!this.state.descriptionIsCollapsed ?
+                            [(this.state.descriptionShowOverflow ? 
+                                <p className="movie-details__description--overflow">{description}</p> :
+                                <p className="movie-details__description">{description}</p>
+                            )]
+                            : 
+                            <div className="movie-details__description">
+                                <LinesEllipsis
+                                    text={description}
+                                    maxLine='1'
+                                    ellipsis='...'
+                                    trimRight
+                                    onReflow={this.handleDescriptionClamped}
+                                    basedOn='letters'
+                                />
+                            </div>
+                        }
+                         
+                        {this.state.showReadMoreDescriptionIcon &&
+                            <img className="movie-details__more-btn" src={downArrow} alt='Read more button' onClick={() => this.setDescriptionShowOverflow()}/>
+                        }
+
+                        {(opinion !== undefined && !isActiveUserProfile) && 
+                            [(!this.state.opinionIsCollapsed) ?
+                                [(this.state.opinionShowOverflow ? 
+                                    <div>
+                                        <h5 className="movie-details__opinion-header">{favoritedBy}'s opinion</h5>
+                                        <p className="movie-details__opinion--overflow">{opinion}</p>
+                                    </div>
+                                     :
+                                    <div> 
+                                        <h5 className="movie-details__opinion-header">{favoritedBy}'s opinion</h5>
+                                        <p className="movie-details__opinion">{opinion}</p>
+                                    </div>
+                                )]
+                                : 
+                                <div>
+                                    <h5 className="movie-details__opinion-header">{favoritedBy}'s opinion</h5>
+                                    <div className="movie-details__opinion">
+                                        <LinesEllipsis
+                                            text={opinion}
+                                            maxLine='1'
+                                            ellipsis='...'
+                                            trimRight
+                                            onReflow={this.handleOpinionClamped}
+                                            basedOn='letters'
+                                        />
+                                    </div>
+                                </div>
+                            ]
+                        }
+
+                        {this.state.showReadMoreOpinionIcon &&
+                            <img className="movie-details__more-btn" src={downArrow} alt='Read more button' onClick={() => this.setOpinionShowOverflow()}/>
+                        }
+
+                        {(favorited) && 
+                            <div>
+                                <h5 className="movie-details__opinion-header">Your opinion</h5>
+                                <div className="movie-details__opinion">
+                                    <textarea className="movie-details__opinion--textarea" onChange={this.setOpinion} disabled={!this.state.isEditing} defaultValue={this.state.activeUserOpinion} placeholder="Give your opinion..."/>
+                                    <button className="movie-details__opinion-btn" onClick={this.state.isEditing ? this.editOpinion.bind(this, id, this.state.activeUserOpinion) : this.setIsEditing}>{this.state.isEditing ? 'Save' : 'Edit'}</button>
+                                </div>
+                            </div>
+                        }
+                    </div>
                 </div>
             </div>
         )
@@ -57,3 +162,8 @@ class MovieDetailsModal extends Component {
 }
 
 export default MovieDetailsModal
+
+
+
+
+

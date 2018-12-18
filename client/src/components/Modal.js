@@ -1,7 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
 
 class Modal extends React.Component {
+    static propTypes = {
+      children: PropTypes.node.isRequired
+    }
+
     constructor(props) {
       super(props);
      

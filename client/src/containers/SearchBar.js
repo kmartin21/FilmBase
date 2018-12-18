@@ -4,8 +4,14 @@ import {
     fetchSearchedMovies,
     clearSearchedMovies
 } from '../actions/Movies'
+import '../styles/main.css'
+import PropTypes from 'prop-types'
 
 class SearchBar extends Component {
+    static propTypes = {
+        fetchSearchedMovies: PropTypes.func.isRequired,
+        clearSearchedMovies: PropTypes.func.isRequired
+    }
 
     constructor(props) {
         super(props)
@@ -32,10 +38,19 @@ class SearchBar extends Component {
     render() {
         return (
             <form>
-                <input
-                    placeholder="Search for..."
-                    onChange={this.handleInputChange}
-                />
+                {!this.props.userIsLoggedIn ?
+                    <input
+                        placeholder="Search for any movie"
+                        onChange={this.handleInputChange}
+                        className="search__input"
+                    />
+                    :
+                    <input
+                        placeholder="Search for any movie"
+                        onChange={this.handleInputChange}
+                        className="search__input--logged-in-user"
+                    />
+                }
             </form>
         )
     }
