@@ -13,12 +13,12 @@ import {
 import PropTypes from 'prop-types'
 
 class MoviesTable extends Component {
-    static PropTypes = {
+    static propTypes = {
         isProfile: PropTypes.bool.isRequired,
         isActiveUserProfile: PropTypes.bool.isRequired,
         activeUserFavMovies: PropTypes.array.isRequired,
         movies: PropTypes.array.isRequired,
-        userId: PropTypes.string.isRequired,
+        userId: PropTypes.string,
         favoriteMovie: PropTypes.func.isRequired,
         unfavoriteMovie: PropTypes.func.isRequired,
         editOpinion: PropTypes.func.isRequired
@@ -72,7 +72,7 @@ class MoviesTable extends Component {
         return this.props.movies.map(movie => {
             const favorited = this.props.activeUserFavMovies.find(userFavMovie => userFavMovie.id === movie.id) !== undefined
             
-            return <li className="movie-table__item">
+            return <li key={movie.id.toString()} className="movie-table__item">
                 <Movie
                     id={movie.id}
                     title={movie.title}

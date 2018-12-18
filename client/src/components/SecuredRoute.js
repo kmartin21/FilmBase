@@ -11,7 +11,7 @@ const SecuredRoute = ({ path, component: Component, checkingSession }) => (
 
 SecuredRoute.propTypes = {
   path: PropTypes.string.isRequired,
-  Component: PropTypes.element.isRequired,
+  component: PropTypes.func.isRequired,
   checkingSession: PropTypes.bool.isRequired
 }
 

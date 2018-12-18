@@ -14,8 +14,7 @@ const MovieSchema = new Schema({
         type: String
     },
     image_url: {
-        type: String,
-        required: true
+        type: String
     }
 })
 

@@ -8,7 +8,7 @@ import '../styles/main.css'
 import PropTypes from 'prop-types'
 
 class SearchBar extends Component {
-    static PropTypes = {
+    static propTypes = {
         fetchSearchedMovies: PropTypes.func.isRequired,
         clearSearchedMovies: PropTypes.func.isRequired
     }

@@ -8,10 +8,10 @@ import PropTypes from 'prop-types'
 
 class ProfilePage extends Component {
     static propTypes = {
-        userId: PropTypes.string.isRequired,
+        userId: PropTypes.string,
         name: PropTypes.string.isRequired,
         imageUrl: PropTypes.string.isRequired,
-        err: PropTypes.object.isRequired,
+        err: PropTypes.object,
         fetchProfile: PropTypes.func.isRequired
     }
 
@@ -31,7 +31,7 @@ class ProfilePage extends Component {
         var errorPage = null
         
         if (this.props.err) {
-            switch(parseInt(this.props.err.message)) {
+            switch(parseInt(this.props.err.message, 10)) {
                 case 404:
                     errorPage = <ErrorPage errorMessage="404. Looks like you're a bit lost, this user hasn't been found."/>
                     break

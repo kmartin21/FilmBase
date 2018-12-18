@@ -10,10 +10,10 @@ import logo from '../images/logo.png'
 import PropTypes from 'prop-types'
 
 class NavBar extends Component {
-  static PropTypes = {
-    userId: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    imageUrl: PropTypes.string.isRequired,
+  static propTypes = {
+    userId: PropTypes.string,
+    name: PropTypes.string,
+    imageUrl: PropTypes.string,
     logoutUser: PropTypes.func.isRequired
   }
 

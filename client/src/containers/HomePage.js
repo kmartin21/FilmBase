@@ -31,7 +31,7 @@ class HomePage extends Component {
                 {!this.props.isSearching && 
                     <h4 className="recents-page__header">Recently favorited by others</h4>
                 }
-                <MoviesTable isProfile={false} isActiveProfile={false} />
+                <MoviesTable isProfile={false} isActiveUserProfile={false} />
             </div>
         )
     }

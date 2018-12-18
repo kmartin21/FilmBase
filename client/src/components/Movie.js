@@ -8,6 +8,20 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 class Movie extends Component {
+    static propTypes = {
+        id: PropTypes.number.isRequired,
+        title: PropTypes.string.isRequired,
+        imageUrl: PropTypes.string.isRequired,
+        description: PropTypes.string.isRequired,
+        favorited: PropTypes.bool.isRequired,
+        favoritedBy: PropTypes.string,
+        user_id: PropTypes.string,
+        userId: PropTypes.string,
+        isProfile: PropTypes.bool.isRequired,
+        onClickImage: PropTypes.func.isRequired,
+        favoriteMovie: PropTypes.func.isRequired,
+        unfavoriteMovie: PropTypes.func.isRequired
+    }
 
     constructor(props) {
         super(props)
@@ -79,21 +93,6 @@ const mapStateToProps = (state) => {
     return {
         userId
     }
-}
-
-Movie.propTypes = {
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    imageUrl: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    favorited: PropTypes.bool.isRequired,
-    favoritedBy: PropTypes.string.isRequired,
-    user_id: PropTypes.number.isRequired,
-    userId: PropTypes.string.isRequired,
-    isProfile: PropTypes.bool.isRequired,
-    onClickImage: PropTypes.func.isRequired,
-    favoriteMovie: PropTypes.func.isRequired,
-    unfavoriteMovie: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps)(Movie)

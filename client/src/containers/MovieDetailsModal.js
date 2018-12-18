@@ -6,16 +6,16 @@ import PropTypes from 'prop-types'
 
 class MovieDetailsModal extends Component {
     static propTypes = {
-        id: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired,
         title: PropTypes.string.isRequired,
         imageUrl: PropTypes.string.isRequired,
         description: PropTypes.string.isRequired,
         favorited: PropTypes.bool.isRequired,
-        favoritedBy: PropTypes.string.isRequired, 
-        opinion: PropTypes.string.isRequired,
-        activeUserOpinion: PropTypes.string.isRequired,
+        favoritedBy: PropTypes.string, 
+        opinion: PropTypes.string,
+        activeUserOpinion: PropTypes.string,
         isProfile: PropTypes.bool.isRequired,
-        isActiveUserProfile: PropTypes.bool.isRequired,
+        isActiveUserProfile: PropTypes.bool,
         onClose: PropTypes.func.isRequired, 
         editOpinion: PropTypes.func.isRequired
     }
@@ -84,9 +84,9 @@ class MovieDetailsModal extends Component {
         const { id, title, imageUrl, favorited, favoritedBy, description, opinion, isActiveUserProfile, onClose} = this.props
         return (
             <div className='movie-details-modal__container'>
-                <a href="#" className="close" onClick={onClose}/>
+                <button className="close" onClick={onClose}/>
                 <div>
-                    <img className="movie-details__image" src={`https://image.tmdb.org/t/p/w500/${imageUrl}`} alt='Movie image'/>
+                    <img className="movie-details__image" src={`https://image.tmdb.org/t/p/w500/${imageUrl}`} alt='Movie cover'/>
                     <div className="movie-details__info-container">
                     <h5 className="movie-details__title">{title}</h5>
                         {!this.state.descriptionIsCollapsed ?
