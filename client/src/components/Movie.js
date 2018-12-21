@@ -11,7 +11,7 @@ class Movie extends Component {
     static propTypes = {
         id: PropTypes.number.isRequired,
         title: PropTypes.string.isRequired,
-        imageUrl: PropTypes.string.isRequired,
+        imageUrl: PropTypes.string,
         description: PropTypes.string.isRequired,
         favorited: PropTypes.bool.isRequired,
         favoritedBy: PropTypes.string,
@@ -56,7 +56,7 @@ class Movie extends Component {
         return (
             <div className="movie">
                 <img className="movie__favorite-button" src={favorited ? starFilled : starEmpty} alt='Favorite button' onClick={favorited && auth0Client.isAuthenticated() ? () => this.unfavoriteMovie(id) : () => this.favoriteMovie(id, title, description, imageUrl)}/>
-                <img className="movie__image" src={`https://image.tmdb.org/t/p/w185/${imageUrl}`} alt='Movie' onClick={() => onClickImage(id)}/>
+                <img className="movie__image" src={`https://image.tmdb.org/t/p/w185/${imageUrl}`} alt='Movie cover' onClick={() => onClickImage(id)}/>
                 <div className="movie__title-container">
                     <TextEllipsis 
                         lines={2} 

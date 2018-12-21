@@ -225,14 +225,13 @@ nav {
     flex-flow: row;
     align-items: center;
     flex-wrap: wrap;
-    padding: 0;
-    margin-left: 5%;
     list-style: none;
+    background-color: blue;
 }
 
 .movie-table__item {
     padding: 0;
-    margin: 0;
+    margin: 10px;
     width: 50%;
     box-sizing: border-box;
 }
@@ -600,12 +599,6 @@ nav {
     .recents-page__header {
         margin-left: 60px;
     }
-
-    .movie-table__item {
-        display: inline-block;
-        padding-left: 20px;
-        width: auto;
-    }    
 }
 
 @media only screen and (min-width: 1195px) {
