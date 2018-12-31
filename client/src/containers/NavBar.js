@@ -35,11 +35,15 @@ class NavBar extends Component {
     this.props.history.replace('/')
   }
 
+  refreshPage = () => {
+    window.location.reload()
+  }
+
   render = () => (
       <nav>
         <div className="nav__container">
           <div className="nav__title-container">
-            <Link className="nav__title" to="/">
+            <Link onClick={this.refreshPage} className="nav__title" to="/">
                 <img className="nav__logo" src={logo} alt='Logo'/>
                 <h3>Filmbase</h3>
             </Link>
