@@ -8,6 +8,7 @@ import {
 import downArrowWhite from '../images/down-arrow-white.svg'
 import logo from '../images/logo.png'
 import PropTypes from 'prop-types'
+import MoreOptionsList from '../components/MoreOptionsList'
 
 class NavBar extends Component {
   static propTypes = {
@@ -66,9 +67,7 @@ class NavBar extends Component {
           }
 
           {this.state.showDropdown && (
-            <ul className="nav__more-options-list">
-              <li className="nav__more-options-list-item" onClick={() => this.signOut()}>Sign out</li>
-            </ul>
+            <MoreOptionsList signOut={this.signOut} onClickOutside={this.setShowDropdown}/>
           )}
         </div>
       </nav>
