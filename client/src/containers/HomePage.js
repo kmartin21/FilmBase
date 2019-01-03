@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import SearchBar from './SearchBar'
 import MoviesTable from './MoviesTable'
 import { connect } from 'react-redux'
-import { fetchRecentFavMovies } from '../actions/Movies';
+import { fetchRecentFavMovies, clearSearchedMovies } from '../actions/Movies';
 import auth0Client from '../containers/oauth/Auth'
 import PropTypes from 'prop-types'
 
@@ -15,6 +15,10 @@ class HomePage extends Component {
 
     componentDidMount() {
         this.props.fetchRecentFavMovies()
+    }
+
+    componentWillUnmount() {
+        this.props.clearSearchedMovies()
     }
 
     render() {
@@ -39,7 +43,8 @@ class HomePage extends Component {
 
 const mapDispatchToProps = (dispatch) => (
     {
-        fetchRecentFavMovies: () => dispatch(fetchRecentFavMovies())
+        fetchRecentFavMovies: () => dispatch(fetchRecentFavMovies()),
+        clearSearchedMovies: () => dispatch(clearSearchedMovies())
     }
 )
 

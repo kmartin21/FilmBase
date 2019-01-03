@@ -2,7 +2,7 @@ import React from 'react'
 import auth0Client from '../containers/oauth/Auth'
 import PropTypes from 'prop-types'
 
-const LoginModal = ({ onClose }) => (
+ const LoginModal = ({ onClose }) => (
     <div className="login-modal__container">
         <button className="close" onClick={onClose}/>
         <h2 className="login-modal__header">Filmbase</h2>
