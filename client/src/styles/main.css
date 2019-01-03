@@ -13,7 +13,11 @@ nav {
     height: 70px;
     background-color: #2860FF;
     display: flex;
+    display: -webkit-flex;
+    display: -moz-flex;
     flex-flow: column;
+    -webkit-flex-flow: column;
+    -moz-flex-flow: column;
     position: fixed;
     top: 0;
     width: 100%;
@@ -21,6 +25,8 @@ nav {
 
 .nav__container {
     display: flex;
+    display: -webkit-flex;
+    display: -moz-flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
@@ -30,6 +36,8 @@ nav {
 .nav__title-container {
     padding-left: 60px;
     display: flex;
+    display: -webkit-flex;
+    display: -moz-flex;
     align-items: center;
 }
 
@@ -43,11 +51,15 @@ nav {
     color: white;
     text-decoration: none;
     display: flex;
+    display: -webkit-flex;
+    display: -moz-flex;
     align-items: center;
 }
 
 .nav__login-container {
     display: flex;
+    display: -webkit-flex;
+    display: -moz-flex;
     align-items: center;
 }
 
@@ -126,6 +138,8 @@ nav {
 /******************* HOME PAGE *******************/
 .home-page__container {
     display: flex;
+    display: -webkit-flex;
+    display: -moz-flex;
     flex-direction: column;
     justify-content: center;
     width: 100%;
@@ -141,7 +155,6 @@ nav {
     text-align: center;
     margin-bottom: 0;
     padding-bottom: 0;
-    /* new */
     font-size: 20px;
 }
 
@@ -151,7 +164,6 @@ nav {
     margin-top: 10px;
     font-size: 17px;
     text-align: center;
-    /* new */
     margin-top: 20px;
 }
 
@@ -221,51 +233,29 @@ nav {
 
 /******************* MOVIE TABLE *******************/
 .movie-list__container {
-    /* display: flex;
-    flex-flow: row wrap;
-    align-content: flex-start;
-    list-style: none;
-    background-color: blue; */
-
     display: flex;
     display: -webkit-flex;
     display: -moz-flex;
     flex-flow: row wrap;
     -webkit-flex-flow: row wrap;
     -moz-flex-flow: row wrap;
+    padding: 30px 0 0 0;
+    margin: 0;
+    list-style: none;
 }
 
 .movie-table__item {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-
     display: flex;
     display: -webkit-flex;
     display: -moz-flex;
     justify-content: center;
     -webkit-justify-content: center;
     -moz-justify-content: center;
-    /* flex-basis: 25%; */
+    flex-basis: 100%;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
-
-@media (max-width: 360px) {
-    .container .item {
-      flex-basis: 100%;
-    }
-  }
-  
-  @media (min-width:360px) and (max-width: 520px) {
-    .container .item {
-      flex-basis: 50%;
-    }
-  }
-  
-  @media (min-width:520px) and (max-width: 680px) {
-    .container .item {
-      flex-basis: 33.33%;
-    }
-  }
 
 /**********************************************************/
 
@@ -368,6 +358,8 @@ nav {
     top: 0;
     left: 0;
     display: flex;
+    display: -webkit-flex;
+    display: -moz-flex;
     align-items: center;
     justify-content: center;
 }
@@ -390,6 +382,8 @@ nav {
     top: 0;
     left: 0;
     display: flex;
+    display: -webkit-flex;
+    display: -moz-flex;
     align-items: center;
     justify-content: center;
 }
@@ -401,7 +395,11 @@ nav {
     width: 220px;
     border-radius: 5px;
     display: flex;
+    display: -webkit-flex;
+    display: -moz-flex;
     flex-flow: column;
+    -webkit-flex-flow: column;
+    -moz-flex-flow: column;
     align-items: center;
 }
 
@@ -575,6 +573,8 @@ nav {
     padding-top: 100px;
     border-radius: 10px;
     display: flex;
+    display: -webkit-flex;
+    display: -moz-flex;
     align-items: center;
 }
 
@@ -594,6 +594,8 @@ nav {
 /******************* ERROR PAGE *******************/
 .error-message {
     display: flex;
+    display: -webkit-flex;
+    display: -moz-flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -606,11 +608,29 @@ nav {
 
 
 
-/******************* MEDIA ONLY QUERIES *******************/
+/******************* MEDIA QUERIES *******************/
+@media only screen and (min-width: 460px) {
+    .movie-table__item {
+        flex-basis: 50%;
+    }
+}
+
+@media only screen and (min-width: 680px) {
+    .movie-table__item {
+        flex-basis: 33.33%;
+    }
+}
+
 @media only screen and (min-width: 750px) {
     .login-modal__container {
         height: 40%;
         width: 30%;
+    }
+}
+
+@media only screen and (min-width: 890px) {
+    .movie-table__item {
+        flex-basis: 25%;
     }
 }
 
@@ -629,6 +649,12 @@ nav {
 
     .recents-page__header {
         margin-left: 60px;
+    }
+}
+
+@media only screen and (min-width: 1080px) {
+    .movie-table__item {
+        flex-basis: 20%;
     }
 }
 
