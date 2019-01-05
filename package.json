@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "cd server && node server.js"
+    "start": "node server.js",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "author": "Keith Martin",
   "license": "ISC",
@@ -23,5 +24,8 @@
   "devDependencies": {
     "morgan": "^1.9.1",
     "nodemon": "^1.18.4"
+  },
+  "engines": {
+    "node": "8.9.4"
   }
 }
