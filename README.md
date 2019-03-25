@@ -35,7 +35,7 @@ https://filmbaseapp.herokuapp.com
 * <a href="https://nodejs.org/en">Node</a>
 ### Authentication
 * <a href="https://auth0.com">Auth0</a>
-<br>
+
 
 ## Run Locally
 Run these commands first:
