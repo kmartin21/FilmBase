@@ -12,7 +12,7 @@
 </div>
 
 ## Basic Overview
-A full stack web app built with MongoDB, Express, React, Redux and Node allowing a user to create a collection of favorite movies, read and write movie reviews and discover new movies. Movie data is powered by <a href="https://www.themoviedb.org/documentation/api">The Movie Database API</a>.
+A full stack web app built with MongoDB, Express, React, Redux and Node allowing a user to create a collection of favorite movies, read and write movie reviews and discover new movies. Movie data powered by <a href="https://www.themoviedb.org/documentation/api">The Movie Database API</a>.
 
 ![Filmbase Recording](https://media.giphy.com/media/1hBUXvYYqvadhagtww/giphy.gif)
 <br>
