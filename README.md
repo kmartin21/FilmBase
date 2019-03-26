@@ -38,7 +38,7 @@ https://filmbaseapp.herokuapp.com
 <br>
 
 ## Run Locally
-Run these commands first:
+* Run these commands first:
 ```
 $ git clone https://github.com/kmartin21/filmbase.git
 $ cd filmbase
@@ -46,14 +46,14 @@ $ npm install
 $ cd client
 $ npm install
 ```
-Rename the ```.env.example``` files in the root and client directories to ```.env```.
+* Rename the ```.env.example``` files in the root and client directories to ```.env```.
 
-Run the server from the root:
+* Run the server from the root:
 ```
 $ npm start
 ```
 
-Run the client from the client directory:
+* Run the client from the client directory:
 ```
 $ npm start
 ```
